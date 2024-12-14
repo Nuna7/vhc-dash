@@ -1,0 +1,33 @@
+#Page {	
+	margin: auto;
+	padding: 2em 3em; 
+	min-height: 100vh;
+	max-width: 2000px;
+}
+
+#Navigation {
+	counter-reset: navlink -1;
+}
+
+#Navigation .link::before {
+	content: counter(navlink, decimal-leading-zero)".";
+	font-size: 0.9em;
+	margin-right: 0.5em;
+	counter-increment: navlink;
+}
+
+#Content {
+	overflow-x: hidden;
+}
+
+#Auth {
+	flex-shrink: 0;
+}
+
+#Footer {
+	padding: var(--cmp-spacing) 0;
+	margin-top: auto;
+	text-align: center;
+}
+
+

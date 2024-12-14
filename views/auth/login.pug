@@ -1,0 +1,19 @@
+extends ../layout
+
+block content
+	div
+		h1 Authentication
+		p.mReadWidth Identify yourself with the credentials provided to you by the administrator.
+
+	form(method="post").Box.Flexbox.mCol.mMinSpacing.iAlignLeft
+		.rLabel Auth. Portal
+
+		div
+			label(for="UsernameField") #[b User ID] #[small.tRed=error && "* Invalid user ID..."]
+			input#UsernameField(type="text", name="username", class=error && "sError", autocomplete="off", autofocus)
+
+		div
+			label(for="PasswordField") #[b Passkey] #[small.tRed=error && "* ...or incorrect passkey"]
+			input#PasswordField(type="password", name="password", class=error && "sError")
+
+		button(type="submit").iAlignRight Log In

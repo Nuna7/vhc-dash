@@ -1,0 +1,51 @@
+extends layout
+
+append stylesheets
+	link(rel="stylesheet", href="/stylesheets/ranker.css")
+
+append scripts
+	script(type="text/javascript", src="/javascripts/ranker.js", defer)
+
+block content
+	h1 01. Model Output Ranker
+
+	form#Ballot(action="/ranker/post-ballot", method="post").Box.mRoomy.Flexbox.mCol.mCmpSpacing
+		input(type="hidden", name="prc", value=prc._id)
+		
+		.clabel: b M.O. Ranker
+		.llabel.tGray: small #[b select:] [<-, ->] | #[b rank:] [1-#{prc.responses.length}] | #[b submit:] [s|enter]
+
+		.Flexbox.mCmpSpacing.mSpaceBtwn.mVertEnd.mWrap.mHorzEnd
+			#Original.Box.mInvert: p!=prc.input
+
+			#Submission.Box.mCompact.Flexbox.mVertCenter.mMinSpacing
+				.lLabel: b Rev. & post: 
+				
+				#Review.uNoWrap
+				button(type="submit", title="Submit ranking\nShortcut: [s]") Submit
+
+		.Flexbox.mVertCenter.mMinSpacing
+			b.uNoWrap LLM Responses:
+			.Divider 
+
+		#Responses.Flexbox.mMinSpacing
+			each response in prc.responses
+				.Response(tabindex="0", id=`response-${response._id}`).iAlignTop 
+					.header.Flexbox.mVertStart
+						h2.modelName!=response.llm.displayName
+
+						.ranker.RadioGroup(data-rank="?").Flexbox
+							each i in Array.from({length: prc.responses.length}, (v,i) => i+1)
+								label(title=`Assign rank ${i}\nShortcut: [${i}]`)=i
+									input(type="radio", id=`radio-${response._id}-${i}`, name=`rank-${response.llm._id}`, value=i).mButton
+
+						.status.RadioGroup.Flexbox
+							label.pass(title=`Assign "pass" status\nShortcut: [p]`) P
+								input(type="radio", id=`radio-${response._id}-pass`, name=`status-${response.llm._id}`, value="pass").mButton
+
+							label.fail(title=`Assign "fail" status\nShortcut: [f]`) F
+								input(type="radio", id=`radio-${response._id}-fail`, name=`status-${response.llm._id}`, value="fail").mButton
+
+						.rankDisplay ?
+
+					.content!=response.renderContent()

@@ -1,0 +1,54 @@
+html(lang="en") 
+	head 
+		meta(lang="utf-8")
+		meta(charset="utf-8")
+		meta(name="viewport" content="width=device-width, initial-scale=1.0")
+
+		//- link(rel="shortcut icon", href="images/favicon.svg", type="image/svg+xml")
+		
+		meta(name="theme-color" content="#aaaaaa")
+		
+		title!=title
+		meta(name="author" content="Ashoka University")
+		meta(name="description", content="Ashoka visual health computing systems dashboard")
+
+		block stylesheets
+			link(rel="stylesheet", href="/stylesheets/reset.css")
+			link(rel="stylesheet", href="/stylesheets/fonts.css")
+			link(rel="stylesheet", href="/stylesheets/main.css")
+			link(rel="stylesheet", href="/stylesheets/flexbox.css")
+			link(rel="stylesheet", href="/stylesheets/layout.css")
+			link(rel="stylesheet", href="/stylesheets/forms.css")
+
+		block scripts
+			script(type="text/javascript", src="/javascripts/hotkeys.min.js")
+			script(type="text/javascript", src="/javascripts/layout.js", defer)
+			script(type="text/javascript", src="/javascripts/forms.js", defer)
+			
+			if jump
+				script.
+					window.onload = window.location.hash = "#{jump}";
+
+	body#top
+		#Page.Flexbox.mCol.mStdSpacing
+			header#Header.Flexbox.mSpaceBtwn.mCmpSpacing
+				nav#Navigation.Box.Flexbox.mMinSpacing
+					.lLabel: b Navigation:
+					.rLabel.tGray: small Ctrl + [0-9]
+
+					.link: a(href="/") Home
+					.link: a(href="/ranker") Model Output Ranker
+
+				if user
+					#Auth.Box.mCompact.Flexbox.mMinSpacing.mVertCenter
+						.lLabel: b Auth:
+
+						div #[b ID:] #[a(href="/account")=user.username]
+						
+						form(action=`/logout?next=${url}`, method="post")
+							button(type="submit", title=`Terminate session for user: ${user.username}`) Log Out
+
+			main#Content.Flexbox.mCol.mStdSpacing: block content
+
+			footer#Footer: b Ashoka University © 2024
+

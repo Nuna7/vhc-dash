@@ -1,0 +1,143 @@
+:root {
+	--off-white: #aaaaaa;
+	--black: #111111;
+	--dark-gray: #444444;
+	--light-gray: #777777;
+	--red: #9e2a2b;
+	--green: #226f54;
+
+	--bg: var(--off-white);
+	--fg: var(--black);
+
+	--std-spacing: 3rem;
+	--cmp-spacing: 2rem;
+	--min-spacing: 1rem;
+}
+
+* { box-sizing: border-box; }
+
+body {
+	color: var(--fg);
+	background: var(--bg);
+}
+
+:focus {
+	outline: 1px dashed var(--dark-gray);
+	outline-offset: 2px;
+}
+
+::selection {
+	color: var(--bg);
+	background-color: var(--fg);
+}
+
+a {
+	color: inherit;
+}
+
+a:focus {
+	text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+	font-weight: normal;
+	line-height: 1.3em;
+}
+
+:is(h1, h2, h3, h4, p, ul, ol)+ :is(h1, h2, h3, h4) {
+	margin-top: 1.2em;
+}
+
+p,
+ul,
+ol {
+	line-height: 1.5em;
+}
+
+:is(h1, h2, h3, h4, p, ul, ol)+ :is(p, ul, ol) {
+	margin-top: 1em;
+}
+
+p.mReadWidth {
+	max-width: 750px;
+}
+
+ul {
+	list-style-type: square;
+}
+
+.tGray {
+	color: var(--dark-gray);
+}
+
+.tRed {
+	color: var(--red);
+}
+
+.uNoWrap {
+	white-space: nowrap;
+}
+
+.Divider {
+	width: 100%;
+	height: 0;
+	border-top: 1px dotted var(--fg);
+}
+
+.Box {
+	--box-padding: var(--min-spacing);
+
+	border: 1px dotted var(--fg);
+	padding: var(--box-padding);
+	position: relative;
+}
+
+.Box.mInline {
+	display: inline-block;
+}
+
+.Box.mCompact {
+	--box-padding: 0.7em;
+}
+
+.Box.mRoomy {
+	--box-padding: var(--cmp-spacing);
+}
+
+.Box.mInvert {
+	--bg: var(--black);
+	--fg: var(--off-white);
+
+	color: var(--fg);
+	border: none;
+	background-color: var(--bg);
+}
+
+.Box:not(.mRoomy):has(.cLabel, .lLabel, .rLabel) {
+	padding-top: calc(var(--box-padding) + 0.5em);
+}
+
+.Box> :is(.cLabel, .lLabel, .rLabel) {
+	top: 0;
+	padding: 0 calc(var(--box-padding) / 2);
+	position: absolute;
+	background-color: var(--bg);
+}
+
+.Box>.cLabel {
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.Box>.lLabel {
+	left: calc(var(--box-padding) / 2);
+	transform: translateY(-50%);
+}
+
+.Box>.rLabel {
+	right: calc(var(--box-padding) / 2);
+	transform: translateY(-50%);
+}

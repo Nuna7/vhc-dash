@@ -1,0 +1,24 @@
+.Flexbox { display: flex; }
+.Flexbox.mCol { flex-direction: column; }
+
+.Flexbox.mWrap { flex-wrap: wrap; }
+.Flexbox.mWrapRev { flex-wrap: wrap-reverse; }
+
+.Flexbox.mSpaceBtwn { justify-content: space-between; }
+.Flexbox.mStdSpacing { grid-gap: var(--std-spacing) }
+.Flexbox.mCmpSpacing { grid-gap: var(--cmp-spacing) }
+.Flexbox.mMinSpacing { grid-gap: var(--min-spacing) }
+
+.Flexbox.mHorzEnd { justify-content: flex-end; }
+.Flexbox.mHorzCenter { justify-content: center; }
+
+.Flexbox.mVertStart { align-items: flex-start; }
+.Flexbox.mVertEnd { align-items: flex-end; }
+.Flexbox.mVertCenter { align-items: center; }
+
+.Flexbox > .iAlignTop { align-self: flex-start; }
+.Flexbox > .iAlignBtm { align-self: flex-end; }
+.Flexbox > .iAlignRight { margin-left: auto; }
+.Flexbox > .iAlignCenter { align-self: center; }
+.Flexbox.mCol > .iAlignLeft { align-self: flex-start; }
+.Flexbox.mCol > .iAlignRight { align-self: flex-end; }

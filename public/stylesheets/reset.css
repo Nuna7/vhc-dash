@@ -1,0 +1,25 @@
+:focus { outline: none; }
+
+body { margin: 0; }
+
+h1, h2, h3, h4 { margin: 0; }
+
+p, ul, ol { margin: 0 }
+
+input[type="text"], input[type="password"] {
+	border: none;
+	color: inherit;
+	background: none;
+	font-size: inherit;
+	font-family: inherit;
+}
+
+button { 
+	padding: 0;
+	border: none;
+	font-size: inherit;
+	font-family: inherit;
+	background-color: inherit;
+}
+
+form { margin: 0; }
