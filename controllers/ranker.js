@@ -60,14 +60,17 @@ exports.post_ballot = [
 
 			const models = prc.responses.map(({ llm }) => llm);
 			var ranking = Array(models.length);
+			var fail_count = 0;
 
 			models.forEach(model => { // insert LLM IDs into ranked positions
 				ranking[req.body[`rank-${model.toString()}`] - 1] = model;
+				if (req.body[`status-${model.toString()}`] == "fail") fail_count++;
 			});
 
 			prc.rcv.ballots.push({ // push ballot to associated RCV
 				voter: req.user._id,
-				ranking: ranking
+				ranking: ranking,
+				fail_count: fail_count
 			});
 
 			prc.rcv.save().then(() => {
