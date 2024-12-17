@@ -93,6 +93,7 @@ ul {
 	border: 1px dotted var(--fg);
 	padding: var(--box-padding);
 	position: relative;
+	background-color: var(--bg);
 }
 
 .Box.mInline {

@@ -3,6 +3,12 @@
 	padding: 2em 3em; 
 	min-height: 100vh;
 	max-width: 2000px;
+	min-width: 1200px;
+	background: 
+		linear-gradient(to right, var(--bg) 40%, transparent),
+		radial-gradient(circle, var(--light-gray) 1px, var(--bg) 1px);
+  		background-size: 100% 100%, 8px 8px;
+  		background-repeat: no-repeat, repeat;
 }
 
 #Navigation {
