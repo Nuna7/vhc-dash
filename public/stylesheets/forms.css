@@ -49,13 +49,19 @@ label:has(input[type="radio"].mButton) {
 	border-bottom: 2px solid var(--dark-gray);
 }
 
+label:has(input[type="radio"].mButton:disabled) {
+	cursor: not-allowed;
+	opacity: 0.2;
+	background: none;
+}
+
 label:has(input[type="radio"].mButton:checked) {
 	background: repeating-conic-gradient(var(--dark-gray) 0% 25%, transparent 0% 100%) 1px 0.5px / 2px 2px;
 	font-weight: 600;
 }
 
 .RadioGroup > label:not(:last-child) {
-	border-right: none !important;
+	margin-right: -1px;
 }
 
 button {

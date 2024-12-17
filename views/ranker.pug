@@ -41,10 +41,10 @@ block content
 
 						.status.RadioGroup.Flexbox
 							label.pass(title=`Assign "pass" status\nShortcut: [p]`) P
-								input(type="radio", id=`radio-${response._id}-pass`, name=`status-${response.llm._id}`, value="pass").mButton
+								input(type="radio", id=`radio-${response._id}-p`, name=`status-${response.llm._id}`, value="pass", checked).mButton
 
 							label.fail(title=`Assign "fail" status\nShortcut: [f]`) F
-								input(type="radio", id=`radio-${response._id}-fail`, name=`status-${response.llm._id}`, value="fail").mButton
+								input(type="radio", id=`radio-${response._id}-f`, name=`status-${response.llm._id}`, value="fail").mButton
 
 						.rankDisplay ?
 

@@ -2,19 +2,20 @@
 // capture elements
 const responses = document.querySelectorAll(".Response");
 const rankers = document.querySelectorAll(".Response .ranker");
-const radios = document.querySelectorAll(".Response .ranker input[type='radio']");
+const rank_radios = document.querySelectorAll(".Response .ranker input[type='radio']");
 const review = document.getElementById("Review");
 const form = document.getElementById("Ballot");
 
 // initialize page
+updateRadio();
 updateRankData();
 updateReviewBox();
 
 // ranker state change event listener
-Array.from(radios).forEach(element => {
+Array.from(rank_radios).forEach(element => {
 	element.addEventListener("change", function(e) {		
 		// erase duplicate ranker states
-		Array.from(radios).filter(radio => radio !== this).forEach(radio => {
+		Array.from(rank_radios).filter(radio => radio !== this).forEach(radio => {
 			if (radio.value == this.value) { radio.checked = false; }
 		});
 		
@@ -50,7 +51,31 @@ function updateReviewBox() {
 
 	// update rank preview display and disable/enable submission button
 	review.innerHTML = `${ranking[0]} > ${ranking[1]} > ${ranking[2]} > ${ranking[3]}`;
-	document.querySelector("#Ballot button[type='submit']").disabled = checkedCount != rankers.length;
+	document.querySelector("#Ballot button[type='submit']").disabled = checkedCount != responses.length;
+}
+
+// update radio values
+function updateRadio() {
+	Array.from(rank_radios).forEach(radio => { radio.disabled = false; });
+
+	var pass_count = 0;
+
+	Array.from(responses).forEach(response => {
+		const status = response.querySelector(".status input[type='radio']:checked").value;
+		if (status == "pass") pass_count++;
+	});
+
+	Array.from(responses).forEach(response => {
+		const status = response.querySelector(".status input[type='radio']:checked").value;
+		
+		Array.from(response.querySelectorAll(".ranker input[type='radio']")).forEach(radio => {
+			if ((status == "fail" && radio.value <= pass_count) || (status == "pass" && radio.value > pass_count)) { 
+				radio.disabled = true; 
+				radio.checked = false; 
+				radio.dispatchEvent(new Event("change")); // manually dispatch change event to trigger event listener
+			}
+		});
+	});
 }
 
 // response navigation hotkeys
@@ -79,8 +104,21 @@ hotkeys("1,2,3,4", function (event, handler) {
 
 	if (e.classList.contains("Response")) {
 		const radio = e.querySelector(`#radio-${e.id.replace("response-", "")}-${handler.key}`);
-		radio.checked = true; 
-		radio.dispatchEvent(new Event("change")); // manually dispatch change event to trigger event listener
+		
+		if (!radio.disabled) {
+			radio.checked = true; 
+			radio.dispatchEvent(new Event("change")); // manually dispatch change event to trigger event listener
+		}
+	}
+});
+
+// response status hotkeys
+hotkeys("p,f", function (event, handler) {
+	const e = document.activeElement;
+
+	if (e.classList.contains("Response")) {
+		e.querySelector(`#radio-${e.id.replace("response-", "")}-${handler.key}`).checked = true;
+		updateRadio();
 	}
 });
 
