@@ -3,6 +3,7 @@
 const responses = document.querySelectorAll(".Response");
 const rankers = document.querySelectorAll(".Response .ranker");
 const rank_radios = document.querySelectorAll(".Response .ranker input[type='radio']");
+const status_radios = document.querySelectorAll(".Response .status input[type='radio']");
 const review = document.getElementById("Review");
 const form = document.getElementById("Ballot");
 
@@ -22,6 +23,11 @@ Array.from(rank_radios).forEach(element => {
 		updateRankData();
 		updateReviewBox();
 	}, false);
+});
+
+// status state change event listener
+Array.from(status_radios).forEach(element => {
+	element.addEventListener("change", function(e) { updateRadio(); }, false);
 });
 
 // update response element rank data
