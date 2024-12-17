@@ -72,7 +72,6 @@ function updateRadio() {
 			if ((status == "fail" && radio.value <= pass_count) || (status == "pass" && radio.value > pass_count)) { 
 				radio.disabled = true; 
 				radio.checked = false; 
-				radio.dispatchEvent(new Event("change")); // manually dispatch change event to trigger event listener
 			}
 		});
 	});
