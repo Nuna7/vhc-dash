@@ -101,6 +101,13 @@ button:disabled.sLoading::after {
 	justify-content: center;
 }
 
+button.mTiny {
+	color: var(--fg);
+	border: 1px dotted var(--black);
+	padding: 0.1em 0.3em;
+	background-color: var(--bg);
+}
+
 @keyframes spinner {
 	25% {
 		content: "[/]";

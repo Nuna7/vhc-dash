@@ -32,12 +32,22 @@ html(lang="en")
 	body#top
 		#Page.Flexbox.mCol.mStdSpacing
 			header#Header.Flexbox.mSpaceBtwn.mCmpSpacing
-				nav#Navigation.Box.Flexbox.mMinSpacing
-					.lLabel: b Navigation:
-					.rLabel.tGray: small Ctrl + [0-9]
+				.Flexbox.mCmpSpacing
+					nav#Navigation.Box.Flexbox.mMinSpacing
+						.lLabel: b Navigation:
+						.rLabel.tGray: small Ctrl + [0-9]
 
-					.link: a(href="/") Home
-					.link: a(href="/ranker") Model Output Ranker
+						.link: a(href="/") Home
+						.link: a(href="/ranker") Model Output Ranker
+
+					div#SiteSettings.Box
+						.lLabel: b Settings
+
+						.zoom 
+							| Font Size: 
+							| #[button(onclick="zoom('out');", title=`Zoom out\nShortcut: [ctrl+=]`).mTiny -]
+							| #[span#fontSize 12px]
+							| #[button(onclick="zoom('in');", title=`Zoom in\nShortcut: [ctrl+-]`).mTiny +]
 
 				if user
 					#Auth.Box.mCompact.Flexbox.mMinSpacing.mVertCenter
