@@ -7,45 +7,50 @@ append scripts
 	script(type="text/javascript", src="/javascripts/ranker.js", defer)
 
 block content
-	h1 01. Model Output Ranker
-
-	form#Ballot(action="/ranker/post-ballot", method="post").Box.mRoomy.Flexbox.mCol.mCmpSpacing
-		input(type="hidden", name="prc", value=prc._id)
+	div
+		h1 01. Model Output Ranker
 		
-		.clabel: b M.O. Ranker
-		.llabel.tGray: small #[b select:] [<-, ->] | #[b rank:] [1-#{prc.responses.length}] | #[b status:] [p|f] | #[b submit:] [s|enter]
+		unless prc
+			p #[span.tGray EMPTY] Evaluated all available responses. Check for updated entries in 24 hours.
 
-		.Flexbox.mCmpSpacing.mSpaceBtwn.mVertEnd.mWrap.mHorzEnd
-			#Original.Box.mInvert: p!=prc.input
+	if prc
+		form#Ballot(action="/ranker/post-ballot", method="post").Box.mRoomy.Flexbox.mCol.mCmpSpacing
+			input(type="hidden", name="prc", value=prc._id)
+			
+			.clabel: b M.O. Ranker
+			.llabel.tGray: small #[b select:] [<-, ->] | #[b rank:] [1-#{prc.responses.length}] | #[b status:] [p|f] | #[b submit:] [s|enter]
 
-			#Submission.Box.mCompact.Flexbox.mVertCenter.mMinSpacing
-				.lLabel: b Rev. & post: 
-				
-				#Review.uNoWrap
-				button(type="submit", title="Submit ranking\nShortcut: [s]") Submit
+			.Flexbox.mCmpSpacing.mSpaceBtwn.mVertEnd.mWrap.mHorzEnd
+				#Original.Box.mInvert: p!=prc.input
 
-		.Flexbox.mVertCenter.mMinSpacing
-			b.uNoWrap LLM Responses:
-			.Divider 
+				#Submission.Box.mCompact.Flexbox.mVertCenter.mMinSpacing
+					.lLabel: b Rev. & post: 
+					
+					#Review.uNoWrap
+					button(type="submit", title="Submit ranking\nShortcut: [s]") Submit
 
-		#Responses.Flexbox.mMinSpacing
-			each response in prc.responses
-				.Response(tabindex="0", id=`response-${response._id}`).iAlignTop 
-					.header.Flexbox.mVertStart
-						h2.modelName!=response.llm.displayName
+			.Flexbox.mVertCenter.mMinSpacing
+				b.uNoWrap LLM Responses:
+				.Divider 
 
-						.ranker.RadioGroup(data-rank="?").Flexbox
-							each i in Array.from({length: prc.responses.length}, (v,i) => i+1)
-								label(title=`Assign rank ${i}\nShortcut: [${i}]`)=i
-									input(type="radio", id=`radio-${response._id}-${i}`, name=`rank-${response.llm._id}`, value=i).mButton
+			#Responses.Flexbox.mMinSpacing
+				each response in prc.responses
+					.Response(tabindex="0", id=`response-${response._id}`).iAlignTop 
+						.header.Flexbox.mVertStart
+							h2.modelName!=response.llm.displayName
 
-						.status.RadioGroup.Flexbox
-							label.pass(title=`Assign "pass" status\nShortcut: [p]`) P
-								input(type="radio", id=`radio-${response._id}-p`, name=`status-${response.llm._id}`, value="pass", checked).mButton
+							.ranker.RadioGroup(data-rank="?").Flexbox
+								each i in Array.from({length: prc.responses.length}, (v,i) => i+1)
+									label(title=`Assign rank ${i}\nShortcut: [${i}]`)=i
+										input(type="radio", id=`radio-${response._id}-${i}`, name=`rank-${response.llm._id}`, value=i).mButton
 
-							label.fail(title=`Assign "fail" status\nShortcut: [f]`) F
-								input(type="radio", id=`radio-${response._id}-f`, name=`status-${response.llm._id}`, value="fail").mButton
+							.status.RadioGroup.Flexbox
+								label.pass(title=`Assign "pass" status\nShortcut: [p]`) P
+									input(type="radio", id=`radio-${response._id}-p`, name=`status-${response.llm._id}`, value="pass", checked).mButton
 
-						.rankDisplay ?
+								label.fail(title=`Assign "fail" status\nShortcut: [f]`) F
+									input(type="radio", id=`radio-${response._id}-f`, name=`status-${response.llm._id}`, value="fail").mButton
 
-					.content!=response.renderContent()
+							.rankDisplay ?
+
+						.content!=response.renderContent()

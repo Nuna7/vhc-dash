@@ -21,15 +21,24 @@ exports.ranker = (req, res, next) => {
 		{ $unwind: "$rcv" },
 		{ $match: { "rcv.ballots.voter": { $ne: req.user._id } } },
 		{ $limit: 1 }
-	])
-		.then(aggregation => { // populate response LLMs and render view
+	
+	]).then(aggregation => {
+		if (aggregation.length) { // if PRC found, populate and render view
 			PRC.hydrate(aggregation[0]).populate("responses.llm").then(prc => {
 				res.render("ranker", {
 					title: "M.O. Ranker",
 					prc: prc
 				});
 			});
-		});
+		}
+
+		else { // otherwise populate view with undefined
+			res.render("ranker", {
+				title: "M.O. Ranker",
+				prc: undefined
+			});
+		}
+	});
 }
 
 // submit ballot
