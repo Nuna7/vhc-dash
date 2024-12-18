@@ -14,7 +14,7 @@ block content
 			p #[span.tGray EMPTY] Evaluated all available responses. Check for updated entries in 24 hours.
 
 	if prc
-		form#Ballot(action="/ranker/post-ballot", method="post").Box.mRoomy.Flexbox.mCol.mCmpSpacing
+		form#Ballot(method="post").Box.mRoomy.Flexbox.mCol.mCmpSpacing
 			input(type="hidden", name="prc", value=prc._id)
 			
 			.clabel: b M.O. Ranker

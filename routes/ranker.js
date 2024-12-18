@@ -6,6 +6,6 @@ const authMiddleware = require("../middleware/auth");
 const rankerController = require("../controllers/ranker");
 
 router.get("/", authMiddleware.sessionAuthCheck(), rankerController.ranker);
-router.post("/post-ballot", authMiddleware.sessionAuthCheck(), rankerController.post_ballot);
+router.post("/", authMiddleware.sessionAuthCheck(), rankerController.post_ballot);
 
 module.exports = router;
