@@ -79,7 +79,7 @@ exports.post_ballot = [
 			rankStatusPairs.push({ rank: rankValue, status: statusValue });
 		}
 
-		// Ensure all fail ranks are below all pass ranks
+		// ensure all fail ranks are below all pass ranks
 		const sortedPairs = rankStatusPairs.sort((a, b) => a.rank - b.rank);
 		let foundFail = false;
 
@@ -92,13 +92,19 @@ exports.post_ballot = [
 	}),
 
 	(req, res, next) => {
-		// if errors, reload
-		if (!validationResult(req).isEmpty()) { 
-			console.log(validationResult(req));
-			return res.redirect("/ranker"); 
-		}
+		PRC.findById(req.body.prc).populate("rcv responses.llm").then(prc => {
+			const errors = validationResult(req);
 
-		PRC.findById(req.body.prc).populate("rcv").then(prc => {
+			if (!errors.isEmpty()) { 
+				res.render("ranker", {
+					title: "M.O. Ranker",
+					prc: prc,
+					errors: errors.array() 
+				});
+
+				return;
+			}
+
 			const models = prc.responses.map(({ llm }) => llm);
 			var ranking = Array(models.length);
 			var fail_count = 0;

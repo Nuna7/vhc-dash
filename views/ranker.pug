@@ -7,6 +7,12 @@ append scripts
 	script(type="text/javascript", src="/javascripts/ranker.js", defer)
 
 block content
+	if errors 
+		#Error
+			h2 ERROR
+			p "#[b=errors[0]["msg"]]"
+			p Reload page - if error persists, contact system administrators immediately.
+
 	div
 		h1 01. Model Output Ranker
 		
