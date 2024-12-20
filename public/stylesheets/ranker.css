@@ -44,6 +44,10 @@
 	margin: 0 1em 0 1.5em;
 }
 
+#Responses > .Response > .header > .ranker > label:not(:has(:disabled, :checked)):has(.sTaken) {
+	background-image: linear-gradient(to bottom right, transparent 50%, var(--dark-gray) 50%, transparent 55%);
+}
+
 #Responses > .Response > .header > .status {
 	margin-right: 1em;
 }
