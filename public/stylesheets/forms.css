@@ -75,6 +75,7 @@ button {
 }
 
 button.mRed {
+	color: var(--off-white);
 	background-color: var(--red);
 }
 

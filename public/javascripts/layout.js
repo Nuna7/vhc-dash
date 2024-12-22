@@ -1,3 +1,7 @@
+// settings
+const minFontSize = 12;
+const maxFontSize = 16;
+
 // capture elements
 const content = document.getElementById("Content");
 const navLinks = document.querySelectorAll("#Navigation .link");
@@ -9,9 +13,16 @@ if (savedSize) content.style.fontSize = savedSize;
 // initialize settings counters
 updateSettingsDisplay();
 
+// popup close button
+for (button of document.querySelectorAll(".Popup .close")) {
+	button.addEventListener("click", function(e) {
+		this.closest(".Popup").remove();
+	});
+}
+
 // increment/decrement base font size (12 <= x <= 18)
 function zoom(mode) {
-	const fontSize = Math.max(Math.min(parseFloat(window.getComputedStyle(content).fontSize) + (mode == "in" ? 1 : -1), 18), 12);
+	const fontSize = Math.max(Math.min(parseFloat(window.getComputedStyle(content).fontSize) + (mode == "in" ? 1 : -1), maxFontSize), minFontSize);
 	content.style.fontSize = `${fontSize}px`;
 	localStorage.setItem("fontSize", fontSize);
 	

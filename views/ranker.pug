@@ -6,12 +6,27 @@ append stylesheets
 append scripts
 	script(type="text/javascript", src="/javascripts/ranker.js", defer)
 
+block popup
+	unless error
+		#Instructions.Popup
+			button.mRed.close X
+
+			.Flexbox.mCol.mMinSpacing
+				.content
+					h2.header Instructions
+					p Rank LLM responses by "goodness" and assign a pass (✓) or fail (X) status, the latter if the response is entirely inadmissible.
+
+				button#hidePermanent.iAlignRight.close Don't show again
+
+	if error
+		.Popup.mError: div
+			.content
+				h2.header ERROR
+				p: b Invalid LLM ID
+				p Reload page - if error persists, contact system administrators immediately.
+
 block content
-	if errors 
-		#Error
-			h2 ERROR
-			p "#[b=errors[0]["msg"]]"
-			p Reload page - if error persists, contact system administrators immediately.
+	
 
 	div
 		h1 01. Model Output Ranker
@@ -24,7 +39,7 @@ block content
 			input(type="hidden", name="prc", value=prc._id)
 			
 			.clabel: b M.O. Ranker
-			.llabel.tGray: small #[b select:] [<-, ->] | #[b rank:] [1-#{prc.responses.length}] | #[b status:] [p|f] | #[b submit:] [s|enter]
+			.llabel.tGray: small #[b select:] [<-, ->] | #[b rank:] [1-#{prc.responses.length}] | #[b status:] [`] | #[b submit:] [s|enter]
 
 			.Flexbox.mCmpSpacing.mSpaceBtwn.mVertEnd.mWrap.mHorzEnd
 				#Original.Box.mInvert: p!=prc.input
@@ -51,10 +66,10 @@ block content
 										input(type="radio", id=`radio-${response._id}-${i}`, name=`rank-${response.llm._id}`, value=i).mButton
 
 							.status.RadioGroup.Flexbox
-								label.pass(title=`Assign "pass" status\nShortcut: [p]`) ✓
+								label.pass(title=`Assign "pass" status\nShortcut: [\`]`) ✓
 									input(type="radio", id=`radio-${response._id}-p`, name=`status-${response.llm._id}`, value="pass", checked).mButton
 
-								label.fail(title=`Assign "fail" status\nShortcut: [f]`) X
+								label.fail(title=`Assign "fail" status\nShortcut: [\`]`) X
 									input(type="radio", id=`radio-${response._id}-f`, name=`status-${response.llm._id}`, value="fail").mButton
 
 							.rankDisplay ?

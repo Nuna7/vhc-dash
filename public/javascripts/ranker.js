@@ -8,10 +8,24 @@ const review = document.getElementById("Review");
 const form = document.getElementById("Ballot");
 
 // initialize page
+if (localStorage.getItem("showInstructions") == "false" || sessionStorage.getItem("showInstructions") == "false") {
+	document.getElementById("Instructions").remove();
+}
+
 markTaken();
 passFailSplit();
 updateRankData();
 updateReviewBox();
+
+// close instructions (temporary)
+document.querySelector("#Instructions .close").addEventListener("click", function(e) {
+	sessionStorage.setItem("showInstructions", false);
+});
+
+// close instructions (permanent)
+document.querySelector("#hidePermanent").addEventListener("click", function(e) {
+	localStorage.setItem("showInstructions", false);
+});
 
 // ranker state change event listener
 Array.from(rankRadios).forEach(element => {
@@ -138,11 +152,11 @@ hotkeys("1,2,3,4", function (event, handler) {
 });
 
 // response status hotkeys
-hotkeys("p,f", function (event, handler) {
+hotkeys("`", function (event, handler) {
 	const e = document.activeElement;
 
 	if (e.classList.contains("Response")) {
-		e.querySelector(`#radio-${e.id.replace("response-", "")}-${handler.key}`).checked = true;
+		e.querySelector(".status input[type='radio']:not(:checked)").checked = true;
 		passFailSplit();
 	}
 });
