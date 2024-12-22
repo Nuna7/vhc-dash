@@ -8,7 +8,7 @@ const Schema = mongoose.Schema;
 const BallotSchema = new Schema({
 	voter: { type: Schema.Types.ObjectId, ref: "User", required: true },
 	ranking: { type: [Schema.Types.ObjectId], required: true },
-	fail_count: { type: Number, required: true }
+	failCount: { type: Number, required: true }
 }, { timestamps: { createdAt: "cast", updatedAt: "updated" } });
 
 const RCVSchema = new Schema({
