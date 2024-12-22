@@ -32,14 +32,14 @@ html(lang="en")
 	body#top
 		#Page.Flexbox.mCol.mStdSpacing
 			header#Header.Flexbox.mSpaceBtwn.mCmpSpacing
+				nav#Navigation.Box.Flexbox.mMinSpacing
+					.lLabel: b Navigation:
+					.rLabel.tGray: small Ctrl + [0-9]
+
+					.link: a(href="/") Home
+					.link: a(href="/ranker") Model Output Ranker
+
 				.Flexbox.mCmpSpacing
-					nav#Navigation.Box.Flexbox.mMinSpacing
-						.lLabel: b Navigation:
-						.rLabel.tGray: small Ctrl + [0-9]
-
-						.link: a(href="/") Home
-						.link: a(href="/ranker") Model Output Ranker
-
 					div#SiteSettings.Box
 						.lLabel: b Settings:
 
@@ -49,14 +49,14 @@ html(lang="en")
 							| #[span#fontSize 12px]
 							| #[button(onclick="zoom('in');", title=`Zoom in\nShortcut: [ctrl+-]`).mTiny +]
 
-				if user
-					#Auth.Box.mCompact.Flexbox.mMinSpacing.mVertCenter
-						.lLabel: b Auth:
+					if user
+						#Auth.Box.mCompact.Flexbox.mMinSpacing.mVertCenter
+							.lLabel: b Auth:
 
-						div #[b ID:] #[a(href="/account")=user.username]
-						
-						form(action=`/logout?next=${url}`, method="post")
-							button(type="submit", title=`Terminate session for user: ${user.username}`) Log Out
+							div #[b ID:] #[a(href="/account")=user.username]
+							
+							form(action=`/logout?next=${url}`, method="post")
+								button(type="submit", title=`Terminate session for user: ${user.username}`) Log Out
 
 			main#Content.Flexbox.mCol.mStdSpacing: block content
 
