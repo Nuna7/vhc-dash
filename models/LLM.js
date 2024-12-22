@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const LLMSchema = new Schema({
 	name: { type: String, required: true },
-	version: { type: String },
+	version: { type: Schema.Types.Decimal128, required: true },
 	parameters: { type: Schema.Types.Decimal128, required: true },
 }, { timestamps: { createdAt: "created", updatedAt: "edited" } });
 
