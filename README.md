@@ -14,7 +14,7 @@ A dashboard of utilities for the EHR-compliant record digitization component of 
 
 An application to facilitate the ranking of LLM-generated transcribed prescription text paraphrasals. Paraphrasals are ranked numerically, and assigned a passing (default) or failing (if completely inadmissible for further processing) status. The application generates ballot data structures that may be processed by a ranked-choice voting algorithm to create insights.
 
-#### Data Representation
+#### 1.2.1.1. Data Representation
 
-![](docs/images/ranker_db.png)
+![Ranker data representation](docs/images/ranker_db.png)
 
