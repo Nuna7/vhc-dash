@@ -9,9 +9,9 @@ append scripts
 block popup
 	unless error
 		#Instructions.Popup
-			button.mRed.close X
+			button.mRed.close.xBtn X
 
-			.Flexbox.mCol.mMinSpacing
+			.panel.Flexbox.mCol.mMinSpacing
 				.content
 					h2.header Instructions
 					p Rank LLM responses by "goodness" and assign a pass (✓) or fail (X) status, the latter if the response is entirely inadmissible.
@@ -19,15 +19,14 @@ block popup
 				button#hidePermanent.iAlignRight.close Don't show again
 
 	if error
-		.Popup.mError: div
-			.content
-				h2.header ERROR
-				p: b Invalid LLM ID
-				p Reload page - if error persists, contact system administrators immediately.
+		.Popup.mRed
+			.panel
+				.content
+					h2.header ERROR
+					p: b Invalid LLM ID
+					p Reload page - if error persists, contact system administrators immediately.
 
 block content
-	
-
 	div
 		h1 01. Model Output Ranker
 		
@@ -45,9 +44,10 @@ block content
 				#Original.Box.mInvert: p!=prc.input
 
 				#Submission.Box.mCompact.Flexbox.mVertCenter.mMinSpacing
-					.lLabel: b Rev. & post: 
+					.lLabel: b Review: 
 					
 					#Review.uNoWrap
+					
 					button(type="submit", title="Submit ranking\nShortcut: [s]") Submit
 
 			.Flexbox.mVertCenter.mMinSpacing

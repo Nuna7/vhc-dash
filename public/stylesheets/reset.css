@@ -1,25 +1,32 @@
-:focus { outline: none; }
-
-body { margin: 0; }
-
-h1, h2, h3, h4 { margin: 0; }
-
-p, ul, ol { margin: 0 }
-
-input[type="text"], input[type="password"] {
-	border: none;
-	color: inherit;
-	background: none;
-	font-size: inherit;
-	font-family: inherit;
+:focus {
+	outline: none;
 }
 
-button { 
-	padding: 0;
-	border: none;
-	font-size: inherit;
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+form {
+	margin: 0;
+}
+
+input[type="text"],
+input[type="password"] {
+	border     : none;
+	background : none;
+	color      : inherit;
 	font-family: inherit;
+	font-size  : inherit;
+}
+
+button {
+	border          : none;
 	background-color: inherit;
+	padding         : 0;
+	font-family     : inherit;
+	font-size       : inherit;
 }
-
-form { margin: 0; }

@@ -7,36 +7,38 @@ const statusRadios = document.querySelectorAll(".Response .status input[type='ra
 const review = document.getElementById("Review");
 const form = document.getElementById("Ballot");
 
-// initialize page
+// initialize instructions
 if (localStorage.getItem("showInstructions") == "false" || sessionStorage.getItem("showInstructions") == "false") {
 	document.getElementById("Instructions").remove();
+
+} else {
+	// close instructions (temporary)
+	document.querySelector("#Instructions .close").addEventListener("click", function (e) {
+		sessionStorage.setItem("showInstructions", false);
+	});
+	
+	// close instructions (permanent)
+	document.querySelector("#hidePermanent").addEventListener("click", function (e) {
+		localStorage.setItem("showInstructions", false);
+	});
 }
 
+// initialize rankers
 markTaken();
 passFailSplit();
 updateRankData();
 updateReviewBox();
 
-// close instructions (temporary)
-document.querySelector("#Instructions .close").addEventListener("click", function(e) {
-	sessionStorage.setItem("showInstructions", false);
-});
-
-// close instructions (permanent)
-document.querySelector("#hidePermanent").addEventListener("click", function(e) {
-	localStorage.setItem("showInstructions", false);
-});
-
 // ranker state change event listener
 Array.from(rankRadios).forEach(element => {
-	element.addEventListener("change", function(e) {		
+	element.addEventListener("change", function (e) {
 		// erase duplicate ranker states
 		if (this.checked) {
 			for (const radio of Array.from(rankRadios).filter(radio => radio !== this)) {
 				if (radio.value == this.value) radio.checked = false;
 			}
 		}
-		
+
 		markTaken();
 		updateRankData();
 		updateReviewBox();
@@ -45,8 +47,8 @@ Array.from(rankRadios).forEach(element => {
 
 // status state change event listener
 Array.from(statusRadios).forEach(element => {
-	element.addEventListener("change", function(e) { 
-		passFailSplit(); 
+	element.addEventListener("change", function (e) {
+		passFailSplit();
 	}, false);
 });
 
@@ -66,12 +68,12 @@ function updateReviewBox() {
 	// iterate over rankers and...
 	for (const ranker of rankers) {
 		const checkedRadio = ranker.querySelector("input[type='radio']:checked");
-		if (checkedRadio) { 
+		if (checkedRadio) {
 			// ...count number of ranked responses
 			checkedCount = checkedCount + 1;
-			
+
 			// ...update rank array
-			ranking[checkedRadio.value - 1] = ranker.parentNode.querySelector(".modelName").innerText; 
+			ranking[checkedRadio.value - 1] = ranker.parentNode.querySelector(".modelName").innerText;
 		}
 	};
 
@@ -95,11 +97,11 @@ function passFailSplit() {
 	// disable appropriate rank range for each response
 	for (const response of responses) {
 		const status = response.querySelector(".status input[type='radio']:checked").value;
-		
+
 		for (const radio of response.querySelectorAll(".ranker input[type='radio']")) {
-			if ((status == "fail" && radio.value <= pass_count) || (status == "pass" && radio.value > pass_count)) { 
-				radio.disabled = true; 
-				radio.checked = false; 
+			if ((status == "fail" && radio.value <= pass_count) || (status == "pass" && radio.value > pass_count)) {
+				radio.disabled = true;
+				radio.checked = false;
 				radio.dispatchEvent(new Event("change"));
 			}
 		}
@@ -122,18 +124,18 @@ hotkeys("left,right,esc", function (event, handler) {
 	const e = document.activeElement;
 
 	switch (handler.key) {
-		case "right":	
-		case "left": 
+		case "right":
+		case "left":
 			const isResponse = e.classList.contains("Response");
 			const edgeChild = document.querySelector(`.Response:${handler.key == "left" ? "first" : "last"}-child`);
 			const isNotEdge = e !== edgeChild;
-			
-			if (isResponse && isNotEdge) { handler.key == "left" ? e.previousSibling.focus() : e.nextSibling.focus(); } 
+
+			if (isResponse && isNotEdge) { handler.key == "left" ? e.previousSibling.focus() : e.nextSibling.focus(); }
 			else { edgeChild.focus(); }
-			
+
 			break;
 
-		case "esc":	e.blur(); break;
+		case "esc": e.blur(); break;
 	}
 });
 
@@ -143,9 +145,9 @@ hotkeys("1,2,3,4", function (event, handler) {
 
 	if (e.classList.contains("Response")) {
 		const radio = e.querySelector(`#radio-${e.id.replace("response-", "")}-${handler.key}`);
-		
+
 		if (!radio.disabled) {
-			radio.checked = true; 
+			radio.checked = true;
 			radio.dispatchEvent(new Event("change")); // manually dispatch change event to trigger event listener
 		}
 	}

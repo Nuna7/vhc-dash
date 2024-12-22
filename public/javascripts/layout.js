@@ -25,7 +25,6 @@ function zoom(mode) {
 	const fontSize = Math.max(Math.min(parseFloat(window.getComputedStyle(content).fontSize) + (mode == "in" ? 1 : -1), maxFontSize), minFontSize);
 	content.style.fontSize = `${fontSize}px`;
 	localStorage.setItem("fontSize", fontSize);
-	
 	updateSettingsDisplay();
 }
 

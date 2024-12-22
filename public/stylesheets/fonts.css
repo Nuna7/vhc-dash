@@ -1,13 +1,13 @@
 @font-face {
 	font-family: "CommitMono";
-	src: url("../fonts/commit_mono.woff2") format("woff2 supports variations"),
-		url("../fonts/commit_mono.woff2") format("woff2-variations");
 	font-weight: 200 700;
+	src        : url("../fonts/commit_mono.woff2") format("woff2 supports variations"),
+				 url("../fonts/commit_mono.woff2") format("woff2-variations");
 }
 
 body {
-	font-size: 12px;
-	font-family: "CommitMono", monospace;
+	font-family          : "CommitMono", monospace;
+	font-size            : 12px;
 	font-feature-settings: "ss02";
 }
 

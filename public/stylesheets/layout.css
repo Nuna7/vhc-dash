@@ -1,39 +1,37 @@
-#Page {	
+#Page {
 	margin: auto;
-	padding: 2em 3em; 
+	background: linear-gradient(to right, var(--bg) 40%, transparent),
+		radial-gradient(circle, var(--light-gray) 1px, var(--bg) 1px) 0 / 8px 8px;
+	padding   : var(--cmp-spacing) var(--std-spacing);
+	min-width : 1200px;
+	max-width : 2000px;
 	min-height: 100vh;
-	max-width: 2000px;
-	min-width: 1200px;
-	background: 
-		linear-gradient(to right, var(--bg) 40%, transparent),
-		radial-gradient(circle, var(--light-gray) 1px, var(--bg) 1px);
-  		background-size: 100% 100%, 8px 8px;
-  		background-repeat: no-repeat, repeat;
 }
+
+/* NAVIGATION =============================================================== */
 
 #Navigation {
 	counter-reset: navlink -1;
 }
 
+/* navigation link auto-numbering */
 #Navigation .link::before {
-	content: counter(navlink, decimal-leading-zero)".";
-	font-size: 0.9em;
-	margin-right: 0.5em;
+	margin-right     : 0.5em;
+	font-size        : 0.9em;
+	content          : counter(navlink, decimal-leading-zero)".";
 	counter-increment: navlink;
 }
+
+/* CONTENT ================================================================== */
 
 #Content {
 	overflow-x: hidden;
 }
 
-#Auth {
-	flex-shrink: 0;
-}
+/* FOOTER =================================================================== */
 
 #Footer {
-	padding: var(--cmp-spacing) 0;
 	margin-top: auto;
+	padding   : var(--cmp-spacing) 0;
 	text-align: center;
 }
-
-

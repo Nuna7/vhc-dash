@@ -1,112 +1,118 @@
+/* TEXT INPUTS ============================================================== */
+
 input[type="text"],
 input[type="password"] {
-	width: 20em;
-	border: 1px dotted var(--fg);
+	border : 1px dotted;
 	padding: 0.5em;
+	width  : 20em;
 }
 
 :is(input[type="text"], input[type="password"]):focus {
-	--bg: var(--black);
-	--fg: var(--off-white);
-	
-	color: var(--fg);
-	border-color: transparent;
+	border-color    : transparent;
 	background-color: var(--bg);
+	color           : var(--fg);
+	--bg            : var(--black);
+	--fg            : var(--neon-green);
 }
 
-label + :is(input[type="text"], input[type="password"]) {
-	display: block;
+label+ :is(input[type="text"], input[type="password"]) {
+	display   : block;
 	margin-top: 0.5em;
 }
 
 :is(input[type="text"], input[type="password"]).sError {
-	animation: flash 0.2s 3;
+	animation: flash 0.15s 3;
 }
 
 @keyframes flash {
-	0%, 49% {
-		box-shadow: none;
-		background: none;
+	0%,
+	49% {
+		background : none;
+		caret-color: transparent;
 	}
 
-	50%, 100% {
-		background: repeating-conic-gradient(var(--red) 0% 25%, transparent 0% 100%) 1px 0.5px / 2px 2px;
+	50%,
+	100% {
+		background : repeating-conic-gradient(var(--red) 0% 25%, transparent 0% 100%) 0 / 2px 2px;
+		caret-color: transparent;
 	}
 }
 
+/* RADIO BUTTONS ============================================================ */
+
 input[type="radio"].mButton {
-	width: 0;
-	height: 0;
-	margin: 0;
-	position: absolute;
+	position  : absolute;
 	visibility: hidden;
+	margin    : 0;
+	width     : 0;
+	height    : 0;
 }
 
 label:has(input[type="radio"].mButton) {
-	border: 1px dotted var(--fg);
-	cursor: pointer;
-	padding: 0.3em;
+	border       : 1px dotted var(--fg);
 	border-bottom: 2px solid var(--dark-gray);
+	cursor       : pointer;
+	padding      : 0.3em;
 }
 
 label:has(input[type="radio"].mButton:disabled) {
-	cursor: not-allowed;
-	opacity: 0.2;
+	opacity   : 0.2;
 	background: none;
+	cursor    : not-allowed;
 }
 
 label:has(input[type="radio"].mButton:checked) {
-	background: repeating-conic-gradient(var(--dark-gray) 0% 25%, transparent 0% 100%) 1px 0.5px / 2px 2px;
+	background : repeating-conic-gradient(var(--dark-gray) 0% 25%, transparent 0% 100%) 1px 0.5px / 2px 2px;
 	font-weight: 600;
 }
 
-.RadioGroup > label:not(:last-child) {
+.RadioGroup>label:not(:last-child) {
 	margin-right: -1px;
 }
 
+/* BUTTONS ================================================================== */
+
 button {
-	color: var(--bg);
-	cursor: pointer;
-	padding: 0.5em 0.7em;
-	position: relative;
-	font-weight: 600;
-	white-space: nowrap;
+	position        : relative;
 	background-color: var(--fg);
+	cursor          : pointer;
+	padding         : 0.5em 0.7em;
+	white-space     : nowrap;
+	color           : var(--bg);
+	font-weight     : 600;
 }
 
 button.mRed {
-	color: var(--off-white);
 	background-color: var(--red);
-}
-
-button:disabled:not(.sLoading) {
-	cursor: not-allowed;
-	opacity: 0.2;
-}
-
-button:disabled.sLoading::after {
-	top: 0;
-	left: 0;
-	color: var(--bg);
-	width: 100%;
-	height: 100%;
-	cursor: progress;
-	content: "[|]";
-	display: flex;
-	position: absolute;
-	font-size: 1.2em;
-	animation: spinner 0.6s infinite;
-	background: repeating-conic-gradient(var(--fg) 0% 25%, color-mix(in srgb, var(--fg) 10%, var(--bg)) 0% 100%) 1px 0.5px / 2px 2px;
-	align-items: center;
-	font-weight: 700;
-	justify-content: center;
+	color           : var(--off-white);
 }
 
 button.mTiny {
-	color: var(--fg);
-	border: 1px dotted var(--black);
-	padding: 0.1em 0.3em;
+	border          : 1px dotted var(--black);
 	background-color: var(--bg);
+	padding         : 0.1em 0.3em;
+	color           : var(--fg);
+}
+
+button:disabled:not(.sLoading) {
+	opacity: 0.2;
+	cursor : not-allowed;
+}
+
+button:disabled.sLoading::after {
+	display    : grid;
+	position   : absolute;
+	inset      : 0 auto auto 0;
+	place-items: center;
+	background : repeating-conic-gradient(var(--fg) 0% 25%, color-mix(in srgb, var(--fg) 10%, var(--bg)) 0% 100%) 0 / 2px 2px;
+	cursor     : progress;
+	width      : 100%;
+	height     : 100%;
+	animation  : spinner 0.6s infinite;
+	color      : var(--bg);
+	font-size  : 1.2em;
+	font-weight: 700;
+	content    : "[|]";
 }
 
 @keyframes spinner {

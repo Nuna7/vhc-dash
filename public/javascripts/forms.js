@@ -1,5 +1,7 @@
+// disable form submit button on submit to prevent double submission
 document.addEventListener("submit", function(e) {
 	e.target.submit(function() { return false; })
-	e.target.querySelector("button[type='submit']").disabled = true; 
-	e.target.querySelector("button[type='submit']").classList.add("sLoading"); 
+	const button = e.target.querySelector("button[type='submit']");
+	button.disabled = true; 
+	button.classList.add("sLoading"); 
 }, true);

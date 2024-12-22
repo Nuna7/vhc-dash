@@ -3,8 +3,6 @@ html(lang="en")
 		meta(lang="utf-8")
 		meta(charset="utf-8")
 		meta(name="viewport" content="width=device-width, initial-scale=1.0")
-
-		//- link(rel="shortcut icon", href="images/favicon.svg", type="image/svg+xml")
 		
 		meta(name="theme-color" content="#aaaaaa")
 		
@@ -40,7 +38,7 @@ html(lang="en")
 					.link: a(href="/ranker") Model Output Ranker
 
 				.Flexbox.mCmpSpacing
-					div#SiteSettings.Box
+					#SiteSettings.Box
 						.lLabel: b Settings:
 
 						.zoom 
@@ -62,5 +60,5 @@ html(lang="en")
 
 			main#Content.Flexbox.mCol.mStdSpacing: block content
 
-			footer#Footer: b Ashoka University © 2024
+			footer#Footer: b Ashoka University © #{new Date().getFullYear()}
 
