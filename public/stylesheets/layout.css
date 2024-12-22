@@ -1,11 +1,11 @@
 #Page {
-	margin: auto;
-	background: linear-gradient(to right, var(--bg) 40%, transparent),
-		radial-gradient(circle, var(--light-gray) 1px, var(--bg) 1px) 0 / 8px 8px;
-	padding   : var(--cmp-spacing) var(--std-spacing);
 	min-width : 1200px;
 	max-width : 2000px;
 	min-height: 100vh;
+	margin    : auto;
+	padding   : var(--cmp-spacing) var(--std-spacing);
+	background: linear-gradient(to right, var(--bg) 40%, transparent),
+		radial-gradient(circle, var(--light-gray) 1px, var(--bg) 1px) 0 / 8px 8px;
 }
 
 /* NAVIGATION =============================================================== */
@@ -17,14 +17,15 @@
 /* navigation link auto-numbering */
 #Navigation .link::before {
 	margin-right     : 0.5em;
-	font-size        : 0.9em;
 	content          : counter(navlink, decimal-leading-zero)".";
+	font-size        : 0.9em;
 	counter-increment: navlink;
 }
 
 /* CONTENT ================================================================== */
 
 #Content {
+	position  : relative;
 	overflow-x: hidden;
 }
 

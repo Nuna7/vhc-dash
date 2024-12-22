@@ -7,9 +7,9 @@
 }
 
 #Submission::after {
-	right: 0;
-	top: calc(100% + 1em);
-	position: absolute;
+	position : absolute;
+	top      : calc(100% + 1em);
+	right    : 0;
 	font-size: 0.8em;
 }
 
@@ -22,52 +22,51 @@
 }
 
 #Responses {
-	padding: 5px;
-	overflow-x: auto;
 	margin-top: -0.7em;
+	padding   : 5px;
+	overflow-x: auto;
 }
 
-#Responses > .Response {
-	flex: 1 1 0;
+#Responses>.Response {
+	flex     : 1 1 0;
 	min-width: 30em;
 }
 
-#Responses > .Response:focus {
+#Responses>.Response:focus {
 	outline-offset: 0.3em;
 }
 
-#Responses > .Response > .header {
+#Responses>.Response>.header {
 	padding: 0.7em var(--min-spacing);
 }
 
-#Responses > .Response > .header > .ranker {
+#Responses>.Response>.header>.ranker {
 	margin: 0 1em 0 1.5em;
 }
 
-#Responses > .Response > .header > .ranker > label:not(:has(:disabled, :checked)):has(.sTaken) {
+#Responses>.Response>.header>.ranker>label:not(:has(:disabled, :checked)):has(.sTaken) {
 	background-image: linear-gradient(to bottom right, transparent 50%, var(--dark-gray) 50%, transparent 55%);
 }
 
-#Responses > .Response > .header > .status {
+#Responses>.Response>.header>.status {
 	margin-right: 1em;
 }
 
-#Responses > .Response > .header > .rankDisplay {
-	color: var(--bg);
-	padding: 0 0.3rem;
-	font-size: 1.8em;
-	background: repeating-conic-gradient(var(--fg) 0% 25%, color-mix(in srgb, var(--fg) 10%, transparent) 0% 100%) 1px 0.5px / 2px 2px;
+#Responses>.Response>.header>.rankDisplay {
+	padding    : 0 0.3rem;
+	background : repeating-conic-gradient(var(--fg) 0% 25%, color-mix(in srgb, var(--fg) 10%, transparent) 0% 100%) 1px 0.5px / 2px 2px;
+	color      : var(--bg);
 	font-weight: 600;
+	font-size  : 1.8em;
 }
 
-#Responses > .Response > .content {
+#Responses>.Response>.content {
 	padding: var(--min-spacing);
 }
 
-#Responses > .Response:focus > .content {
-	--bg: var(--black);
-	--fg: var(--off-white);
-
-	color: var(--fg);
+#Responses>.Response:focus>.content {
+	--bg            : var(--black);
+	--fg            : var(--off-white);
 	background-color: var(--bg);
+	color: var(--fg);
 }
