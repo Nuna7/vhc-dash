@@ -105,11 +105,12 @@ exports.post_ballot = [
 				return;
 			}
 
-			const models = prc.responses.map(({ llm }) => llm);
+			const models = prc.responses.map(({ llm }) => llm._id);
 			var ranking = Array(models.length);
 			var failCount = 0;
 
 			models.forEach(model => { // insert LLM IDs into ranked positions
+				console.log(req.body[`rank-${model.toString()}`]);
 				ranking[req.body[`rank-${model.toString()}`] - 1] = model;
 				if (req.body[`status-${model.toString()}`] == "fail") failCount++;
 			});
