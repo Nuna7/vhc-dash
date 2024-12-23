@@ -16,5 +16,5 @@ An application to facilitate the ranking of LLM-generated transcribed prescripti
 
 #### 1.2.1.1. Data Representation
 
-![Ranker data representation](docs/images/ranker_db.png)
+![Ranker data representation](docs/images/ranker_uml.svg)
 
