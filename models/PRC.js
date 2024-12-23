@@ -8,20 +8,20 @@ const md = new MarkdownIt();
 
 const Schema = mongoose.Schema;
 
-// implicit paraphrasal model definition
-const ParaphrasalSchema = new mongoose.Schema({
+// implicit paraphrase model definition
+const ParaphraseSchema = new mongoose.Schema({
 	llm: { type: Schema.Types.ObjectId, ref: "LLM", required: true },
 	response: { type: String, required: true }
 }, { timestamps: { createdAt: "created", updatedAt: "edited" } });
 
-// render paraphrasal markdown as HTML
-ParaphrasalSchema.methods.renderContent = function() {
+// render paraphrase markdown as HTML
+ParaphraseSchema.methods.renderContent = function() {
 	return md.render(this.response);
 }
 
 const PRCSchema = new Schema({
 	input: { type: String, required: true },
-	responses: { type: [ParaphrasalSchema], required: true },
+	responses: { type: [ParaphraseSchema], required: true },
 	rcv: { type: Schema.Types.ObjectId, ref: "RCV", required: true }
 }, { timestamps: { createdAt: "created", updatedAt: "edited" } });
 
