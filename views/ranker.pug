@@ -18,12 +18,12 @@ block popup
 
 				button#hidePermanent.iAlignRight.close Don't show again
 
-	if error
+	if errors
 		.Popup.mRed
 			.panel
 				.content
 					h2.header ERROR
-					p: b Invalid LLM ID
+					p: b=errors[0].msg
 					p Reload page - if error persists, contact system administrators immediately.
 
 block content
