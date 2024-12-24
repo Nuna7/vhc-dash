@@ -1,5 +1,8 @@
 scratchpad/
 
+# VSCode
+.vscode/
+
 # Logs
 logs
 *.log
