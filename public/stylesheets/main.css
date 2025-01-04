@@ -112,10 +112,13 @@ ul {
 /* BOX COMPONENT ============================================================ */
 
 .Box {
+	--highlight     : var(--black);
 	--box-padding   : var(--min-spacing);
 	position        : relative;
 	padding         : var(--box-padding);
 	border          : 1px dotted;
+	border-bottom   : 2px dotted;
+	border-left     : 3px solid var(--highlight);
 	background-color: var(--bg);
 }
 
