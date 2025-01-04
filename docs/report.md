@@ -78,9 +78,13 @@ The width of paragraphs is limited (`750px`) to enhance readability and allow us
 
 ### 1.4.3. UI Layout and Modularity
 
-The UI is designed to be as barebones yet maximally functional as possible. A modular approach ensures that components are distinct and reusable across the application.
+The UI is designed to be as bare-bones yet maximally functional as possible. A modular approach ensures that components are distinct and reusable across the application.
+
+#### 1.4.3.1. Box Elements
 
 Custom box elements are employed extensively, each with optional top-left, top-right, or center-aligned labels. These labels provide context and hints, ensuring clarity in the interface.
+
+A box element's borders are designed to support natural reading flow and simultaneously define content boundaries. The solid left border clearly indicates the vertical scope of the box and serves as a "start" marker for the content. The bottom border is a thick(er) dotted border, indicating a continuation and pulling the eye downwards and to the right, as with natural reading flow. the two remaining borders are understated; thin and dotted to serve only as demarcations of content boundaries without distracting from the content itself.
 
 ![Box](images/box.png)
 
