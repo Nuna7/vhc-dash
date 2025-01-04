@@ -1,7 +1,7 @@
 #Page {
 	min-width : 1200px;
 	max-width : 2000px;
-	min-height: 100vh;
+	min-height: 100%;
 	margin    : auto;
 	padding   : var(--cmp-spacing) var(--std-spacing);
 	background: linear-gradient(to right, var(--bg) 40%, transparent),

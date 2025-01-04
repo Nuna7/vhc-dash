@@ -19,9 +19,12 @@
 	box-sizing: border-box;
 }
 
-body {
+body,
+html {
 	--bg      : var(--off-white);
 	--fg      : var(--black);
+	height    : 100vh;
+	overflow-y: auto;
 	background: var(--bg);
 	color     : var(--fg);
 }
