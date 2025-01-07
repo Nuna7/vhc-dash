@@ -8,9 +8,10 @@
 	--red        : #9e2a2b;
 	--green      : #226f54;
 	--neon-green : #58aa8d;
-	--std-spacing: 3rem;
-	--cmp-spacing: 2rem;
-	--min-spacing: 1rem;
+	--std-spacing: 6ch;
+	--cmp-spacing: 3ch;
+	--min-spacing: 2ch;
+	--font-bold  : 600;
 }
 
 /* GLOBAL =================================================================== */
@@ -19,8 +20,8 @@
 	box-sizing: border-box;
 }
 
-body,
-html {
+html,
+body {
 	--bg      : var(--off-white);
 	--fg      : var(--black);
 	height    : 100vh;

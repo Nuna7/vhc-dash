@@ -5,6 +5,7 @@
 	font-family: "CommitMono";
 }
 
+html,
 body {
 	font-size            : 12px;
 	font-family          : "CommitMono", monospace;
@@ -13,7 +14,7 @@ body {
 
 b,
 strong {
-	font-weight: 600;
+	font-weight: var(--font-bold);
 }
 
 small {
