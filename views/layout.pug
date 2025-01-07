@@ -30,7 +30,7 @@ html(lang="en")
 	body#top
 		#Page.Flexbox.mCol.mStdSpacing
 			header#Header.Flexbox.mSpaceBtwn.mCmpSpacing
-				nav#Navigation.Box.Flexbox.mMinSpacing
+				nav#Navigation.Box.Flexbox.mMinSpacing.mVertCenter
 					.lLabel: b Navigation:
 					.rLabel.tGray: small Ctrl + [0-9]
 
@@ -38,10 +38,10 @@ html(lang="en")
 					.link: a(href="/ranker") Model Output Ranker
 
 				.Flexbox.mCmpSpacing
-					#SiteSettings.Box
+					#SiteSettings.Box.Flexbox.mMinSpacing.mVertCenter
 						.lLabel: b Settings:
 
-						.zoom 
+						#Zoom 
 							| Font Size: 
 							| #[button(onclick="zoom('out');", title=`Zoom out\nShortcut: [ctrl+=]`).mTiny -]
 							| #[span#fontSize 12px]

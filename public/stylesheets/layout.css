@@ -16,7 +16,7 @@
 
 /* navigation link auto-numbering */
 #Navigation .link::before {
-	margin-right     : 0.5em;
+	margin-right     : 1ch;
 	content          : counter(navlink, decimal-leading-zero)".";
 	font-size        : 0.9em;
 	counter-increment: navlink;
