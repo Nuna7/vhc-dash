@@ -150,6 +150,7 @@ ul {
 	top             : 0;
 	padding         : 0 calc(var(--box-padding) / 2);
 	background-color: var(--bg);
+	white-space: nowrap;
 }
 
 .Box>.cLabel {
@@ -194,7 +195,7 @@ ul {
 	outline         : 1px dashed var(--base-color);
 	outline-offset  : 0.5em;
 	background-color: var(--bg);
-	box-shadow      : 1em 1em color-mix(in srgb, var(--base-color) 20%, transparent);
+	box-shadow      : 1em 1em color-mix(in srgb, var(--base-color) 10%, transparent);
 	color           : var(--fg);
 }
 
@@ -212,6 +213,6 @@ body:has(.Popup) #Content::after {
 	z-index         : 1;
 	position        : absolute;
 	inset           : 0 0 0 0;
-	background-color: color-mix(in srgb, var(--bg) 30%, transparent);
+	background-color: color-mix(in srgb, var(--bg) 50%, transparent);
 	content         : "";
 }
