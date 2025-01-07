@@ -53,7 +53,7 @@
 }
 
 #Responses>.Response>.header>.rankDisplay {
-	padding    : 0 0.3rem;
+	padding    : 0 0.2em;
 	background : repeating-conic-gradient(var(--fg) 0% 25%, color-mix(in srgb, var(--fg) 10%, transparent) 0% 100%) 1px 0.5px / 2px 2px;
 	color      : var(--bg);
 	font-weight: 600;
@@ -69,4 +69,5 @@
 	--fg            : var(--off-white);
 	background-color: var(--bg);
 	color: var(--fg);
+	font-weight: var(--font-bold);
 }
