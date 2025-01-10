@@ -56,8 +56,6 @@ html(lang="en")
 							form(action=`/logout?next=${url}`, method="post")
 								button(type="submit", title=`Terminate session for user: ${user.username}`) Log Out
 
-			block popup
-
 			main#Content.Flexbox.mCol.mStdSpacing: block content
 
 			footer#Footer: b Ashoka University © #{new Date().getFullYear()}

@@ -7,6 +7,7 @@
 	--light-gray : #a1a1a1;
 	--red        : #9e2a2b;
 	--green      : #226f54;
+	--yellow     : #c09a33;
 	--neon-green : #58aa8d;
 	--std-spacing: 6ch;
 	--cmp-spacing: 3ch;
@@ -150,7 +151,7 @@ ul {
 	top             : 0;
 	padding         : 0 calc(var(--box-padding) / 2);
 	background-color: var(--bg);
-	white-space: nowrap;
+	white-space     : nowrap;
 }
 
 .Box>.cLabel {
@@ -171,21 +172,25 @@ ul {
 /* POPUP ELEMENT ============================================================ */
 
 .Popup {
-	--base-color    : var(--black);
-	z-index         : 100;
-	position        : fixed;
-	inset           : 50% auto auto 50%;
-	padding         : 1em 1.5em 1.5em 1em;
-	transform       : translate(-50%, -50%);
-	background-color: var(--bg);
+	--base-color: var(--black);
+	z-index     : 100;
+	position    : absolute;
+	inset       : 50% auto auto 50%;
+	transform   : translate(-50%, -50%);
 }
 
 .Popup>.xBtn {
-	z-index       : 1;
-	position      : absolute;
-	inset         : -0.9em -0.4em auto auto;
-	border        : 0.5em solid var(--off-white);
-	outline-offset: calc(-0.5em + 2px);
+	position  : absolute;
+	inset     : 0 0 auto auto;
+	transform : translate(100%, -100%);
+	box-shadow: 0 0 0 0.5em var(--off-white);
+}
+
+.Popup>.ribbon {
+	z-index   : 1;
+	position  : relative;
+	height    : 1em;
+	background: repeating-linear-gradient(45deg, var(--yellow) 0 1rem, var(--black) 1rem 2rem) -1px;
 }
 
 .Popup>.panel {
@@ -193,10 +198,13 @@ ul {
 	--fg            : var(--off-white);
 	padding         : var(--min-spacing);
 	outline         : 1px dashed var(--base-color);
-	outline-offset  : 0.5em;
+	outline-offset  : calc(0.5em - 1px);
 	background-color: var(--bg);
-	box-shadow      : 1em 1em color-mix(in srgb, var(--base-color) 10%, transparent);
-	color           : var(--fg);
+	box-shadow      : 1em 1em #00000015,
+		1em 1em 0 0.5em var(--fg),
+		0 0 0 1em var(--fg),
+		0 -1em 0 0.5em var(--fg);
+	color: var(--fg);
 }
 
 .Popup>.panel>.content {
@@ -210,9 +218,9 @@ ul {
 }
 
 body:has(.Popup) #Content::after {
-	z-index         : 1;
-	position        : absolute;
-	inset           : 0 0 0 0;
-	background-color: color-mix(in srgb, var(--bg) 50%, transparent);
-	content         : "";
+	z-index   : 1;
+	position  : absolute;
+	inset     : 0;
+	background: repeating-conic-gradient(var(--bg) 0% 25%, transparent 0% 100%) 1px 0.5px / 2px 2px;
+	content   : "";
 }

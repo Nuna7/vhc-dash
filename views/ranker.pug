@@ -6,10 +6,12 @@ append stylesheets
 append scripts
 	script(type="text/javascript", src="/javascripts/ranker.js", defer)
 
-block popup
+block content
 	unless error
 		#Instructions.Popup
 			button.mRed.close.xBtn X
+
+			.ribbon
 
 			.panel.Flexbox.mCol.mMinSpacing
 				.content
@@ -20,13 +22,14 @@ block popup
 
 	if errors
 		.Popup.mRed
+			.ribbon 
+
 			.panel
 				.content
-					h2.header ERROR
+					h2.header ERROR!
 					p: b=errors[0].msg
 					p Reload page - if error persists, contact system administrators immediately.
 
-block content
 	div
 		h1 01. Model Output Ranker
 		
