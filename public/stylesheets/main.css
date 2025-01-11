@@ -169,9 +169,9 @@ ul {
 	transform: translateY(-50%);
 }
 
-/* POPUP ELEMENT ============================================================ */
+/* ALERT ELEMENT ============================================================ */
 
-.Popup {
+.Alert {
 	--base-color: var(--black);
 	z-index     : 100;
 	position    : absolute;
@@ -179,21 +179,22 @@ ul {
 	transform   : translate(-50%, -50%);
 }
 
-.Popup>.xBtn {
+.Alert>.xBtn {
 	position  : absolute;
 	inset     : 0 0 auto auto;
 	transform : translate(100%, -100%);
 	box-shadow: 0 0 0 0.5em var(--off-white);
 }
 
-.Popup>.ribbon {
-	z-index   : 1;
-	position  : relative;
-	height    : 1em;
-	background: repeating-linear-gradient(45deg, var(--yellow) 0 1rem, var(--black) 1rem 2rem) -1px;
+.Alert>.ribbon {
+	--stripe-width: 1em;
+	z-index       : 1;
+	position      : relative;
+	height        : 1em;
+	background    : repeating-linear-gradient(45deg, var(--yellow) 0 var(--stripe-width), var(--black) var(--stripe-width) calc(var(--stripe-width) * 2));
 }
 
-.Popup>.panel {
+.Alert>.panel {
 	--bg            : var(--base-color);
 	--fg            : var(--off-white);
 	padding         : var(--min-spacing);
@@ -207,17 +208,17 @@ ul {
 	color: var(--fg);
 }
 
-.Popup>.panel>.content {
+.Alert>.panel>.content {
 	max-width : 30em;
-	max-height: 10em;
+	max-height: 12em;
 	overflow-y: auto;
 }
 
-.Popup.mRed {
+.Alert.mRed {
 	--base-color: var(--red);
 }
 
-body:has(.Popup) #Content::after {
+body:has(.Alert) #Content::after {
 	z-index   : 1;
 	position  : absolute;
 	inset     : 0;

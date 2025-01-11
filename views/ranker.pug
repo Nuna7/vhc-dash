@@ -1,5 +1,7 @@
 extends layout
 
+include ./mixins/alert.pug
+
 append stylesheets
 	link(rel="stylesheet", href="/stylesheets/ranker.css")
 
@@ -8,27 +10,19 @@ append scripts
 
 block content
 	unless error
-		#Instructions.Popup
-			button.mRed.close.xBtn X
+		+Alert(id="Instructions")
+			.content
+				h2.header Instructions
+				p Rank LLM responses by "goodness" and assign a pass (✓) or fail (X) status, the latter if the response is entirely inadmissible.
 
-			.ribbon
-
-			.panel.Flexbox.mCol.mMinSpacing
-				.content
-					h2.header Instructions
-					p Rank LLM responses by "goodness" and assign a pass (✓) or fail (X) status, the latter if the response is entirely inadmissible.
-
-				button#hidePermanent.iAlignRight.close Don't show again
+			button#hidePermanent.iAlignRight.close Don't show again
 
 	if errors
-		.Popup.mRed
-			.ribbon 
-
-			.panel
-				.content
-					h2.header ERROR!
-					p: b=errors[0].msg
-					p Reload page - if error persists, contact system administrators immediately.
+		+Alert.mRed
+			.content
+				h2.header ERROR!
+				p: b=errors[0].msg
+				p Reload page - if error persists, contact system administrators immediately.
 
 	div
 		h1 01. Model Output Ranker

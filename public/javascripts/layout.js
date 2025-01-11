@@ -14,9 +14,9 @@ if (savedSize) content.style.fontSize = savedSize;
 updateSettingsDisplay();
 
 // popup close button
-for (button of document.querySelectorAll(".Popup .close")) {
+for (button of document.querySelectorAll(".Alert .close")) {
 	button.addEventListener("click", function(e) {
-		this.closest(".Popup").remove();
+		this.closest(".Alert").remove();
 	});
 }
 
