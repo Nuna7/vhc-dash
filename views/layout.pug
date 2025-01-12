@@ -3,26 +3,33 @@ html(lang="en")
 		meta(lang="utf-8")
 		meta(charset="utf-8")
 		meta(name="viewport" content="width=device-width, initial-scale=1.0")
-		
+
 		meta(name="theme-color" content="#aaaaaa")
-		
+
+		link(rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96")
+		link(rel="icon" type="image/svg+xml" href="/favicon/favicon.svg")
+		link(rel="shortcut icon" href="/favicon/favicon.ico")
+		link(rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png")
+		meta(name="apple-mobile-web-app-title" content="Ashoka VHC")
+		link(rel="manifest" href="/favicon/site.webmanifest")
+
 		title!=title
 		meta(name="author" content="Ashoka University")
-		meta(name="description", content="Ashoka visual health computing systems dashboard")
+		meta(name="description" content="Ashoka visual health computing systems dashboard")
 
 		block stylesheets
-			link(rel="stylesheet", href="/stylesheets/reset.css")
-			link(rel="stylesheet", href="/stylesheets/fonts.css")
-			link(rel="stylesheet", href="/stylesheets/main.css")
-			link(rel="stylesheet", href="/stylesheets/flexbox.css")
-			link(rel="stylesheet", href="/stylesheets/layout.css")
-			link(rel="stylesheet", href="/stylesheets/forms.css")
+			link(rel="stylesheet" href="/stylesheets/reset.css")
+			link(rel="stylesheet" href="/stylesheets/fonts.css")
+			link(rel="stylesheet" href="/stylesheets/main.css")
+			link(rel="stylesheet" href="/stylesheets/flexbox.css")
+			link(rel="stylesheet" href="/stylesheets/layout.css")
+			link(rel="stylesheet" href="/stylesheets/forms.css")
 
 		block scripts
-			script(type="text/javascript", src="/javascripts/hotkeys.min.js")
-			script(type="text/javascript", src="/javascripts/layout.js", defer)
-			script(type="text/javascript", src="/javascripts/forms.js", defer)
-			
+			script(type="text/javascript" src="/javascripts/hotkeys.min.js")
+			script(type="text/javascript" src="/javascripts/layout.js", defer)
+			script(type="text/javascript" src="/javascripts/forms.js", defer)
+
 			if jump
 				script.
 					window.onload = window.location.hash = "#{jump}";
@@ -52,7 +59,7 @@ html(lang="en")
 							.lLabel: b Auth:
 
 							div #[b ID:] #[a(href="/account")=user.username]
-							
+
 							form(action=`/logout?next=${url}`, method="post")
 								button(type="submit", title=`Terminate session for user: ${user.username}`) Log Out
 
