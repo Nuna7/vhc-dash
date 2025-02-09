@@ -1,7 +1,5 @@
 extends layout
 
-include ./mixins/alert.pug
-
 append stylesheets
 	link(rel="stylesheet", href="/stylesheets/ranker.css")
 
@@ -9,21 +7,6 @@ append scripts
 	script(type="text/javascript", src="/javascripts/ranker.js", defer)
 
 block content
-	unless error
-		+Alert(id="Instructions")
-			.content
-				h2.header Instructions
-				p Rank LLM responses by "goodness" and assign a pass (✓) or fail (X) status, the latter if the response is entirely inadmissible.
-
-			button#hidePermanent.iAlignRight.close Don't show again
-
-	if errors
-		+Alert.mRed
-			.content
-				h2.header ERROR!
-				p: b=errors[0].msg
-				p Reload page - if error persists, contact system administrators immediately.
-
 	div
 		h1 01. Model Output Ranker
 		

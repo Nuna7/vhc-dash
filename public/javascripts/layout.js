@@ -13,13 +13,6 @@ if (savedSize) content.style.fontSize = savedSize;
 // initialize settings counters
 updateSettingsDisplay();
 
-// popup close button
-for (button of document.querySelectorAll(".Alert .close")) {
-	button.addEventListener("click", function(e) {
-		this.closest(".Alert").remove();
-	});
-}
-
 // increment/decrement base font size (12 <= x <= 18)
 function zoom(mode) {
 	const fontSize = Math.max(Math.min(parseFloat(window.getComputedStyle(content).fontSize) + (mode == "in" ? 1 : -1), maxFontSize), minFontSize);

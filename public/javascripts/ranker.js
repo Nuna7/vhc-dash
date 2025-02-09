@@ -7,22 +7,6 @@ const statusRadios = document.querySelectorAll(".Response .status input[type='ra
 const review = document.getElementById("Review");
 const form = document.getElementById("Ballot");
 
-// initialize instructions
-if (localStorage.getItem("showInstructions") == "false" || sessionStorage.getItem("showInstructions") == "false") {
-	document.getElementById("Instructions").remove();
-
-} else {
-	// close instructions (temporary)
-	document.querySelector("#Instructions .close").addEventListener("click", function (e) {
-		sessionStorage.setItem("showInstructions", false);
-	});
-	
-	// close instructions (permanent)
-	document.querySelector("#hidePermanent").addEventListener("click", function (e) {
-		localStorage.setItem("showInstructions", false);
-	});
-}
-
 // initialize rankers
 markTaken();
 passFailSplit();
