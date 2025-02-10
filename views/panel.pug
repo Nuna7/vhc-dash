@@ -1,0 +1,63 @@
+extends layout
+
+append stylesheets
+	link(rel="stylesheet", href="/stylesheets/panel.css")
+
+append scripts
+	script(type="text/javascript", src="/javascripts/panel.js", defer)
+
+block content
+	div
+		h1 User Panel
+		p View and edit your user instance information.
+
+	if errors
+		.FormErrors.iAlignLeft
+			h2 Form Error(s)
+			
+			ul
+				each error in errors
+					li(data-field=error.path)=error.msg
+
+	form(action="/user/edit-info", method="post").Box.iAlignLeft.Flexbox.mCol.mMinSpacing
+		.lLabel: b Info. (Form)
+		
+		table 
+			tbody 
+				tr 
+					th(scope="row") ID:
+					td!=user.username
+
+				tr 
+					th(scope="row") Roles: 
+					td!=user.roles.join(', ') || "[none]"
+
+		table 
+			tbody
+				tr
+					th(scope="row"): label(for="EmailField") Email:
+					td: input#EmailField(type="text" name="email" value=user.email placeholder="NULL")
+
+				tr
+					if user.orcid 
+						th(scope="row") ORCiD:
+						td=user.orcid
+						
+					else 
+						th(scope="row"): label(for="ORCiDField") ORCiD:
+
+						td
+							button#ORCiDButton(type="button") Add ORCiD
+
+							#ORCiDSection
+								input#ORCiDField(type="text" name="orcid" placeholder="NULL")
+								p.tGray: small Your ORCiD iD can only be updated once.
+
+
+				tr
+					th(scope="row"): label(for="PhoneField") Phone:
+					td: input#PhoneField(type="text" name="phone" value=user.phone || "" placeholder="NULL")
+
+		button(type="submit").iAlignRight.mGreen Update Info
+
+

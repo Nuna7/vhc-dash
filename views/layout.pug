@@ -56,9 +56,9 @@ html(lang="en")
 
 					if user
 						#Auth.Box.mCompact.Flexbox.mMinSpacing.mVertCenter
-							.lLabel: b Auth:
+							.lLabel: b User:
 
-							div #[b ID:] #[a(href="/account")=user.username]
+							div #[b ID:] #[a(href="/user/panel", title="User info. panel")=user.username]
 
 							form(action=`/logout?next=${url}`, method="post")
 								button(type="submit", title=`Terminate session for user: ${user.username}`) Log Out

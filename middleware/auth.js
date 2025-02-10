@@ -2,7 +2,7 @@ exports.sessionAuthCheck = function (status) {
 	return function (req, res, next) {
 		if (req.isAuthenticated()) {
 			if (status && !req.user.roles.includes(status)) {
-				const error = new Error("You don't have permission to acess this page");
+				const error = new Error("You don't have permission to access this page");
 				error.status = 403;
 				return next(error);
 			} else { return next(); }
