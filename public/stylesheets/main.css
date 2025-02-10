@@ -168,3 +168,27 @@ ul {
 	right    : calc(var(--box-padding) / 2);
 	transform: translateY(-50%);
 }
+
+/* TABLES =================================================================== */
+
+table {
+	table-layout: fixed;
+	border-collapse: collapse;
+	border: 1px solid var(--light-gray);
+}
+
+th,
+td {
+	padding: 1ch;
+	border: 1px solid var(--light-gray);
+}
+
+th {
+	font-weight: var(--font-bold);
+}
+
+th[scope="row"] {
+	text-align: right;
+	width:0.1%;
+	white-space: nowrap;
+}
