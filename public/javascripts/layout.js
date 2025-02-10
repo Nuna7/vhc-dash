@@ -1,6 +1,6 @@
 // settings
 const minFontSize = 12;
-const maxFontSize = 16;
+const maxFontSize = 18;
 
 // capture elements
 const content = document.getElementById("Content");
