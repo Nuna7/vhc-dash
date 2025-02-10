@@ -6,7 +6,10 @@ const RCV = require("./RCV");
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-	roles: { type: Array }
+	roles: { type: Array },
+	email: { type: String, required: true, unique: true },
+	orcid: { type: String, unique: true },
+	phone: { type: String }
 }, { timestamps: { createdAt: "created", updatedAt: "updated" } });
 
 // deletion cascade
