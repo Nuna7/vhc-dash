@@ -69,25 +69,33 @@ h4 {
 
 /* TEXT ELEMENTS ============================================================ */
 
-p,
-ul,
-ol {
-	line-height: 1.5em;
-}
-
 :is(h1, h2, h3, h4, p, ul, ol)+ :is(p, ul, ol) {
 	margin-top: 1em;
+}
+
+p {
+	line-height: 1.5em;
 }
 
 p.mReadWidth {
 	max-width: 750px;
 }
 
+ul,
+ol {
+	line-height: 1.75em;
+}
+
 ul {
 	list-style-type: square;
+	padding-left: var(--cmp-spacing)
 }
 
 /* TEXT FORMATTING ========================================================== */
+
+small {
+	font-size: 0.8em;
+}
 
 .tGray {
 	color: var(--dark-gray);
