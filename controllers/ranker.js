@@ -96,13 +96,8 @@ exports.post_ballot = [
 			const errors = validationResult(req);
 
 			if (!errors.isEmpty()) { 
-				res.render("ranker", {
-					title: "M.O. Ranker",
-					prc: prc,
-					errors: errors.array() 
-				});
-
-				return;
+				req.session.errors = errors.array();
+				return res.redirect("/ranker");
 			}
 
 			const models = prc.responses.map(({ llm }) => llm._id);
