@@ -5,15 +5,24 @@ block content
 		h1 Authentication
 		p.mReadWidth Identify yourself with the credentials provided to you by the administrator.
 
-	form(method="post").Box.Flexbox.mCol.mMinSpacing.iAlignLeft
-		.rLabel Auth. Portal
+	.Flexbox.mCmpSpacing
+		form(method="post").Box.Flexbox.mCol.mMinSpacing.iAlignLeft
+			.rLabel Auth. Portal
 
-		div
-			label(for="UsernameField") #[b User ID] #[small.tRed=error && "* Invalid user ID..."]
-			input#UsernameField(type="text", name="username", class=error && "sError", autocomplete="off", autofocus)
+			div
+				label(for="UsernameField") #[b User ID] #[small.tRed=error && "* Invalid user ID..."]
+				input#UsernameField(type="text", name="username", class=error && "sError", autocomplete="off", autofocus)
 
-		div
-			label(for="PasswordField") #[b Passkey] #[small.tRed=error && "* ...or incorrect passkey"]
-			input#PasswordField(type="password", name="password", class=error && "sError")
+			div
+				label(for="PasswordField") #[b Passkey] #[small.tRed=error && "* ...or incorrect passkey"]
+				input#PasswordField(type="password", name="password", class=error && "sError")
 
-		button(type="submit").iAlignRight Log In
+			button(type="submit").iAlignRight Log In
+
+		if errors
+			.FormErrors.iAlignTop
+				h2 <- Auth. Error(s)
+				
+				ul
+					each error in errors
+						li(data-field=error.path)=error.msg
