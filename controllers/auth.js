@@ -21,7 +21,6 @@ exports.login_validate_post = [
 	
 	(req, res, next) => {
 		const errors = validationResult(req);
-		console.log(errors);
 		
 		if (!errors.isEmpty()) { 
 			req.session.errors = errors.array();

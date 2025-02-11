@@ -105,7 +105,6 @@ exports.post_ballot = [
 			var failCount = 0;
 
 			models.forEach(model => { // insert LLM IDs into ranked positions
-				console.log(req.body[`rank-${model.toString()}`]);
 				ranking[req.body[`rank-${model.toString()}`] - 1] = model;
 				if (req.body[`status-${model.toString()}`] == "fail") failCount++;
 			});
