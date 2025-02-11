@@ -6,6 +6,7 @@ const RCV = require("./RCV");
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
+	approved: { type: Boolean, default: false },
 	roles: { type: Array },
 	email: { type: String, required: true, unique: true },
 	orcid: { type: String, unique: true },
@@ -21,6 +22,11 @@ UserSchema.pre("deleteOne", { document: true, query: false }, async function(nex
 	); next();
 });
 
-UserSchema.plugin(passportLocalMongoose);
+UserSchema.plugin(passportLocalMongoose, {
+	findByUsername: function(model, queryParameters) {
+		queryParameters.approved = true;
+		return model.findOne(queryParameters);
+	}
+});
 
 module.exports = mongoose.model("User", UserSchema);
