@@ -11,53 +11,54 @@ block content
 		h1 User Panel
 		p View and edit your user instance information.
 
-	if errors
-		.FormErrors.iAlignLeft
-			h2 Form Error(s)
+	.Flexbox.mCmpSpacing
+		form#InfoForm(action="/user/edit-info", method="post").Box.iAlignLeft.Flexbox.mCol.mMinSpacing
+			.lLabel: b Info. (Form)
 			
-			ul
-				each error in errors
-					li(data-field=error.path)=error.msg
+			table 
+				tbody 
+					tr 
+						th(scope="row") ID:
+						td!=user.username
 
-	form(action="/user/edit-info", method="post").Box.iAlignLeft.Flexbox.mCol.mMinSpacing
-		.lLabel: b Info. (Form)
-		
-		table 
-			tbody 
-				tr 
-					th(scope="row") ID:
-					td!=user.username
+					tr 
+						th(scope="row") Roles: 
+						td!=user.roles.join(', ') || "[none]"
 
-				tr 
-					th(scope="row") Roles: 
-					td!=user.roles.join(', ') || "[none]"
+			table 
+				tbody
+					tr
+						th(scope="row"): label(for="EmailField") Email:
+						td: input#EmailField(type="text" name="email" value=user.email placeholder="NULL")
 
-		table 
-			tbody
-				tr
-					th(scope="row"): label(for="EmailField") Email:
-					td: input#EmailField(type="text" name="email" value=user.email placeholder="NULL")
+					tr
+						if user.orcid 
+							th(scope="row") ORCiD:
+							td=user.orcid
+							
+						else 
+							th(scope="row"): label(for="ORCiDField") ORCiD:
 
-				tr
-					if user.orcid 
-						th(scope="row") ORCiD:
-						td=user.orcid
-						
-					else 
-						th(scope="row"): label(for="ORCiDField") ORCiD:
+							td
+								button#ORCiDButton(type="button") Add ORCiD
 
-						td
-							button#ORCiDButton(type="button") Add ORCiD
-
-							#ORCiDSection
-								input#ORCiDField(type="text" name="orcid" placeholder="NULL")
-								p.tGray: small Your ORCiD iD can only be updated once.
+								#ORCiDSection
+									input#ORCiDField(type="text" value="" name="orcid" placeholder="NULL")
+									p.tGray: small Your ORCiD iD can only be updated once.
 
 
-				tr
-					th(scope="row"): label(for="PhoneField") Phone:
-					td: input#PhoneField(type="text" name="phone" value=user.phone || "" placeholder="NULL")
+					tr
+						th(scope="row"): label(for="PhoneField") Phone:
+						td: input#PhoneField(type="text" name="phone" value=user.phone || "" placeholder="NULL")
 
-		button(type="submit").iAlignRight.mGreen Update Info
+			button(type="submit").iAlignRight.mGreen Update Info
+
+		if errors
+			.FormErrors.iAlignTop
+				h2 <- Form Error(s)
+				
+				ul
+					each error in errors
+						li(data-field=error.path)=error.msg
 
 

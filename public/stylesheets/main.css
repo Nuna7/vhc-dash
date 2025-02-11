@@ -1,18 +1,21 @@
 /* VARIABLES ================================================================ */
 
 :root {
-	--off-white  : #bbbbbb;
-	--black      : #111111;
-	--dark-gray  : #444444;
-	--light-gray : #a1a1a1;
-	--red        : #9e2a2b;
-	--green      : #1e6149;
-	--yellow     : #c09a33;
-	--neon-green : #58aa8d;
+	--off-white : #bbbbbb;
+	--black     : #111111;
+	--dark-gray : #444444;
+	--light-gray: #a1a1a1;
+	--red       : #9e2a2b;
+	--green     : #1e6149;
+	--yellow    : #c09a33;
+	--neon-green: #58aa8d;
+	--shadow    : #00000015;
+
 	--std-spacing: 6ch;
 	--cmp-spacing: 3ch;
 	--min-spacing: 2ch;
-	--font-bold  : 600;
+
+	--font-bold: 600;
 }
 
 /* GLOBAL =================================================================== */
@@ -87,8 +90,8 @@ ol {
 }
 
 ul {
-	list-style-type: square;
-	padding-left: var(--cmp-spacing)
+	padding-left   : var(--cmp-spacing);
+	list-style-type: square
 }
 
 /* TEXT FORMATTING ========================================================== */
@@ -180,15 +183,15 @@ small {
 /* TABLES =================================================================== */
 
 table {
-	table-layout: fixed;
+	border         : 1px solid var(--light-gray);
 	border-collapse: collapse;
-	border: 1px solid var(--light-gray);
+	table-layout   : fixed;
 }
 
 th,
 td {
 	padding: 1ch;
-	border: 1px solid var(--light-gray);
+	border : 1px solid var(--light-gray);
 }
 
 th {
@@ -196,7 +199,7 @@ th {
 }
 
 th[scope="row"] {
-	text-align: right;
-	width:0.1%;
+	width      : 0.1%;
+	text-align : right;
 	white-space: nowrap;
 }

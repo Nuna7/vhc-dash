@@ -27,6 +27,7 @@ label+ :is(input[type="text"], input[type="email"], input[type="password"]) {
 }
 
 @keyframes flash {
+
 	0%,
 	49% {
 		background : none;
@@ -150,5 +151,6 @@ button:disabled.sLoading::after {
 	outline         : 1px solid var(--off-white);
 	outline-offset  : calc(0px - var(--cmp-spacing) / 2);
 	background-color: var(--bg);
+	box-shadow      : 0.5em 0.5em #00000015;
 	color           : var(--fg);
 }
