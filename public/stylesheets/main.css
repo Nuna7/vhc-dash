@@ -63,7 +63,7 @@ h2,
 h3,
 h4 {
 	font-weight: normal;
-	line-height: 1.3em;
+	line-height: 1.5em;
 }
 
 :is(h1, h2, h3, h4, p, ul, ol)+ :is(h1, h2, h3, h4) {
@@ -76,7 +76,9 @@ h4 {
 	margin-top: 1em;
 }
 
-p {
+p,
+ul,
+ol {
 	line-height: 1.5em;
 }
 
@@ -84,14 +86,13 @@ p.mReadWidth {
 	max-width: 750px;
 }
 
-ul,
-ol {
-	line-height: 1.75em;
-}
-
 ul {
 	padding-left   : var(--cmp-spacing);
 	list-style-type: square
+}
+
+li+li {
+	margin-top: 1em;
 }
 
 /* TEXT FORMATTING ========================================================== */
