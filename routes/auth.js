@@ -10,7 +10,6 @@ router.post("/login", authController.login_validate_post, passport.authenticate(
 
 router.get("/register", authController.register_get);
 router.post("/register", authController.register_post);
-router.get("/registration-success", authController.register_success);
 
 router.post("/logout", authController.logout);
 
