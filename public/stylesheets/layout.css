@@ -1,17 +1,20 @@
+body {
+	min-width: 1400px;
+	max-width: 2000px;
+}
+
 /* FLASH MESSAGES =========================================================== */
 
 #Flash {
-	color: var(--off-white);
-	padding: var(--min-spacing);
+	padding         : var(--min-spacing);
 	background-color: var(--green);
+	color           : var(--off-white);
 }
 
 /* MAIN PAGE ================================================================ */
 
 #Page {
 	flex-grow: 1;
-	min-width: 1400px;
-	max-width: 2000px;
 }
 
 /* SIDEBAR ================================================================== */
