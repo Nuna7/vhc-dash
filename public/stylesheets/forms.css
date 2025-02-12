@@ -35,6 +35,10 @@ label+:is(input[type="text"], input[type="email"], input[type="password"], texta
 	margin-top: 0.5em;
 }
 
+textarea {
+	line-height: 1.5em;
+}
+
 ::placeholder {
 	font-size: 0.9em;
 	font-style: italic;
