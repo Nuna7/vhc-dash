@@ -24,6 +24,7 @@ label+:is(input[type="text"], input[type="email"], input[type="password"]) {
 }
 
 ::placeholder {
+	font-size: 0.9em;
 	font-style: italic;
 }
 
