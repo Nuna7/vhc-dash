@@ -9,14 +9,13 @@ exports.login_get = (req, res, next) => {
 }
 
 exports.login_validate_post = [
-	body("username").custom((value) => {
+	body("username").trim().custom((value) => {
 		return User.findOne({ username: value }).then(user => {
 			if (!user) { return Promise.reject("User does not exist"); }
 			if (!user.approved) { return Promise.reject("User not approved"); }
 			
 			return true;
 		});
-		
 	}),
 	
 	(req, res, next) => {
