@@ -20,7 +20,8 @@ table {
 
 input[type="text"],
 input[type="email"],
-input[type="password"] {
+input[type="password"],
+textarea {
 	border     : none;
 	background : none;
 	color      : inherit;
