@@ -9,9 +9,15 @@ const UserSchema = new Schema({
 	approved: { type: Boolean, default: false },
 	roles: { type: Array },
 	email: { type: String, required: true, unique: true },
-	orcid: { type: String, unique: true },
+	orcid: { type: String, unique: true, sparse: true },
 	phone: { type: String }
 }, { timestamps: { createdAt: "created", updatedAt: "updated" } });
+
+// sanitize empty ORCiD values
+UserSchema.pre("save", function (next) {
+	if (this.orcid === "") { this.orcid = null; }
+	next();
+});
 
 // deletion cascade
 UserSchema.pre("deleteOne", { document: true, query: false }, async function(next) { 
