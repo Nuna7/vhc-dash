@@ -2,13 +2,14 @@
 
 input[type="text"],
 input[type="email"],
-input[type="password"] {
-	width  : 20em;
+input[type="password"],
+textarea {
+	min-width  : 20em;
 	padding: 0.5em;
 	border : 1px dotted;
 }
 
-:is(input[type="text"], input[type="email"], input[type="password"]):focus {
+:is(input[type="text"], input[type="email"], input[type="password"], textarea):focus {
 	--bg: var(--black);
 	--fg: var(--neon-green);
 
@@ -18,7 +19,7 @@ input[type="password"] {
 	color           : var(--fg);
 }
 
-label+:is(input[type="text"], input[type="email"], input[type="password"]) {
+label+:is(input[type="text"], input[type="email"], input[type="password"], textarea) {
 	display   : block;
 	margin-top: 0.5em;
 }
