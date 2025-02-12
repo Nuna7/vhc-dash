@@ -158,7 +158,7 @@ small {
 	padding-top: calc(var(--box-padding) + 0.5em);
 }
 
-.Box> :is(.cLabel, .lLabel, .rLabel) {
+.Box>:is(.cLabel, .lLabel, .rLabel) {
 	position        : absolute;
 	top             : 0;
 	padding         : 0 calc(var(--box-padding) / 2);
