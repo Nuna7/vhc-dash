@@ -1,3 +1,14 @@
+/* LABELS =================================================================== */
+
+label {
+	white-space: nowrap;
+}
+
+label.mReq::before {
+	content: "* ";
+	color: var(--red);
+}
+
 /* TEXT INPUTS ============================================================== */
 
 input[type="text"],
