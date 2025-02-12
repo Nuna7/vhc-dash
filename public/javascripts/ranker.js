@@ -14,8 +14,8 @@ updateRankData();
 updateReviewBox();
 
 // ranker state change event listener
-Array.from(rankRadios).forEach(element => {
-	element.addEventListener("change", function (e) {
+for (const radio of rankRadios) {
+	radio.addEventListener("change", function (e) {
 		// erase duplicate ranker states
 		if (this.checked) {
 			for (const radio of Array.from(rankRadios).filter(radio => radio !== this)) {
@@ -27,14 +27,14 @@ Array.from(rankRadios).forEach(element => {
 		updateRankData();
 		updateReviewBox();
 	}, false);
-});
+}
 
 // status state change event listener
-Array.from(statusRadios).forEach(element => {
-	element.addEventListener("change", function (e) {
+for (const radio of statusRadios) {
+	radio.addEventListener("change", function (e) {
 		passFailSplit();
 	}, false);
-});
+}
 
 // update response element rank data
 function updateRankData() {
