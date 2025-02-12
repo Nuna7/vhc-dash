@@ -13,7 +13,8 @@ block content
 
 	.Flexbox.mCmpSpacing
 		form#InfoForm(action="/user/edit-info", method="post").Box.iAlignLeft.Flexbox.mCol.mMinSpacing
-			.lLabel: b Info. (Form)
+			.lLabel: b User Info. 
+			.rLabel + Info. Form
 			
 			table 
 				tbody 
@@ -23,7 +24,12 @@ block content
 
 					tr 
 						th(scope="row") Roles: 
-						td!=user.roles.join(', ') || "[none]"
+
+						if user.role
+							td!=user.roles.join(', ')
+
+						else 
+							td: span.tGray [EMPTY]
 
 			table 
 				tbody

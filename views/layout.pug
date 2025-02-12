@@ -34,36 +34,63 @@ html(lang="en")
 				script.
 					window.onload = window.location.hash = "#{jump}";
 
-	body#top
-		#Page.Flexbox.mCol.mStdSpacing
-			header#Header.Flexbox.mSpaceBtwn.mCmpSpacing
-				nav#Navigation.Box.Flexbox.mMinSpacing.mVertCenter
+	body#Top.Flexbox.mCol
+		#Page.Flexbox
+			#Sidebar.Flexbox.mCol.mCmpSpacing
+				if user
+					#Auth.Box.Flexbox.mCol.mMinSpacing
+						.lLabel: b User:
+
+						.Flexbox.mSpaceBtwn.mVertCenter
+							div #[b ID:] #[a(href="/user/panel", title="User management panel")=user.username]
+
+							form(action=`/logout?next=${url}`, method="post")
+								button(type="submit", title=`Terminate session for user: ${user.username}`) Log Out
+
+						if ["admin", "senior"].some(role => user.roles.includes(role))
+							.Flexbox.mMinSpacing.mVertCenter
+								b Admin:
+								.Divider
+
+							nav#AdminPanels.Flexbox.mCol.mMinSpacing: ul
+								li: a(href="/admin/user-depot", title="Manage incoming user requests") User Depot
+
+				#SiteSettings.Box.Flexbox.mMinSpacing.mVertCenter
+					.lLabel: b Interface:
+
+					#Zoom 
+						b Font Size: 
+						| #[button(onclick="zoom('out');", title=`Zoom out\nShortcut: [ctrl+=]`).mTiny -]
+						| #[span#fontSize 12px]
+						| #[button(onclick="zoom('in');", title=`Zoom in\nShortcut: [ctrl+-]`).mTiny +]
+
+			#Main.Flexbox.mCol.mStdSpacing
+				nav#Navigation.iAlignLeft.Box.Flexbox.mMinSpacing.mVertCenter
 					.lLabel: b Navigation:
 					.rLabel.tGray: small Ctrl + [0-9]
 
 					.link: a(href="/") Home
 					.link: a(href="/ranker") Model Output Ranker
 
-				.Flexbox.mCmpSpacing
-					#SiteSettings.Box.Flexbox.mMinSpacing.mVertCenter
-						.lLabel: b Settings:
 
-						#Zoom 
-							| Font Size: 
-							| #[button(onclick="zoom('out');", title=`Zoom out\nShortcut: [ctrl+=]`).mTiny -]
-							| #[span#fontSize 12px]
-							| #[button(onclick="zoom('in');", title=`Zoom in\nShortcut: [ctrl+-]`).mTiny +]
+				main#Content.Flexbox.mCol.mStdSpacing: block content
 
-					if user
-						#Auth.Box.mCompact.Flexbox.mMinSpacing.mVertCenter
-							.lLabel: b User:
+		footer#Footer.Flexbox.mSpaceBtwn
+			.Hero
+				h2 VHC Dashboard
+				p Ashoka University © #{new Date().getFullYear()}
+				
+			//- TODO: add links
+			.Flexbox.mStdSpacing
+				#Resources 
+					h2 Resources
 
-							div #[b ID:] #[a(href="/user/panel", title="User info. panel")=user.username]
+					ul 
+						li: a(href="#") User Documentation
+						li: a(href="#") Website Source
+				
+				#QuickLinks
+					h2 Quick Links 
 
-							form(action=`/logout?next=${url}`, method="post")
-								button(type="submit", title=`Terminate session for user: ${user.username}`) Log Out
-
-			main#Content.Flexbox.mCol.mStdSpacing: block content
-
-			footer#Footer: b Ashoka University © #{new Date().getFullYear()}
-
+					ul 
+						li: a(href="#") Registration Req.
