@@ -129,7 +129,6 @@ small {
 	--highlight     : var(--black);
 	--box-padding   : var(--min-spacing);
 	position        : relative;
-	margin          : 0 0.5em 0.5em 0;
 	padding         : var(--box-padding);
 	border          : 1px dotted;
 	border-bottom   : 2px dotted;
@@ -152,6 +151,10 @@ small {
 	border          : none;
 	background-color: var(--bg);
 	color           : var(--fg);
+}
+
+.Box:has(.cLabel, .lLabel, .rLabel) {
+	margin-top: 0.5ch;
 }
 
 .Box:not(.mRoomy):has(.cLabel, .lLabel, .rLabel) {
