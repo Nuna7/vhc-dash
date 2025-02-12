@@ -192,6 +192,14 @@ table {
 	table-layout   : fixed;
 }
 
+thead {
+	--fg: var(--off-white);
+	--bg: var(--black);
+
+	color: var(--fg);
+	background-color: var(--bg);
+}
+
 th,
 td {
 	padding: 1ch;
