@@ -35,7 +35,7 @@ block content
 				tbody
 					tr
 						th(scope="row"): label(for="EmailField") Email:
-						td: input#EmailField(type="text" name="email" value=user.email placeholder="NULL")
+						td: input#EmailField(type="email" name="email" value=user.email placeholder="NULL")
 
 					tr
 						if user.orcid 
@@ -55,7 +55,7 @@ block content
 
 					tr
 						th(scope="row"): label(for="PhoneField") Phone:
-						td: input#PhoneField(type="text" name="phone" value=user.phone || "" placeholder="NULL")
+						td: input#PhoneField(type="text" name="phone" value=user.phone placeholder="NULL")
 
 			button(type="submit").iAlignRight.mGreen Update Info
 

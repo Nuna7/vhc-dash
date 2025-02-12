@@ -1,0 +1,52 @@
+extends ../layout
+
+block content
+	div
+		h1 Registration Request
+		p.mReadWidth Submit a user creation request, subject to approval by site admininstrators.
+
+	.Flexbox.mCmpSpacing
+		form(method="post").Box.Flexbox.mCol.mMinSpacing.iAlignLeft
+			.rLabel Cred. Request
+
+			div
+				label(for="UsernameField").mReq: b New User ID
+				input#UsernameField(type="text" name="username" required placeholder="Between 3 and 20 chars." autocomplete="off" autofocus)
+
+			div
+				label(for="EmailField").mReq: b Email ID
+				input#EmailField(type="email" name="email" required)
+
+			div
+				label(for="ORCiDField"): b ORCiD
+				input#ORCiDField(type="text" name="orcid" placeholder="xxxx-xxxx-xxxx-xxxx")
+
+			div
+				label(for="PhoneField"): b Phone No.
+				input#PhoneField(type="text" name="phone")
+
+			.Flexbox.mMinSpacing.mVertCenter(style="margin-top: var(--cmp-spacing)")
+				label(for="PasswordField").mReq: b Passkey
+				.Divider
+
+			input#PasswordField(type="password" name="password" placeholder="More than 8 chars." required)
+
+			div
+				label(for="PasswordConfirmField").mReq: b Confirmation
+				input#PasswordConfirmField(type="password" name="confirm" required)
+
+			.Flexbox.mMinSpacing.mVertCenter(style="margin-top: var(--cmp-spacing)")
+				label(for="PasswordField"): b Comments
+				.Divider
+
+			textarea#CommentsField(name="comments" rows="5")
+
+			button(type="submit").mGreen.iAlignRight Submit Req.
+
+		if errors
+			.FormErrors.iAlignTop
+				h2 <- Form Error(s)
+
+				ul
+					each error in errors
+						li(data-field=error.path)=error.msg

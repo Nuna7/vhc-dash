@@ -6,16 +6,17 @@ const RCV = require("./RCV");
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-	approved: { type: Boolean, default: false },
+	approved: { type: Boolean, default: false }, // only approved users can log in
 	roles: { type: Array },
 	email: { type: String, required: true, unique: true },
 	orcid: { type: String, unique: true, sparse: true },
-	phone: { type: String }
+	phone: { type: String },
+	creationComment: { type: String } // comment submitted at registration
 }, { timestamps: { createdAt: "created", updatedAt: "updated" } });
 
 // sanitize empty ORCiD values
 UserSchema.pre("save", function (next) {
-	if (this.orcid === "") { this.orcid = undefined; }
+	if (this.orcid === "") this.orcid = undefined;
 	next();
 });
 
@@ -29,6 +30,7 @@ UserSchema.pre("deleteOne", { document: true, query: false }, async function(nex
 });
 
 UserSchema.plugin(passportLocalMongoose, {
+	// filter query by approved users
 	findByUsername: function(model, queryParameters) {
 		queryParameters.approved = true;
 		return model.findOne(queryParameters);
