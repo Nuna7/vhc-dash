@@ -1,3 +1,13 @@
+/* FLASH MESSAGES =========================================================== */
+
+#Flash {
+	color: var(--off-white);
+	padding: var(--min-spacing);
+	background-color: var(--green);
+}
+
+/* MAIN PAGE ================================================================ */
+
 #Page {
 	flex-grow: 1;
 	min-width: 1400px;

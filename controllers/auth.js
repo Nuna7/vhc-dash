@@ -32,6 +32,11 @@ exports.login_validate_post = [
 exports.login_success_post = (req, res, next) => {
 	const returnTo = req.session.returnTo;
 	req.session.returnTo = undefined;
+
+	req.session.flash = { 
+		msg: `Logged in as "${req.user.username}" successfully.` 
+	}
+
 	res.redirect(returnTo || "/");
 }
 
@@ -123,15 +128,24 @@ exports.register_post = [
 			orcid: data.orcid,
 			phone: data.phone,
 			creationComment: data.comments
-		}, req.body.password).then(() => { res.redirect("/registration-success"); });
+		}, req.body.password)
+		
+		.then(() => { 
+			req.session.flash = {
+				msg: "Registration request successful. Contact POC for approval status." 
+			}
+			
+			res.redirect("/");
+		});
 	}
 ]
 
-exports.register_success = (req, res, next) => {
-	res.render("auth/register_success", { title: "Successful Reg. Request" });
-}
-
 exports.logout = (req, res, next) => {
 	req.logout();
+
+	req.session.flash = { 
+		msg: "Terminated user session successfully."
+	}
+	
 	res.redirect(req.query.next);
 }
