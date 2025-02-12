@@ -1,7 +1,7 @@
-exports.sessionAuthCheck = function (status) {
+exports.sessionAuthCheck = function (roles) {
 	return function (req, res, next) {
 		if (req.isAuthenticated()) {
-			if (status && !req.user.roles.includes(status)) {
+			if (roles && !roles.some(role => req.user.roles.includes(role))) {
 				const error = new Error("You don't have permission to access this page");
 				error.status = 403;
 				return next(error);
