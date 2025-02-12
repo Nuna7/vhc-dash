@@ -6,7 +6,7 @@ label {
 
 label.mReq::before {
 	content: "* ";
-	color: var(--red);
+	color  : var(--red);
 }
 
 /* TEXT INPUTS ============================================================== */
@@ -15,17 +15,17 @@ input[type="text"],
 input[type="email"],
 input[type="password"],
 textarea {
-	min-width  : 20em;
-	padding: 0.5em;
-	border : 1px dotted;
+	min-width: 20em;
+	padding  : 0.5em;
+	border   : 1px dotted;
 }
 
 :is(input[type="text"], input[type="email"], input[type="password"], textarea):focus {
 	--bg: var(--black);
 	--fg: var(--neon-green);
 
-	outline       : 1px dashed var(--bg);
 	border-color    : transparent;
+	outline         : 1px dashed var(--bg);
 	background-color: var(--bg);
 	color           : var(--fg);
 }
@@ -40,8 +40,8 @@ textarea {
 }
 
 ::placeholder {
-	font-size: 0.9em;
 	font-style: italic;
+	font-size : 0.9em;
 }
 
 /* RADIO BUTTONS ============================================================ */
@@ -70,6 +70,11 @@ label:has(input[type="radio"].mButton:disabled) {
 label:has(input[type="radio"].mButton:checked) {
 	background : repeating-conic-gradient(var(--dark-gray) 0% 25%, transparent 0% 100%) 1px 0.5px / 2px 2px;
 	font-weight: 600;
+	text-shadow:
+		1px 1px 5px var(--bg),
+		1px -1px 5px var(--bg),
+		-1px -1px 5px var(--bg),
+		-1px 1px 5px var(--bg);
 }
 
 .RadioGroup>label:not(:last-child) {
