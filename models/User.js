@@ -15,7 +15,7 @@ const UserSchema = new Schema({
 
 // sanitize empty ORCiD values
 UserSchema.pre("save", function (next) {
-	if (this.orcid === "") { this.orcid = null; }
+	if (this.orcid === "") { this.orcid = undefined; }
 	next();
 });
 
