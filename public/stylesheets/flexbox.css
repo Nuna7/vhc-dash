@@ -4,6 +4,10 @@
 
 /* DIRECTION ================================================================ */
 
+.Flexbox.mRev {
+	flex-direction: row-reverse;
+}
+
 .Flexbox.mCol {
 	flex-direction: column;
 }
