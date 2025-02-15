@@ -126,31 +126,48 @@ small {
 /* BOX COMPONENT ============================================================ */
 
 .Box {
-	--highlight     : var(--black);
-	--box-padding   : var(--min-spacing);
+	--highlight  : var(--black);
+	--box-padding: var(--min-spacing);
+
 	position        : relative;
 	padding         : var(--box-padding);
 	border          : 1px dotted;
 	border-bottom   : 2px dotted;
 	border-left     : 3px solid var(--highlight);
 	background-color: var(--bg);
-	box-shadow      : 0.5em 0.5em #00000015;
+	box-shadow      : 0.5em 0.5em var(--shadow);
 }
 
 .Box.mCompact {
-	--box-padding: 0.7em;
+	--box-padding: 1ch;
 }
 
 .Box.mRoomy {
 	--box-padding: var(--cmp-spacing);
 }
 
-.Box.mInvert {
-	--bg            : var(--black);
-	--fg            : var(--off-white);
+.Box.mSolid {
+	--bg: var(--black);
+	--fg: var(--off-white);
+
 	border          : none;
 	background-color: var(--bg);
 	color           : var(--fg);
+}
+
+.Box.mSolid.mRed {
+	--bg: var(--red);
+}
+
+.Box.mSolid.mGreen {
+	--bg: var(--green);
+}
+
+.Box.mSolid.mOutline {
+	--box-padding: var(--cmp-spacing);
+
+	outline       : 1px solid var(--off-white);
+	outline-offset: calc(0px - var(--box-padding) / 2);
 }
 
 .Box:has(.cLabel, .lLabel, .rLabel) {
@@ -158,13 +175,13 @@ small {
 }
 
 .Box:not(.mRoomy):has(.cLabel, .lLabel, .rLabel) {
-	padding-top: calc(var(--box-padding) + 0.5em);
+	padding-top: calc(var(--box-padding) + 1ch);
 }
 
 .Box>:is(.cLabel, .lLabel, .rLabel) {
 	position        : absolute;
 	top             : 0;
-	padding         : 0 calc(var(--box-padding) / 2);
+	padding         : 0 1ch;
 	background-color: var(--bg);
 	white-space     : nowrap;
 }
@@ -175,12 +192,12 @@ small {
 }
 
 .Box>.lLabel {
-	left     : calc(var(--box-padding) / 2);
+	left     : calc(var(--box-padding) - 1ch);
 	transform: translateY(-50%);
 }
 
 .Box>.rLabel {
-	right    : calc(var(--box-padding) / 2);
+	right    : calc(var(--box-padding) - 1ch);
 	transform: translateY(-50%);
 }
 
@@ -196,8 +213,8 @@ thead {
 	--fg: var(--off-white);
 	--bg: var(--black);
 
-	color: var(--fg);
 	background-color: var(--bg);
+	color           : var(--fg);
 }
 
 th,

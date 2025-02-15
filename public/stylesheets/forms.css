@@ -144,17 +144,3 @@ button:disabled.sLoading::after {
 		content: "[\\]";
 	}
 }
-
-/* FORM ERRORS ============================================================== */
-
-.FormErrors {
-	--fg: var(--off-white);
-	--bg: var(--red);
-
-	padding         : var(--cmp-spacing) var(--std-spacing) var(--cmp-spacing) var(--cmp-spacing);
-	outline         : 1px solid var(--off-white);
-	outline-offset  : calc(0px - var(--cmp-spacing) / 2);
-	background-color: var(--bg);
-	box-shadow      : 0.5em 0.5em #00000015;
-	color           : var(--fg);
-}

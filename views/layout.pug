@@ -35,37 +35,40 @@ html(lang="en")
 					window.onload = window.location.hash = "#{jump}";
 
 	body#Top.Flexbox.mCol
-		if flash
-			#Flash: marquee: p: b=flash.msg
-
 		#Page.Flexbox
-			#Sidebar.Flexbox.mCol.mCmpSpacing
-				if user
-					#Auth.Box.Flexbox.mCol.mMinSpacing
-						.lLabel: b User:
+			#Sidebar.Flexbox.mCol.mStdSpacing
+				if flash
+					#Flash(data-type=flash.type).Box.mSolid.mOutline.mGreen
+						h2 Message
+						p=flash.msg
 
-						.Flexbox.mSpaceBtwn.mVertCenter
-							div #[b ID:] #[a(href="/user/panel", title="User management panel")=user.username]
+				.Flexbox.mCol.mCmpSpacing
+					if user
+						#Auth.Box.Flexbox.mCol.mMinSpacing
+							.lLabel: b User:
 
-							form(action=`/logout?next=${url}`, method="post")
-								button(type="submit", title=`Terminate session for user: ${user.username}`) Log Out
+							.Flexbox.mSpaceBtwn.mVertCenter
+								div #[b ID:] #[a(href="/user/panel", title="User management panel")=user.username]
 
-						if ["admin", "senior"].some(role => user.roles.includes(role))
-							.Flexbox.mMinSpacing.mVertCenter
-								b Admin:
-								.Divider
+								form(action=`/logout?next=${url}`, method="post")
+									button(type="submit", title=`Terminate session for user: ${user.username}`) Log Out
 
-							nav#AdminPanels.Flexbox.mCol.mMinSpacing: ul
-								li: a(href="/admin/user-depot", title="Manage incoming user requests") User Depot
+							if ["admin", "senior"].some(role => user.roles.includes(role))
+								.Flexbox.mMinSpacing.mVertCenter
+									b Admin:
+									.Divider
 
-				#SiteSettings.Box.Flexbox.mMinSpacing.mVertCenter
-					.lLabel: b Interface:
+								nav#AdminPanels.Flexbox.mCol.mMinSpacing: ul
+									li: a(href="/admin/user-depot", title="Manage incoming user requests") User Depot
 
-					#Zoom 
-						b Font Size: 
-						| #[button(onclick="zoom('out');", title=`Zoom out\nShortcut: [ctrl+=]`).mTiny -]
-						| #[span#fontSize 12px]
-						| #[button(onclick="zoom('in');", title=`Zoom in\nShortcut: [ctrl+-]`).mTiny +]
+					#SiteSettings.Box.Flexbox.mMinSpacing.mVertCenter
+						.lLabel: b Interface:
+
+						#Zoom 
+							b Font Size: 
+							| #[button(onclick="zoom('out');", title=`Zoom out\nShortcut: [ctrl+=]`).mTiny -]
+							| #[span#fontSize 12px]
+							| #[button(onclick="zoom('in');", title=`Zoom in\nShortcut: [ctrl+-]`).mTiny +]
 
 			#Main.Flexbox.mCol.mStdSpacing
 				nav#Navigation.iAlignLeft.Box.Flexbox.mMinSpacing.mVertCenter

@@ -3,14 +3,6 @@ body {
 	max-width: 2000px;
 }
 
-/* FLASH MESSAGES =========================================================== */
-
-#Flash {
-	padding         : var(--min-spacing);
-	background-color: var(--green);
-	color           : var(--off-white);
-}
-
 /* MAIN PAGE ================================================================ */
 
 #Page {
