@@ -15,9 +15,10 @@ input[type="text"],
 input[type="email"],
 input[type="password"],
 textarea {
-	min-width: 20em;
-	padding  : 0.5em;
-	border   : 1px dotted;
+	min-width       : 20em;
+	padding         : 0.5em;
+	border          : 1px dotted;
+	background-color: var(--lighter-gray);
 }
 
 :is(input[type="text"], input[type="email"], input[type="password"], textarea):focus {

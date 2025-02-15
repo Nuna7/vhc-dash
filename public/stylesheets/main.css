@@ -1,15 +1,16 @@
 /* VARIABLES ================================================================ */
 
 :root {
-	--off-white : #bbbbbb;
-	--black     : #111111;
-	--dark-gray : #444444;
-	--light-gray: #a1a1a1;
-	--red       : #9e2a2b;
-	--green     : #1e6149;
-	--yellow    : #c09a33;
-	--neon-green: #58aa8d;
-	--shadow    : #00000015;
+	--off-white   : #bbbbbb;
+	--black       : #111111;
+	--lighter-gray: #b0b0b0;
+	--light-gray  : #a1a1a1;
+	--dark-gray   : #444444;
+	--red         : #9e2a2b;
+	--green       : #1e6149;
+	--yellow      : #c09a33;
+	--neon-green  : #58aa8d;
+	--shadow      : #00000015;
 
 	--std-spacing: 6ch;
 	--cmp-spacing: 3ch;
