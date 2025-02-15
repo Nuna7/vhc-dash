@@ -7,13 +7,13 @@ exports.panel = (req, res, next) => {
 }
 
 exports.edit_user = [
-	body("email", "Invalid email ID").trim().isEmail().custom(value => {
-		return User.findOne({ email: value }).then(result => { 
+	body("email", "Invalid email ID").trim().isEmail().custom((value, { req }) => {
+		return User.findOne({ _id: { $ne: req.user._id }, email: value }).then(result => { 
 			return result ? Promise.reject("User with this email ID exists") : true;
 		});
 	}),
 
-	body("orcid").custom((value) => {
+	body("orcid").custom((value, { req }) => {
 		if (!value) return true;
 
 		// disallow setting ORCiD once already set
@@ -54,6 +54,7 @@ exports.edit_user = [
 		
 		if (!errors.isEmpty()) { 
 			req.session.errors = errors.array();
+
 			return res.redirect("/user/panel");
 		}
 		
@@ -61,6 +62,11 @@ exports.edit_user = [
 			email: req.body.email,
 			orcid: req.body.orcid,
 			phone: req.body.phone
-		}).then(() => { res.redirect("/user/panel"); });
+		})
+
+		.then(() => { 
+			req.session.flash = { msg: `Updated info. for "${req.user.username}" successfully.` };
+			res.redirect("/user/panel"); 
+		});
 	}
 ]
