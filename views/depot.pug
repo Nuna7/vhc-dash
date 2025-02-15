@@ -1,0 +1,66 @@
+extends layout
+
+append scripts
+	script(type="text/javascript" src="/javascripts/depot.js", defer)
+
+block content
+	div
+		h1 Registration Request Depot
+		p Approve/deny incoming user registration requests.
+
+	if users.length
+		.Flexbox.mCmpSpacing
+			form#DepotForm(action="/admin/user-depot" method="post").iAlignLeft.Box.Flexbox.mCol.mMinSpacing
+				.cLabel: b Req. Depot 
+
+				table 
+					thead
+						tr 
+							th(scope="column") Name
+							th(scope="column") Email
+							th(scope="column") ORCiD
+							th(scope="column") Phone
+							th(scope="column") Sp. Roles
+							th(scope="column") Approve
+
+					tbody
+						each u in users
+							tr
+								th(scope="row" rowspan=u.creationComment ? 2 : 1)=u.username
+								td=u.email
+								td=u.orcid || "NULL"
+								td=u.phone || "NULL"
+
+								td: input.roleField(type="text" name=`roles-${u._id}`)
+
+								td: .statusField.Flexbox.mMinSpacing
+									.RadioGroup.Flexbox
+										label ✓
+											input(type="radio" name=`status-${u._id}`, value="approve").mButton
+
+										label X
+											input(type="radio" name=`status-${u._id}` value="reject").mButton
+
+									label Defer
+										input(type="radio" name=`status-${u._id}` value="defer" checked).mButton
+
+							if u.creationComment 
+								tr: td(colspan=6)
+									small Comment: 
+									small.tGray=`"${u.creationComment}"`
+
+
+				button(type="submit").mGreen.iAlignRight Process Requests
+			
+			if errors
+				.Box.mSolid.mOutline.mRed.iAlignTop
+					h2 <- Form Error(s)
+					
+					ul
+						each error in errors
+							li(data-field=error.path)=error.msg
+
+	else
+		.Box.mSolid.mOutline.iAlignLeft 
+			h2 No pending requests
+			p All incoming user creation requests have been resolved.

@@ -54,7 +54,6 @@ exports.edit_user = [
 		
 		if (!errors.isEmpty()) { 
 			req.session.errors = errors.array();
-
 			return res.redirect("/user/panel");
 		}
 		

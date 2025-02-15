@@ -18,6 +18,7 @@ const User = require("./models/User");
 var authRouter = require("./routes/auth");
 var indexRouter = require("./routes/index");
 var userRouter = require("./routes/user");
+var adminRouter = require("./routes/admin");
 var rankerRouter = require("./routes/ranker");
 
 var app = express();
@@ -60,6 +61,7 @@ app.use(function(req, res, next) { // provide current url as local template vari
 app.use("/", authRouter);
 app.use("/", indexRouter);
 app.use("/user", userRouter);
+app.use("/admin", adminRouter);
 app.use("/ranker", rankerRouter);
 
 app.use(function(req, res, next) {
