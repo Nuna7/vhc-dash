@@ -70,12 +70,17 @@ html(lang="en")
 						| #[button(onclick="zoom('in');", title=`Zoom in\nShortcut: [ctrl+-]`).mTiny +]
 
 		#Main.Flexbox.mCol.mStdSpacing
-			nav#Navigation.iAlignLeft.Box.Flexbox.mMinSpacing.mVertCenter
+			nav#Navigation.iAlignLeft.Box.Flexbox.mMinSpacing
 				.lLabel: b Navigation:
 				.rLabel.tGray: small Ctrl + [0-9]
 
 				.link: a(href="/") Home
 				.link: a(href="/ranker") Model Output Ranker
+
+				unless user
+					.tGray |
+										
+					a.login(href="/login") Log In
 
 
 			main#Content.Flexbox.mCol.mStdSpacing: block content
