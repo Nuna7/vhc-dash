@@ -2,17 +2,17 @@ const { body, validationResult } = require("express-validator");
 
 const User = require("../models/User");
 
-exports.depot_get = (req, res, next) => {
-	User.find({ approved: false }).then(users => {
-		res.render("depot", { 
-			title: "Registration Depot",
-			users: users
-		});
+
+exports.depot_get = async (req, res, next) => {
+	res.render("depot", { 
+		title: "Registration Depot",
+		users: await User.find({ approved: false })
 	});
 }
 
+
 exports.depot_post = [
-	body().custom((body) => {
+	body().custom(body => {
 		// validate roles against regex
 		for (const key of Object.keys(body).filter(key => key.startsWith("roles-"))) {
 			const pattern = /^(?!-)(?!.*--)[a-z0-9-]+(?<!-)(,\s*(?!-)(?!.*--)[a-z0-9-]+(?<!-))*$/;
@@ -26,7 +26,7 @@ exports.depot_post = [
 		const errors = validationResult(req);
 		
 		if (!errors.isEmpty()) { 
-			req.session.errors = errors.array();
+			(req.session.flash ??= {}).errors = errors.array();
 			return res.redirect("/admin/user-depot");
 		}
 

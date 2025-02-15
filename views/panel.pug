@@ -57,12 +57,12 @@ block content
 
 			button(type="submit").iAlignRight.mGreen Update Info
 
-		if errors
+		if flash && flash.errors
 			.Box.mSolid.mOutline.mRed.iAlignTop
 				h2 <- Form Error(s)
 				
 				ul
-					each error in errors
+					each error in flash.errors
 						li(data-field=error.path)=error.msg
 
 

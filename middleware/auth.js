@@ -5,11 +5,19 @@ exports.sessionAuthCheck = function (roles) {
 				const error = new Error("You don't have permission to access this page");
 				error.status = 403;
 				return next(error);
-			} else { return next(); }
-		} else {
-			req.session.returnTo = req.originalUrl || req.url
-			res.redirect("/login") 
+			} 
+			
+			else return next();
+		} 
+		
+		// retrieve and reset passthrough flash if exists
+		if (req.session.PTFlash) {
+			req.session.flash = req.session.PTFlash;
+			delete req.session.PTFlash;
 		}
+
+		req.session.returnTo = req.originalUrl || req.url;
+		res.redirect("/login");
 	}
 }
 

@@ -1,5 +1,11 @@
 exports.flashMessages = function (req, res, next) {
 	res.locals.flash = req.session.flash;
-	req.session.flash = undefined;
+	
+	// reset and assign passthrough flash
+	delete req.session.PTFlash;
+	req.session.PTFlash = req.session.flash;
+	
+	delete req.session.flash;
+	
 	return next();
 }

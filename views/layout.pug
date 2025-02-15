@@ -36,10 +36,10 @@ html(lang="en")
 
 	body: #Page
 		#Sidebar.Flexbox.mCol.mStdSpacing
-			if flash
-				#Flash(data-type=flash.type).Box.mSolid.mOutline.mGreen
-					h2 Message
-					p=flash.msg
+			if flash && flash.message
+				#Flash(data-type=flash.message.type).Box.mSolid.mOutline.mGreen
+					h2 Flash Msg.
+					p=flash.message.msg
 
 			.Flexbox.mCol.mCmpSpacing
 				if user
@@ -98,4 +98,4 @@ html(lang="en")
 					h2 Quick Links 
 
 					ul 
-						li: a(href="/register") Registration Req.
+						li: a(href="/register") Registration Request

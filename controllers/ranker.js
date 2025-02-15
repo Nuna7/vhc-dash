@@ -1,11 +1,13 @@
-const { body, check, validationResult } = require("express-validator");
+const { body, validationResult } = require("express-validator");
 
 const PRC = require("../models/PRC");
 const RCV = require("../models/RCV");
 
+
 // ranker view
-exports.ranker = (req, res, next) => {
-	PRC.aggregate([ // find all PRCs not voted for by user
+exports.ranker = async (req, res, next) => {
+	// find all PRCs not voted for by user
+	const prcs = await PRC.aggregate([
 		{
 			$lookup: {
 				from: RCV.collection.name,
@@ -18,24 +20,17 @@ exports.ranker = (req, res, next) => {
 		{ $match: { "rcv.ballots.voter": { $ne: req.user._id } } },
 		{ $limit: 1 }
 	
-	]).then(aggregation => {
-		if (aggregation.length) { // if PRC found, populate and render view
-			PRC.hydrate(aggregation[0]).populate("responses.llm").then(prc => {
-				res.render("ranker", {
-					title: "M.O. Ranker",
-					prc: prc
-				});
-			});
-		}
-
-		else { // otherwise populate view with undefined
-			res.render("ranker", {
-				title: "M.O. Ranker",
-				prc: undefined
-			});
-		}
+	]);
+	
+	// populate PRC
+	const prc = prcs.length ? await PRC.hydrate(prcs[0]).populate("responses.llm") : undefined;
+		
+	res.render("ranker", {
+		title: "M.O. Ranker",
+		prc: prc
 	});
 }
+
 
 // submit ballot
 exports.post_ballot = [
@@ -44,12 +39,10 @@ exports.post_ballot = [
 	body().custom(async (body, { req }) => {
 		const prc = await PRC.findById(body.prc);
 		
-		const validLLMIDs = prc.responses.map((response) =>
-			response.llm.toString()
-		);
+		const validLLMIDs = prc.responses.map(response => response.llm.toString());
 
-		const rankKeys = Object.keys(body).filter((key) => key.startsWith("rank-"));
-		const statusKeys = Object.keys(body).filter((key) => key.startsWith("status-"));
+		const rankKeys = Object.keys(body).filter(key => key.startsWith("rank-"));
+		const statusKeys = Object.keys(body).filter(key => key.startsWith("status-"));
 
 		// make sure no extra/missing rank/status fields
 		if (!(rankKeys.length == prc.responses.length || statusKeys.length == prc.responses.length)) {
@@ -82,7 +75,7 @@ exports.post_ballot = [
 		const sortedPairs = rankStatusPairs.sort((a, b) => a.rank - b.rank);
 		let foundFail = false;
 
-		for (const { status } of sortedPairs) {
+		for (const status of sortedPairs) {
 			if (!foundFail && status == "fail") foundFail = true;
 			if (foundFail && status == "pass") throw new Error("Fail rank above pass rank");
 		}
@@ -90,33 +83,36 @@ exports.post_ballot = [
 		return true;
 	}),
 
-	(req, res, next) => {
-		PRC.findById(req.body.prc).populate("rcv responses.llm").then(prc => {
-			const errors = validationResult(req);
+	async (req, res, next) => {
+		const prc = await PRC.findById(req.body.prc)
+			.populate("rcv responses.llm");
 
-			if (!errors.isEmpty()) { 
-				req.session.errors = errors.array();
-				return res.redirect("/ranker");
-			}
+		const errors = validationResult(req);
 
-			const models = prc.responses.map(({ llm }) => llm._id);
-			var ranking = Array(models.length);
-			var failCount = 0;
+		if (!errors.isEmpty()) { 
+			(req.session.flash ??= {}).errors = errors.array();
+			return res.redirect("/ranker");
+		}
 
-			models.forEach(model => { // insert LLM IDs into ranked positions
-				ranking[req.body[`rank-${model.toString()}`] - 1] = model;
-				if (req.body[`status-${model.toString()}`] == "fail") failCount++;
-			});
+		const models = prc.responses.map(response => response.llm._id);
+		var ranking = Array(models.length);
+		var failCount = 0;
 
-			prc.rcv.ballots.push({ // push ballot to associated RCV
-				voter: req.user._id,
-				ranking: ranking,
-				failCount: failCount
-			});
-
-			prc.rcv.save().then(() => {
-				return res.redirect("/ranker");
-			});
+		// insert LLM IDs into ranked positions
+		models.forEach(model => {
+			ranking[req.body[`rank-${model.toString()}`] - 1] = model;
+			if (req.body[`status-${model.toString()}`] == "fail") failCount++;
 		});
+
+		// push ballot to associated RCV
+		prc.rcv.ballots.push({
+			voter: req.user._id,
+			ranking: ranking,
+			failCount: failCount
+		});
+
+		await prc.rcv.save();
+		
+		return res.redirect("/ranker");
 	}
 ]

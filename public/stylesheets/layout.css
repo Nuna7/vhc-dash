@@ -22,7 +22,7 @@
 	grid-area: main;
 	flex-grow: 1;
 	min-width: 0;
-	padding  : var(--cmp-spacing) var(--std-spacing);
+	padding  : var(--cmp-spacing) var(--std-spacing) var(--std-spacing) var(--std-spacing);
 }
 
 /* NAVIGATION =============================================================== */

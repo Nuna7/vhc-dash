@@ -10,7 +10,6 @@ const passport = require("passport");
 const url = require("url");
 
 const authMiddleware = require("./middleware/auth");
-const formMiddleware = require("./middleware/form");
 const flashMiddleware = require("./middleware/flash");
 
 const User = require("./models/User");
@@ -50,7 +49,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(authMiddleware.sessionAuthData);
-app.use(formMiddleware.formErrorData);
 app.use(flashMiddleware.flashMessages);
 
 app.use(function(req, res, next) { // provide current url as local template variable

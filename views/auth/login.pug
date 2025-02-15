@@ -21,10 +21,10 @@ block content
 				button(type="submit").mGreen.iAlignRight Log In
 				a(href="/register").tGray Request Access
 
-		if errors
+		if flash && flash.errors
 			.Box.mSolid.mOutline.mRed.iAlignTop
 				h2 <- Auth. Error(s)
 				
 				ul
-					each error in errors
+					each error in flash.errors
 						li(data-field=error.path)=error.msg

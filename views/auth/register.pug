@@ -39,14 +39,14 @@ block content
 				label(for="PasswordField"): b Comments
 				.Divider
 
-			textarea#CommentsField(name="comments" rows="5")
+			textarea#CommentsField(name="comments" rows="5" maxlength="300" placeholder="Less than 300 chars.")
 
 			button(type="submit").mGreen.iAlignRight Submit Req.
 
-		if errors
-			.FormErrors.iAlignTop
+		if flash && flash.errors
+			.Box.mSolid.mOutline.mRed.iAlignTop
 				h2 <- Form Error(s)
 
 				ul
-					each error in errors
+					each error in flash.errors
 						li(data-field=error.path)=error.msg
