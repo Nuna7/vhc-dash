@@ -27,9 +27,10 @@
 
 html,
 body {
-	--bg      : var(--off-white);
-	--fg      : var(--black);
-	height    : 100vh;
+	--bg: var(--off-white);
+	--fg: var(--black);
+
+	height    : 100%;
 	overflow-y: auto;
 	background: var(--bg);
 	color     : var(--fg);

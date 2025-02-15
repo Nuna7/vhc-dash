@@ -1,17 +1,15 @@
-body {
-	min-width: 1400px;
-	max-width: 2000px;
-}
-
-/* MAIN PAGE ================================================================ */
-
 #Page {
-	flex-grow: 1;
+	display      : grid;
+	grid-template: "sidebar main" 1fr "footer footer" auto / auto 1fr;
+	min-width    : 1400px;
+	max-width    : 2000px;
+	min-height   : 100%;
 }
 
 /* SIDEBAR ================================================================== */
 
 #Sidebar {
+	grid-area  : sidebar;
 	flex-shrink: 0;
 	width      : 250px;
 	padding    : var(--cmp-spacing);
@@ -21,6 +19,7 @@ body {
 /* MAIN ===================================================================== */
 
 #Main {
+	grid-area: main;
 	flex-grow: 1;
 	min-width: 0;
 	padding  : var(--cmp-spacing) var(--std-spacing);
@@ -46,6 +45,7 @@ body {
 	--fg: var(--off-white);
 	--bg: var(--black);
 
+	grid-area       : footer;
 	padding         : var(--cmp-spacing) var(--std-spacing);
 	background-color: var(--bg);
 	color           : var(--fg);
