@@ -12,6 +12,7 @@ block content
 		.Flexbox.mCmpSpacing
 			form#DepotForm(action="/admin/user-depot" method="post").iAlignLeft.Box.Flexbox.mCol.mMinSpacing
 				.cLabel: b Req. Depot 
+				.llabel.tGray: small #[b move/sel:] [↑, ↓, TAB] | #[b approve:] [`]
 
 				table 
 					thead
@@ -23,8 +24,8 @@ block content
 							th(scope="column") Sp. Roles
 							th(scope="column") Approve
 
-					tbody
-						each u in users
+					each u in users
+						tbody.RegistrationRequest(tabindex=0)
 							tr
 								th(scope="row" rowspan=u.creationComment ? 2 : 1)=u.username
 								td=u.email

@@ -219,6 +219,11 @@ thead {
 	color           : var(--fg);
 }
 
+tbody:focus {
+	outline: none;
+	background-color: var(--lighter-gray);
+}
+
 th,
 td {
 	padding: 1ch;

@@ -18,7 +18,7 @@ textarea {
 	min-width       : 20em;
 	padding         : 0.5em;
 	border          : 1px dotted;
-	background-color: var(--lighter-gray);
+	background-color: var(--shadow);
 }
 
 :is(input[type="text"], input[type="email"], input[type="password"], textarea):focus {
