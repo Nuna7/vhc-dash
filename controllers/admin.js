@@ -15,7 +15,7 @@ exports.depot_post = [
 	body().custom(body => {
 		// validate roles against regex
 		for (const key of Object.keys(body).filter(key => key.startsWith("roles-"))) {
-			const pattern = /^(?!-)(?!.*--)[a-z0-9-]+(?<!-)(,\s*(?!-)(?!.*--)[a-z0-9-]+(?<!-))*$/;
+			const pattern = /^((?!-)(?!.*--)[a-z0-9-]+(?<!-)(,\s*(?!-)(?!.*--)[a-z0-9-]+(?<!-))*)?$/;
 			if (!pattern.test(body[key])) throw new Error("Invalid role format(s)");
 		}
 
@@ -58,6 +58,10 @@ exports.depot_post = [
 					}
 				});
 			}
+		}
+
+		(req.session.flash ??= {}).message = {
+			msg: `Successfully processed ${userIDs.length} registration request(s).` 
 		}
 
 		return res.redirect("/admin/user-depot");
