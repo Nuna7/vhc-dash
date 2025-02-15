@@ -31,4 +31,6 @@ if (document.querySelector(".FormErrors li[data-field='orcid']")) {
 ORCiDButton.addEventListener("click", function() {
 	ORCiDSection.style.display = "block";
 	ORCiDButton.style.display = "none";
+
+	document.getElementById("ORCiDField").focus();
 });
