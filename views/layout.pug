@@ -47,7 +47,7 @@ html(lang="en")
 						.lLabel: b User:
 
 						.Flexbox.mSpaceBtwn.mVertCenter
-							div #[b ID:] #[a(href="/user/panel", title="User management panel")=user.username]
+							div #[b ID:] #[a(href="/user", title="User management panel")=user.username]
 
 							form(action=`/logout?next=${url}`, method="post")
 								button(type="submit", title=`Terminate session for user: ${user.username}`) Log Out

@@ -4,7 +4,7 @@ const User = require("../models/User");
 
 
 exports.panel = (req, res, next) => {
-	res.render("panel", { title: "User Panel" });
+	res.render("user", { title: "User Panel" });
 }
 
 
@@ -52,7 +52,7 @@ exports.edit_user = [
 		
 		if (!errors.isEmpty()) { 
 			(req.session.flash ??= {}).errors = errors.array();
-			return res.redirect("/user/panel");
+			return res.redirect("/user");
 		}
 		
 		await User.findById(req.user._id).updateOne({
@@ -65,6 +65,6 @@ exports.edit_user = [
 			msg: `Updated info. for "${req.user.username}" successfully.` 
 		};
 		
-		res.redirect("/user/panel");
+		res.redirect("/user");
 	}
 ]

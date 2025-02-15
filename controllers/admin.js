@@ -4,7 +4,7 @@ const User = require("../models/User");
 
 
 exports.depot_get = async (req, res, next) => {
-	res.render("depot", { 
+	res.render("admin/depot", { 
 		title: "Registration Depot",
 		users: await User.find({ approved: false })
 	});
