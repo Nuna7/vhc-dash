@@ -7,11 +7,7 @@ append scripts
 	script(type="text/javascript", src="/javascripts/ranker.js", defer)
 
 block content
-	div
-		h1 01. Model Output Ranker
-		
-		unless prc
-			p #[span.tGray EMPTY] Evaluated all available responses. Check for updated entries in 24 hours.
+	h1 01. Model Output Ranker
 
 	if prc
 		form#Ballot(method="post").Box.mRoomy.Flexbox.mCol.mCmpSpacing
@@ -55,3 +51,8 @@ block content
 							.rankDisplay ?
 
 						.content!=response.renderContent()
+
+	else 
+		.Box.mSolid.mOutline.iAlignLeft
+			h2 No PRC Available
+			p.mReadWidth Evaluated all available responses. Check for updated entries in 24 hours.
