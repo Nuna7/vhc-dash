@@ -32,7 +32,7 @@ block content
 								td: span(class=u.orcid ? "" : "tGray")=u.orcid || "NULL"
 								td: span(class=u.phone ? "" : "tGray")=u.phone || "NULL"
 
-								td: input.roleField(type="text" name=`roles-${u._id}`)
+								td: input.roleField(type="text" name=`roles-${u._id}` placeholder="L.C. alphanumeric & \"-\", comma sep.")
 
 								td: .statusField.Flexbox.mMinSpacing
 									.RadioGroup.Flexbox
