@@ -1,21 +1,23 @@
 extends layout
 
+include ./mixins/ErrorWrapper.pug
+
 append stylesheets
-	link(rel="stylesheet", href="/stylesheets/user.css")
+	link(rel="stylesheet" href="/stylesheets/user.css")
 
 append scripts
-	script(type="text/javascript", src="/javascripts/user.js", defer)
+	script(type="text/javascript" src="/javascripts/user.js", defer)
 
 block content
 	div
 		h1 User Mgmt.
 		p View and edit your user instance information.
 
-	.Flexbox.mCmpSpacing
-		form#InfoForm(action="/user/edit-info", method="post").Box.iAlignLeft.Flexbox.mCol.mMinSpacing
+	+ErrorWrapper("info")
+		form#InfoForm(action="/user/edit-info" method="post").Box.Flexbox.mCol.mMinSpacing
 			.lLabel: b User Info. 
 			.rLabel + Info. Form
-			
+
 			table 
 				tr 
 					th(scope="row") ID:
@@ -39,7 +41,7 @@ block content
 					if user.orcid 
 						th(scope="row") ORCiD:
 						td=user.orcid
-						
+
 					else 
 						th(scope="row"): label(for="ORCiDField") ORCiD:
 
@@ -56,13 +58,5 @@ block content
 					td: input#PhoneField(type="text" name="phone" value=user.phone placeholder="NULL")
 
 			button(type="submit").iAlignRight.mGreen Update Info
-
-		if flash && flash.errors
-			.Box.mSolid.mOutline.mRed.iAlignTop
-				h2 <- Form Error(s)
-				
-				ul
-					each error in flash.errors
-						li(data-field=error.path)=error.msg
 
 

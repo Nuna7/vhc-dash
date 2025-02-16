@@ -1,11 +1,13 @@
 extends ../layout
 
+include ../mixins/ErrorWrapper.pug
+
 block content
 	div
 		h1 Authentication
 		p.mReadWidth Identify yourself with the credentials provided to you by the administrator.
 
-	.Flexbox.mCmpSpacing
+	+ErrorWrapper("login")
 		form(method="post").Box.Flexbox.mCol.mMinSpacing.iAlignLeft
 			.rLabel Auth. Portal
 
@@ -20,11 +22,3 @@ block content
 			.Flexbox.mRev.mSpaceBtwn.mVertCenter
 				button(type="submit").mGreen.iAlignRight Log In
 				a(href="/register").tGray Request Access
-
-		if flash && flash.errors
-			.Box.mSolid.mOutline.mRed.iAlignTop
-				h2 <- Auth. Error(s)
-				
-				ul
-					each error in flash.errors
-						li(data-field=error.path)=error.msg

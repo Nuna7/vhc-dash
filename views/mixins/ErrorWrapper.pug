@@ -1,0 +1,11 @@
+mixin ErrorWrapper(name)
+	.Flexbox.mCmpSpacing
+		block
+
+		if flash && flash.errors && flash.errors.for == name
+			.Box.mSolid.mOutline.mRed.iAlignTop
+				h2 <- Error(s)
+
+				ul
+					each error in flash.errors.err
+						li(data-field=error.path)=error.msg

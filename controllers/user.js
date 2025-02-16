@@ -51,7 +51,11 @@ exports.edit_user = [
 		const errors = validationResult(req);
 		
 		if (!errors.isEmpty()) { 
-			(req.session.flash ??= {}).errors = errors.array();
+			(req.session.flash ??= {}).errors = {
+				for: "info",
+				err: errors.array()
+			}
+
 			return res.redirect("/user");
 		}
 		

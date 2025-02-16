@@ -1,11 +1,13 @@
 extends ../layout
 
+include ../mixins/ErrorWrapper.pug
+
 block content
 	div
 		h1 Registration Request
 		p.mReadWidth Submit a user creation request, subject to approval by site admininstrators.
 
-	.Flexbox.mCmpSpacing
+	+ErrorWrapper("register")
 		form(method="post").Box.Flexbox.mCol.mMinSpacing.iAlignLeft
 			.rLabel Cred. Request
 
@@ -42,11 +44,3 @@ block content
 			textarea#CommentsField(name="comments" rows="5" maxlength="300" placeholder="Less than 300 chars.")
 
 			button(type="submit").mGreen.iAlignRight Submit Req.
-
-		if flash && flash.errors
-			.Box.mSolid.mOutline.mRed.iAlignTop
-				h2 <- Form Error(s)
-
-				ul
-					each error in flash.errors
-						li(data-field=error.path)=error.msg

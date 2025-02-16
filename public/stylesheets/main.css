@@ -220,7 +220,7 @@ thead {
 }
 
 tbody:focus {
-	outline: none;
+	outline         : none;
 	background-color: var(--lighter-gray);
 }
 

@@ -1,5 +1,7 @@
 extends ../layout
 
+include ../mixins/ErrorWrapper.pug
+
 append scripts
 	script(type="text/javascript" src="/javascripts/depot.js", defer)
 
@@ -9,7 +11,7 @@ block content
 		p Approve/deny incoming user registration requests.
 
 	if users.length
-		.Flexbox.mCmpSpacing
+		+ErrorWrapper("depot")
 			form#DepotForm(action="/admin/user-depot" method="post").iAlignLeft.Box.Flexbox.mCol.mMinSpacing
 				.cLabel: b Req. Depot 
 				.llabel.tGray: small #[b move/sel:] [↑, ↓, TAB] | #[b approve:] [`]
@@ -52,14 +54,6 @@ block content
 
 
 				button(type="submit").mGreen.iAlignRight Process Requests
-			
-			if flash && flash.errors
-				.Box.mSolid.mOutline.mRed.iAlignTop
-					h2 <- Form Error(s)
-					
-					ul
-						each error in flash.errors
-							li(data-field=error.path)=error.msg
 
 	else
 		.Box.mSolid.mOutline.iAlignLeft 

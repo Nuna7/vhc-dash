@@ -22,7 +22,11 @@ exports.login_validate_post = [
 		const errors = validationResult(req);
 		
 		if (!errors.isEmpty()) { 
-			(req.session.flash ??= {}).errors = errors.array();
+			(req.session.flash ??= {}).errors = {
+				for: "login",
+				err: errors.array()
+			}
+
 			return res.redirect("/login");
 		} 
 
@@ -44,10 +48,13 @@ exports.login_success_post = (req, res, next) => {
 
 
 exports.login_error_post = (err, req, res, next) => {
-	(req.session.flash ??= {}).errors = [{ 
-		path: "password", 
-		msg: "Incorrect passkey" 
-	}];
+	(req.session.flash ??= {}).errors = {
+		for: "login",
+		err: [{ 
+			path: "password", 
+			msg: "Incorrect passkey" 
+		}]
+	};
 
 	return res.redirect("/login");
 }
@@ -113,7 +120,11 @@ exports.register_post = [
 		const errors = validationResult(req);
 
 		if (!errors.isEmpty()) { 
-			(req.session.flash ??= {}).errors = errors.array();
+			(req.session.flash ??= {}).errors = {
+				for: "register",
+				err: errors.array()
+			}
+
 			return res.redirect("/register");
 		}
 
