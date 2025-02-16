@@ -59,4 +59,24 @@ block content
 
 			button(type="submit").iAlignRight.mGreen Update Info
 
+	.Flexbox.mCmpSpacing.mVertCenter
+		h2.uNoWrap Account & Auth.
+		.Divider
 
+	+ErrorWrapper("password")
+		form#PasswordForm(method="post" action="/user/edit-password").Box.Flexbox.mCol.mCmpSpacing 
+			.rLabel Passkey Form
+
+			div
+				label(for="OldPasswordField"): b Old Passkey
+				input#OldPasswordField(type="password" name="old" required)
+
+			div
+				label(for="NewPasswordField"): b New Passkey
+				input#NewPasswordField(type="password" name="new" placeholder="More than 8 chars." required)
+
+			div
+				label(for="ConfirmPasswordField"): b Confirm New Passkey
+				input#ConfirmPasswordField(type="password" name="confirm" required)
+
+			button(type="submit").mGreen.iAlignRight Update Passkey

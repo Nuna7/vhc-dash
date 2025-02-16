@@ -72,3 +72,36 @@ exports.edit_user = [
 		res.redirect("/user");
 	}
 ]
+
+exports.edit_password = [
+	body("old", "Incorrect former passkey").custom(async (value, { req }) => {
+		return (await req.user.authenticate(value)).error ? Promise.reject() : true;
+	}),
+
+	body("new", "Invalid passkey length").isLength({ min: 8 }),
+	
+	body("confirm", "Passkey confirmation does not match").custom((value, { req }) => {
+		return value == req.body.new || Promise.reject();
+	}),
+
+	async (req, res, next) => {
+		const errors = validationResult(req);
+
+		if (!errors.isEmpty()) { 
+			(req.session.flash ??= {}).errors = {
+				for: "password",
+				err: errors.array()
+			}
+
+			return res.redirect("/user#PasswordForm");
+		}
+
+		await req.user.changePassword(req.body.old, req.body.new);
+		
+		(req.session.flash ??= {}).message = {
+			msg: `Updated passkey for ${req.user.username} successfully.` 
+		}
+		
+		res.redirect("/user"); 
+	}
+]
