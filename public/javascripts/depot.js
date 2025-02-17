@@ -5,7 +5,7 @@ const depotFormSubmit = document.querySelector("#DepotForm>button[type='submit']
 // initialize form submit disabled state
 depotFormSubmit.disabled = Array.from(statusRadios).filter((r) => r.checked && r.value == "defer" ).length == roleInputs.length;
 
-// initialize role input disabled state1\
+// initialize role input disabled state
 for (const input of roleInputs) {
 	const uid = input.name.replace("roles-", "");
 	input.disabled = document.querySelector(`input[name="status-${uid}"]:checked`).value != "approve";

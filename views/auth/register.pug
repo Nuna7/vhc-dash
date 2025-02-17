@@ -19,9 +19,12 @@ block content
 				label(for="EmailField").mReq: b Email ID
 				input#EmailField(type="email" name="email" required)
 
-			div
-				label(for="ORCiDField"): b ORCiD
-				input#ORCiDField(type="text" name="orcid" placeholder="xxxx-xxxx-xxxx-xxxx")
+			.Flexbox.mCol.mMinSpacing
+				div
+					label(for="ORCiDField").mReq: b ORCiD
+					input#ORCiDField(type="text" name="orcid" placeholder="xxxx-xxxx-xxxx-xxxx" required)
+
+				a#ORCiDLink(href="https://orcid.org/register" target="blank_").tGray.iAlignRight: small Create an ORCiD ID
 
 			div
 				label(for="PhoneField"): b Phone No.

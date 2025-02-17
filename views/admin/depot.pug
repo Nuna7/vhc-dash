@@ -31,7 +31,7 @@ block content
 							tr
 								th(scope="row" rowspan=u.creationComment ? 2 : 1)=u.username
 								td=u.email
-								td: span(class=u.orcid ? "" : "tGray")=u.orcid || "NULL"
+								td: span(class=u.orcid ? "" : "tGray")=u.orcid
 								td: span(class=u.phone ? "" : "tGray")=u.phone || "NULL"
 
 								td: input.roleField(type="text" name=`roles-${u._id}` placeholder="L.C. alphanumeric & \"-\", comma sep.")

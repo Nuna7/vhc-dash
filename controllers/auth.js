@@ -76,8 +76,6 @@ exports.register_post = [
 	}),
 
 	body("orcid").custom(async value => {
-		if (!value) return true;
-
 		if (await User.findOne({ orcid: value })) throw new Error("User with this ORCiD exists");
 
 		// test orcid pattern against regex

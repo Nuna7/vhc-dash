@@ -9,7 +9,7 @@ const UserSchema = new Schema({
 	approved: { type: Boolean, default: false }, // only approved users can log in
 	roles: { type: Array },
 	email: { type: String, required: true, unique: true },
-	orcid: { type: String, unique: true, sparse: true },
+	orcid: { type: String, required: true, unique: true },
 	phone: { type: String },
 	creationComment: { type: String } // comment submitted at registration
 }, { timestamps: { createdAt: "created", updatedAt: "updated" } });

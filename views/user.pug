@@ -32,26 +32,14 @@ block content
 					else 
 						td: span.tGray [EMPTY]
 
+				tr 
+					th(scope="row") ORCiD:
+					td!=user.orcid
+
 			table 
 				tr
 					th(scope="row"): label(for="EmailField") Email:
-					td: input#EmailField(type="email" name="email" value=user.email placeholder="NULL")
-
-				tr
-					if user.orcid 
-						th(scope="row") ORCiD:
-						td=user.orcid
-
-					else 
-						th(scope="row"): label(for="ORCiDField") ORCiD:
-
-						td
-							button#ORCiDButton(type="button") Add ORCiD
-
-							#ORCiDSection
-								input#ORCiDField(type="text" value="" name="orcid" placeholder="NULL")
-								p.tGray: small Your ORCiD iD can only be updated once.
-
+					td: input#EmailField(type="email" name="email" value=user.email placeholder="NULL" required)
 
 				tr
 					th(scope="row"): label(for="PhoneField") Phone:
