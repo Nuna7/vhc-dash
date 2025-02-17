@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 const passportLocalMongoose = require("passport-local-mongoose");
 
-const RCV = require("./RCV");
+const { Schema } = mongoose;
 
-const Schema = mongoose.Schema;
+const RCV = require("./RCV");
 
 const UserSchema = new Schema({
 	approved: { type: Boolean, default: false }, // only approved users can log in
@@ -12,7 +12,7 @@ const UserSchema = new Schema({
 	orcid: { type: String, required: true, unique: true },
 	phone: { type: String },
 	creationComment: { type: String } // comment submitted at registration
-}, { timestamps: { createdAt: "created", updatedAt: "updated" } });
+}, { timestamps: true });
 
 // sanitize empty ORCiD values
 UserSchema.pre("save", function (next) {

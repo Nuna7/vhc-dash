@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
 const LLMSchema = new Schema({
 	name: { type: String, required: true },
 	version: { type: Schema.Types.Decimal128 },
 	parameters: { type: Schema.Types.Decimal128 },
-}, { timestamps: { createdAt: "created", updatedAt: "edited" } });
+});
 
 // concatenate model data into display information
 LLMSchema.virtual("displayName").get(function() {
