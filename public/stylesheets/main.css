@@ -1,8 +1,9 @@
 /* VARIABLES ================================================================ */
 
 :root {
-	--off-white   : #bbbbbb;
+	--white       : #bbbbbb;
 	--black       : #111111;
+	--off-white   : #b5b5b5;
 	--lighter-gray: #b0b0b0;
 	--light-gray  : #a1a1a1;
 	--dark-gray   : #444444;
@@ -27,7 +28,7 @@
 
 html,
 body {
-	--bg: var(--off-white);
+	--bg: var(--white);
 	--fg: var(--black);
 
 	height    : 100%;
@@ -150,7 +151,7 @@ small {
 
 .Box.mSolid {
 	--bg: var(--black);
-	--fg: var(--off-white);
+	--fg: var(--white);
 
 	border          : none;
 	background-color: var(--bg);
@@ -168,7 +169,7 @@ small {
 .Box.mSolid.mOutline {
 	--box-padding: var(--cmp-spacing);
 
-	outline       : 1px solid var(--off-white);
+	outline       : 1px solid var(--white);
 	outline-offset: calc(0px - var(--box-padding) / 2);
 }
 
@@ -181,11 +182,18 @@ small {
 }
 
 .Box>:is(.cLabel, .lLabel, .rLabel) {
+	position   : absolute;
+	top        : 0;
+	padding    : 0 1ch;
+	white-space: nowrap;
+}
+
+.Box>:is(.cLabel, .lLabel, .rLabel)::after {
+	z-index         : -1;
 	position        : absolute;
-	top             : 0;
-	padding         : 0 1ch;
+	inset           : calc(50% - 1px) 0 0 0;
 	background-color: var(--bg);
-	white-space     : nowrap;
+	content         : "";
 }
 
 .Box>.cLabel {
@@ -212,7 +220,7 @@ table {
 }
 
 thead {
-	--fg: var(--off-white);
+	--fg: var(--white);
 	--bg: var(--black);
 
 	background-color: var(--bg);

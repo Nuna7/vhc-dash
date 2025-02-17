@@ -101,12 +101,12 @@ button {
 
 button.mRed {
 	background-color: var(--red);
-	color           : var(--off-white);
+	color           : var(--white);
 }
 
 button.mGreen {
 	background-color: var(--green);
-	color           : var(--off-white);
+	color           : var(--white);
 }
 
 button.mTiny {
