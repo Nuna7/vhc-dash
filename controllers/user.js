@@ -9,7 +9,7 @@ export function panel(req, res, next) {
 
 export const edit_user = [
 	body("email", "Invalid email ID").trim().isEmail().custom(async (value, { req }) => {
-		try { return (await User.findOne({ _id: { $ne: req.user._id }, email: value })) ? Promise.reject("User with this email ID exists") : true; }
+		try { return (await User.exists({ _id: { $ne: req.user._id }, email: value })) ? Promise.reject("User with this email ID exists") : true; }
 		catch(err) { next(err); }
 	}),
 

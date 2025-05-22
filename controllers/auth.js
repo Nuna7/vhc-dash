@@ -14,7 +14,7 @@ export function login_get(req, res, next) {
 export const login_validate_post = [
 	body("username").trim().custom(async value => {
 		try {
-			const user = await User.findOne({ username: value });
+			const user = await User.exists({ username: value });
 			
 			if (!user) return Promise.reject("User does not exist");
 			if (!user.approved) return Promise.reject("User not approved");
@@ -88,18 +88,18 @@ export function register_get(req, res, next) {
 // registration request --------------------------------------------------------
 export const register_post = [
 	body("username", "Invalid username length").trim().isLength({ min: 3, max: 20 }).custom(async value => {
-		try { return (await User.findOne({ username: value })) ? Promise.reject("Username not unique") : true; }
+		try { return (await User.exists({ username: value })) ? Promise.reject("Username not unique") : true; }
 		catch(err) { next(err); }
 	}),
 
 	body("email", "Invalid email ID").trim().isEmail().custom(async value => {
-		try { return (await User.findOne({ email: value })) ? Promise.reject("User with this email ID exists") : true; }
+		try { return (await User.exists({ email: value })) ? Promise.reject("User with this email ID exists") : true; }
 		catch(err) { next(err); }
 	}),
 
 	body("orcid").custom(async value => {
 		try {
-			if (await User.findOne({ orcid: value })) throw new Error("User with this ORCiD exists");
+			if (await User.exists({ orcid: value })) throw new Error("User with this ORCiD exists");
 
 			// test orcid pattern against regex
 			const orcidPattern = /^(\d{4}-){3}\d{3}[\dX]$/;
