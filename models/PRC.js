@@ -6,7 +6,9 @@ import RCV from "./RCV.js";
 
 const md = new MarkdownIt();
 
-// implicit paraphrase model definition
+// SCHEMAS =====================================================================
+
+// implicit paraphrase schema
 const ParaphraseSchema = new Schema({
 	llm: { type: Schema.Types.ObjectId, ref: "LLM", required: true },
 	response: { type: String, required: true }
@@ -17,6 +19,7 @@ ParaphraseSchema.methods.renderContent = function() {
 	return md.render(this.response);
 }
 
+// main paraphrases schema -----------------------------------------------------
 const PRCSchema = new Schema({
 	input: { type: String, required: true },
 	responses: { type: [ParaphraseSchema], required: true },
@@ -31,5 +34,7 @@ PRCSchema.pre("deleteMany", function(next) {
 		next();
 	});
 });
+
+// DEFAULT EXPORT ==============================================================
 
 export default model("PRC", PRCSchema);

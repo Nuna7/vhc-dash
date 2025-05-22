@@ -3,6 +3,8 @@ import passportLocalMongoose from "passport-local-mongoose";
 
 import RCV from "./RCV.js";
 
+// SCHEMAS =====================================================================
+
 const UserSchema = new Schema({
 	approved: { type: Boolean, default: false }, // only approved users can log in
 	roles: { type: Array },
@@ -34,5 +36,7 @@ UserSchema.plugin(passportLocalMongoose, {
 		return model.findOne(queryParameters);
 	}
 });
+
+// DEFAULT EXPORT ==============================================================
 
 export default model("User", UserSchema);

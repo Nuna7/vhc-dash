@@ -1,5 +1,7 @@
 import { Schema, model } from "mongoose";
 
+// SCHEMAS =====================================================================
+
 const LLMSchema = new Schema({
 	name: { type: String, required: true },
 	version: { type: Schema.Types.Decimal128 },
@@ -15,5 +17,7 @@ LLMSchema.virtual("displayName").get(function() {
 
 	return display;
 });
+
+// DEFAULT EXPORT ==============================================================
 
 export default model("LLM", LLMSchema);
