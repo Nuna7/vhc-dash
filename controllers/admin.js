@@ -39,13 +39,12 @@ export const depot_post = [
 			.filter((key) => key.startsWith("status-"))
 			.filter((key) => req.body[key] != "defer");
 
-		// map status keys to role keys and extract user IDs
-		const roleKeys = statusKeys.map((key) => key.replace("status", "roles"));
-		const userIDs= statusKeys.map((key) => key.replace("status-", ""));
+		// extract user IDs
+		const userIDs = statusKeys.map((key) => key.replace("status-", ""));
 
 		for (const id of userIDs) {
-			const status = req.body[statusKeys.filter((key) => key.endsWith(id))[0]];
-			const roles = (req.body[roleKeys.find((key) => key.endsWith(id))] || "")
+			const status = req.body[`status-${id}`];
+			const roles = (req.body[`roles-${id}`] || "")
 							.split(",")
 							.map((role) => role.trim())
 							.filter(Boolean);  
