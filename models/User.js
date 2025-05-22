@@ -7,7 +7,7 @@ import RCV from "./RCV.js";
 
 const UserSchema = new Schema({
 	approved: { type: Boolean, default: false }, // only approved users can log in
-	roles: { type: Array },
+	roles: [{ type: String, enum: ["admin", "researcher"] }],
 	email: { type: String, required: true, unique: true },
 	orcid: { type: String, required: true, unique: true },
 	phone: { type: String },
