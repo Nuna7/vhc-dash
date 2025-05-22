@@ -3,8 +3,8 @@ import { body, validationResult } from "express-validator";
 import PRC from "../models/PRC.js";
 import RCV from "../models/RCV.js";
 
+// RANKER ======================================================================
 
-// ranker view
 export async function ranker(req, res, next) {
 	// find all PRCs not voted for by user
 	const prcs = await PRC.aggregate([
@@ -20,18 +20,14 @@ export async function ranker(req, res, next) {
 		{ $match: { "rcv.ballots.voter": { $ne: req.user._id } } },
 		{ $limit: 1 }
 	]);
-	
-	// populate PRC
-	const prc = prcs.length ? await PRC.hydrate(prcs[0]) : undefined;
-		
+			
 	res.render("ranker", {
 		title: "M.O. Ranker",
-		prc: prc
+		prc: prcs.length ? await PRC.hydrate(prcs[0]) : undefined
 	});
 }
 
-
-// submit ballot
+// submit ballot ---------------------------------------------------------------
 export const post_ballot = [
 	body("prc").isMongoId(),
 	
@@ -88,8 +84,8 @@ export const post_ballot = [
 
 		const errors = validationResult(req);
 
+		// TODO: implement syserror page/display
 		if (!errors.isEmpty()) { 
-			(req.session.flash ??= {}).errors = errors.array();
 			return res.redirect("/ranker");
 		}
 
@@ -115,6 +111,8 @@ export const post_ballot = [
 		return res.redirect("/ranker");
 	}
 ]
+
+// DEFAULT EXPORT ==============================================================
 
 export default {
 	ranker,

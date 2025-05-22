@@ -2,19 +2,22 @@ import { body, validationResult, matchedData } from "express-validator";
 
 import User from "../models/User.js";
 
+// LOGIN/OUT ===================================================================
 
+// login page
 export function login_get(req, res, next) {
 	if (req.query.next) req.session.returnTo = req.query.next;
 	res.render("auth/login", { title: "Log In" });
 }
 
-
-// validate everything except password before actual auth. attempt
+// pre-validation POST ---------------------------------------------------------
 export const login_validate_post = [
 	body("username").trim().custom(async value => {
 		const user = await User.findOne({ username: value });
+		
 		if (!user) return Promise.reject("User does not exist");
 		if (!user.approved) return Promise.reject("User not approved");
+		
 		return true;
 	}),
 	
@@ -34,7 +37,7 @@ export const login_validate_post = [
 	}
 ]
 
-
+// login success POST ----------------------------------------------------------
 export function login_success_post(req, res, next) {
 	const returnTo = req.session.returnTo;
 	delete req.session.returnTo;
@@ -46,7 +49,7 @@ export function login_success_post(req, res, next) {
 	res.redirect(returnTo || "/");
 }
 
-
+// login failure POST ----------------------------------------------------------
 export function login_error_post(err, req, res, next) {
 	(req.session.flash ??= {}).errors = {
 		for: "login",
@@ -59,6 +62,18 @@ export function login_error_post(err, req, res, next) {
 	return res.redirect("/login");
 }
 
+// logout ----------------------------------------------------------------------
+export function logout(req, res, next) {
+	req.logout();
+
+	(req.session.flash ??= {}).message = {
+		msg: "Terminated user session successfully."
+	}
+	
+	res.redirect(req.query.next);
+}
+
+// REGISTRATION ================================================================
 
 export function register_get(req, res, next) {
 	if (req.query.next) req.session.returnTo = req.query.next;
@@ -66,6 +81,7 @@ export function register_get(req, res, next) {
 
 }
 
+// registration request --------------------------------------------------------
 export const register_post = [
 	body("username", "Invalid username length").trim().isLength({ min: 3, max: 20 }).custom(async value => {
 		return (await User.findOne({ username: value })) ? Promise.reject("Username not unique") : true;
@@ -144,15 +160,7 @@ export const register_post = [
 	}
 ]
 
-export function logout(req, res, next) {
-	req.logout();
-
-	(req.session.flash ??= {}).message = {
-		msg: "Terminated user session successfully."
-	}
-	
-	res.redirect(req.query.next);
-}
+// DEFAULT EXPORT ==============================================================
 
 export default {
 	login_get,

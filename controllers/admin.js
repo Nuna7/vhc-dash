@@ -2,6 +2,7 @@ import { body, validationResult } from "express-validator";
 
 import User from "../models/User.js";
 
+// DEPOT =======================================================================
 
 export async function depot_get(req, res, next) {
 	res.render("admin/depot", { 
@@ -10,7 +11,7 @@ export async function depot_get(req, res, next) {
 	});
 }
 
-
+// process registration requests -----------------------------------------------
 export const depot_post = [
 	body().custom(body => {
 		// validate roles against regex
@@ -70,6 +71,8 @@ export const depot_post = [
 		return res.redirect("/admin/user-depot");
 	}
 ]
+
+// DEFAULT EXPORT ==============================================================
 
 export default {
 	depot_get,
