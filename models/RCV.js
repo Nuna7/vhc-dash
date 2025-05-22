@@ -7,7 +7,15 @@ import User from "./User.js";
 // implicit ballot schema
 const BallotSchema = new Schema({
 	voter: { type: Schema.Types.ObjectId, ref: "User", required: true },
-	ranking: { type: [Schema.Types.ObjectId], required: true },
+	ranking: { 
+		type: [Schema.Types.ObjectId], 
+		required: true,
+		validate: {
+			// check if array elements are unique
+			validator: (arr) => Array.isArray(arr) && new Set(arr.map(String)).size === arr.length,
+			message: "Ranking must contain unique choices"
+		}
+	},
 	failCount: { type: Number, required: true }
 }, { timestamps: true });
 
