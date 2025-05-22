@@ -80,7 +80,8 @@ app.use(flashMessages);
 
 // template url access middleware ----------------------------------------------
 app.use(function(req, res, next) {
-	res.locals.url = url.parse(req.originalUrl || req.url).pathname;
+	const fullUrl = `${req.protocol}://${req.get("host")}${req.originalUrl || req.url}`;
+	res.locals.url = new URL(fullUrl).pathname;
 	return next();
 });
 
