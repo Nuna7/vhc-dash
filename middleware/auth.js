@@ -1,3 +1,6 @@
+// MIDDLEWARE ==================================================================
+
+// restricted-access management
 export function sessionAuthCheck(roles) {
 	return function (req, res, next) {
 		// if logged in, verify permissions
@@ -23,11 +26,13 @@ export function sessionAuthCheck(roles) {
 	}
 }
 
-// make auth data available to templates
+// make auth data available to templates ---------------------------------------
 export function sessionAuthData(req, res, next) {
 	if (req.isAuthenticated()) { res.locals.user = req.user; } 
 	return next();
 }
+
+// DEFAULT EXPORT ==============================================================
 
 export default {
 	sessionAuthCheck,

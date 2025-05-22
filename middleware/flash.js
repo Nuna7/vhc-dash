@@ -1,3 +1,6 @@
+// MIDDLEWARE ==================================================================
+
+// flash messages
 export function flashMessages(req, res, next) {
 	res.locals.flash = req.session.flash;
 	
@@ -9,6 +12,8 @@ export function flashMessages(req, res, next) {
 	
 	return next();
 }
+
+// DEFAULT EXPORT ==============================================================
 
 export default {
 	flashMessages
