@@ -1,4 +1,4 @@
-import { body, validationResult } from "express-validator";
+import { body, validationResult, matchedData } from "express-validator";
 
 import User from "../models/User.js";
 
@@ -25,10 +25,12 @@ export const edit_user = [
 
 			return res.redirect("/user");
 		}
+
+		const data = matchedData(req);
 		
 		await User.findById(req.user._id).updateOne({
-			email: req.body.email,
-			phone: req.body.phone
+			email: data.email,
+			phone: data.phone
 		});
 
 		(req.session.flash ??= {}).message = { 
@@ -62,7 +64,9 @@ export const edit_password = [
 			return res.redirect("/user#PasswordForm");
 		}
 
-		await req.user.changePassword(req.body.old, req.body.new);
+		const data = matchedData(req);
+
+		await req.user.changePassword(data.old, data.new);
 		
 		(req.session.flash ??= {}).message = {
 			msg: `Updated passkey for ${req.user.username} successfully.` 
