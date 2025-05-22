@@ -2,9 +2,11 @@
 
 // DEPENDENCIES ================================================================
 
-const app = require("../app");
-const debug = require("debug")("vhc:server");
-const http = require("http");
+import app from "../app.js";
+import createDebug from "debug";
+import http from "http";
+
+const debug = createDebug("vhc:server");
 
 // PORT ========================================================================
 

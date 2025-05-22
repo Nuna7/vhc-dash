@@ -1,4 +1,4 @@
-exports.flashMessages = function (req, res, next) {
+export function flashMessages(req, res, next) {
 	res.locals.flash = req.session.flash;
 	
 	// reset and assign passthrough flash
@@ -9,3 +9,7 @@ exports.flashMessages = function (req, res, next) {
 	
 	return next();
 }
+
+export default {
+	flashMessages
+};

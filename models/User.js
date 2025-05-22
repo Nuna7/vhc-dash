@@ -1,9 +1,7 @@
-const mongoose = require("mongoose");
-const passportLocalMongoose = require("passport-local-mongoose");
+import { Schema, model } from "mongoose";
+import passportLocalMongoose from "passport-local-mongoose";
 
-const { Schema } = mongoose;
-
-const RCV = require("./RCV");
+import RCV from "./RCV.js";
 
 const UserSchema = new Schema({
 	approved: { type: Boolean, default: false }, // only approved users can log in
@@ -37,4 +35,4 @@ UserSchema.plugin(passportLocalMongoose, {
 	}
 });
 
-module.exports = mongoose.model("User", UserSchema);
+export default model("User", UserSchema);

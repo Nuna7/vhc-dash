@@ -1,16 +1,16 @@
-const { body, validationResult, matchedData } = require("express-validator");
+import { body, validationResult, matchedData } from "express-validator";
 
-const User = require("../models/User");
+import User from "../models/User.js";
 
 
-exports.login_get = (req, res, next) => {
+export function login_get(req, res, next) {
 	if (req.query.next) req.session.returnTo = req.query.next;
 	res.render("auth/login", { title: "Log In" });
 }
 
 
 // validate everything except password before actual auth. attempt
-exports.login_validate_post = [
+export const login_validate_post = [
 	body("username").trim().custom(async value => {
 		const user = await User.findOne({ username: value });
 		if (!user) return Promise.reject("User does not exist");
@@ -35,7 +35,7 @@ exports.login_validate_post = [
 ]
 
 
-exports.login_success_post = (req, res, next) => {
+export function login_success_post(req, res, next) {
 	const returnTo = req.session.returnTo;
 	delete req.session.returnTo;
 
@@ -47,7 +47,7 @@ exports.login_success_post = (req, res, next) => {
 }
 
 
-exports.login_error_post = (err, req, res, next) => {
+export function login_error_post(err, req, res, next) {
 	(req.session.flash ??= {}).errors = {
 		for: "login",
 		err: [{ 
@@ -60,13 +60,13 @@ exports.login_error_post = (err, req, res, next) => {
 }
 
 
-exports.register_get = (req, res, next) => {
+export function register_get(req, res, next) {
 	if (req.query.next) req.session.returnTo = req.query.next;
 	res.render("auth/register", { title: "Register" });
 
 }
 
-exports.register_post = [
+export const register_post = [
 	body("username", "Invalid username length").trim().isLength({ min: 3, max: 20 }).custom(async value => {
 		return (await User.findOne({ username: value })) ? Promise.reject("Username not unique") : true;
 	}),
@@ -144,7 +144,7 @@ exports.register_post = [
 	}
 ]
 
-exports.logout = (req, res, next) => {
+export function logout(req, res, next) {
 	req.logout();
 
 	(req.session.flash ??= {}).message = {
@@ -153,3 +153,13 @@ exports.logout = (req, res, next) => {
 	
 	res.redirect(req.query.next);
 }
+
+export default {
+	login_get,
+	login_validate_post,
+	login_success_post,
+	login_error_post,
+	register_get,
+	register_post,
+	logout
+};

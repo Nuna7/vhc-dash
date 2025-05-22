@@ -1,4 +1,4 @@
-exports.sessionAuthCheck = function (roles) {
+export function sessionAuthCheck(roles) {
 	return function (req, res, next) {
 		// if logged in, verify permissions
 		if (req.isAuthenticated()) {
@@ -24,7 +24,12 @@ exports.sessionAuthCheck = function (roles) {
 }
 
 // make auth data available to templates
-exports.sessionAuthData = function (req, res, next) {
+export function sessionAuthData(req, res, next) {
 	if (req.isAuthenticated()) { res.locals.user = req.user; } 
 	return next();
 }
+
+export default {
+	sessionAuthCheck,
+	sessionAuthData
+};

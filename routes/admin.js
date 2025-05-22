@@ -1,11 +1,11 @@
-var express = require("express");
-var router = express.Router();
+import { Router } from "express";
+const router = Router();
 
-const authMiddleware = require("../middleware/auth");
+import { sessionAuthCheck } from "../middleware/auth.js";
 
-const adminController = require("../controllers/admin");
+import adminController from "../controllers/admin.js";
 
-router.get("/user-depot", authMiddleware.sessionAuthCheck(["admin"]), adminController.depot_get);
-router.post("/user-depot", authMiddleware.sessionAuthCheck(["admin"]), adminController.depot_post);
+router.get("/user-depot", sessionAuthCheck(["admin"]), adminController.depot_get);
+router.post("/user-depot", sessionAuthCheck(["admin"]), adminController.depot_post);
 
-module.exports = router;
+export default router;

@@ -1,8 +1,6 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
-const { Schema } = mongoose;
-
-const User = require("./User");
+import User from "./User.js";
 
 // implicit ballot model definition
 const BallotSchema = new Schema({
@@ -15,4 +13,4 @@ const RCVSchema = new Schema({
 	ballots: { type: [BallotSchema] }
 }, { timestamps: true });
 
-module.exports = mongoose.model("RCV", RCVSchema);
+export default model("RCV", RCVSchema);

@@ -1,14 +1,13 @@
-const { body, validationResult } = require("express-validator");
+import { body, validationResult } from "express-validator";
 
-const User = require("../models/User");
+import User from "../models/User.js";
 
-
-exports.panel = (req, res, next) => {
+export function panel(req, res, next) {
 	res.render("user", { title: "User Panel" });
 }
 
 
-exports.edit_user = [
+export const edit_user = [
 	body("email", "Invalid email ID").trim().isEmail().custom(async (value, { req }) => {
 		return (await User.findOne({ _id: { $ne: req.user._id }, email: value })) ? Promise.reject("User with this email ID exists") : true;
 	}),
@@ -40,7 +39,7 @@ exports.edit_user = [
 	}
 ]
 
-exports.edit_password = [
+export const edit_password = [
 	body("old", "Incorrect former passkey").custom(async (value, { req }) => {
 		return (await req.user.authenticate(value)).error ? Promise.reject() : true;
 	}),
@@ -72,3 +71,9 @@ exports.edit_password = [
 		res.redirect("/user"); 
 	}
 ]
+
+export default {
+	panel,
+	edit_user,
+	edit_password
+}

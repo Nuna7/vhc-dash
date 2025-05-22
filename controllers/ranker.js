@@ -1,11 +1,11 @@
-const { body, validationResult } = require("express-validator");
+import { body, validationResult } from "express-validator";
 
-const PRC = require("../models/PRC");
-const RCV = require("../models/RCV");
+import PRC from "../models/PRC.js";
+import RCV from "../models/RCV.js";
 
 
 // ranker view
-exports.ranker = async (req, res, next) => {
+export async function ranker(req, res, next) {
 	// find all PRCs not voted for by user
 	const prcs = await PRC.aggregate([
 		{
@@ -32,7 +32,7 @@ exports.ranker = async (req, res, next) => {
 
 
 // submit ballot
-exports.post_ballot = [
+export const post_ballot = [
 	body("prc").isMongoId(),
 	
 	body().custom(async (body, { req }) => {
@@ -115,3 +115,8 @@ exports.post_ballot = [
 		return res.redirect("/ranker");
 	}
 ]
+
+export default {
+	ranker,
+	post_ballot
+}

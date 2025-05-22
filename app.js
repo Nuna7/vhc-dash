@@ -1,44 +1,48 @@
-require("dotenv").config();
+import dotenv from "dotenv";
+
+dotenv.config();
 
 // IMPORTS =====================================================================
 
 // core functionality
-const express = require("express");	
-const path = require("path");
-const url = require("url");
+import express from "express"
+import { dirname, join } from "path";
+import { fileURLToPath } from "url";
 
 // requests & session
-const cookieParser = require("cookie-parser");
-const session = require("cookie-session");
-const logger = require("morgan");
+import cookieParser from "cookie-parser";
+import session from "cookie-session";
+import logger from "morgan";
 
 // security & auth
-const helmet = require("helmet");
-const passport = require("passport");
+import helmet from "helmet";
+import passport from "passport";
 
 // error handling
-const createError = require("http-errors");
+import createError from "http-errors";
+
+// database
+import mongoose from "mongoose";
 
 // custom middleware -----------------------------------------------------------
-const authMiddleware = require("./middleware/auth");
-const flashMiddleware = require("./middleware/flash");
+import { sessionAuthData } from "./middleware/auth.js";
+import { flashMessages } from "./middleware/flash.js";
 
 // user model ------------------------------------------------------------------
-const User = require("./models/User");
+import User from "./models/User.js";
 
 // routers ---------------------------------------------------------------------
-const authRouter = require("./routes/auth");
-const indexRouter = require("./routes/index");
-const userRouter = require("./routes/user");
-const adminRouter = require("./routes/admin");
-const rankerRouter = require("./routes/ranker");
+import authRouter from "./routes/auth.js";
+import indexRouter from "./routes/index.js";
+import userRouter from "./routes/user.js";
+import adminRouter from "./routes/admin.js";
+import rankerRouter from "./routes/ranker.js";
 
 // APP DEFINITION ==============================================================
 
 const app = express();
 
 // mongodb connection ----------------------------------------------------------
-const mongoose = require("mongoose");
 const connect_db = async () => { return mongoose.connect(process.env.MONGODB_URL); }
 
 connect_db().then(conn => {
@@ -47,13 +51,16 @@ connect_db().then(conn => {
 }).catch(err => console.error("MongoDB connection error:", err));
 
 // app settings ----------------------------------------------------------------
-app.set("views", path.join(__dirname, "views"));
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+app.set("views", join(__dirname, "views"));
 app.set("view engine", "pug");
 
 // app middleware --------------------------------------------------------------
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(join(__dirname, "public")));
 
 app.use(cookieParser());
 app.use(session({
@@ -68,8 +75,8 @@ app.use(helmet());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(authMiddleware.sessionAuthData);
-app.use(flashMiddleware.flashMessages);
+app.use(sessionAuthData);
+app.use(flashMessages);
 
 // template url access middleware ----------------------------------------------
 app.use(function(req, res, next) {
@@ -101,4 +108,4 @@ passport.deserializeUser(User.deserializeUser());
 
 // MODULE EXPORT ===============================================================
 
-module.exports = app;
+export default app;

@@ -1,11 +1,11 @@
-var express = require("express");
-var router = express.Router();
+import { Router } from "express";
+const router = Router();
 
-const authMiddleware = require("../middleware/auth");
+import { sessionAuthCheck } from "../middleware/auth.js";
 
-const rankerController = require("../controllers/ranker");
+import rankerController from "../controllers/ranker.js";
 
-router.get("/", authMiddleware.sessionAuthCheck(), rankerController.ranker);
-router.post("/", authMiddleware.sessionAuthCheck(), rankerController.post_ballot);
+router.get("/", sessionAuthCheck(), rankerController.ranker);
+router.post("/", sessionAuthCheck(), rankerController.post_ballot);
 
-module.exports = router;
+export default router;

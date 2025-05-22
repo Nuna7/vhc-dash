@@ -1,10 +1,8 @@
-const mongoose = require("mongoose");
-const MarkdownIt = require("markdown-it");
+import { Schema, model } from "mongoose";
+import MarkdownIt from "markdown-it";
 
-const { Schema } = mongoose;
-
-const LLM = require("./LLM")
-const RCV = require("./RCV")
+import LLM from "./LLM.js";
+import RCV from "./RCV.js";
 
 const md = new MarkdownIt();
 
@@ -34,4 +32,4 @@ PRCSchema.pre("deleteMany", function(next) {
 	});
 });
 
-module.exports = mongoose.model("PRC", PRCSchema);
+export default model("PRC", PRCSchema);

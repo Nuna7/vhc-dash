@@ -1,9 +1,9 @@
-const { body, validationResult } = require("express-validator");
+import { body, validationResult } from "express-validator";
 
-const User = require("../models/User");
+import User from "../models/User.js";
 
 
-exports.depot_get = async (req, res, next) => {
+export async function depot_get(req, res, next) {
 	res.render("admin/depot", { 
 		title: "Registration Depot",
 		users: await User.find({ approved: false })
@@ -11,7 +11,7 @@ exports.depot_get = async (req, res, next) => {
 }
 
 
-exports.depot_post = [
+export const depot_post = [
 	body().custom(body => {
 		// validate roles against regex
 		for (const key of Object.keys(body).filter(key => key.startsWith("roles-"))) {
@@ -71,3 +71,8 @@ exports.depot_post = [
 		return res.redirect("/admin/user-depot");
 	}
 ]
+
+export default {
+	depot_get,
+	depot_post
+};

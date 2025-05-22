@@ -1,6 +1,4 @@
-const mongoose = require("mongoose");
-
-const { Schema } = mongoose;
+import { Schema, model } from "mongoose";
 
 const LLMSchema = new Schema({
 	name: { type: String, required: true },
@@ -18,4 +16,4 @@ LLMSchema.virtual("displayName").get(function() {
 	return display;
 });
 
-module.exports = mongoose.model("LLM", LLMSchema);
+export default model("LLM", LLMSchema);
