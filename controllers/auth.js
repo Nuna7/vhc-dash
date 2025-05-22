@@ -14,7 +14,10 @@ export function login_get(req, res, next) {
 export const login_validate_post = [
 	body("username").trim().custom(async value => {
 		try {
-			const user = await User.exists({ username: value });
+			const user = await User.findOne({ username: value })
+									.select("approved")
+									.lean()
+									.exec();
 			
 			if (!user) return Promise.reject("User does not exist");
 			if (!user.approved) return Promise.reject("User not approved");
