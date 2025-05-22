@@ -5,10 +5,14 @@ import User from "../models/User.js";
 // DEPOT =======================================================================
 
 export async function depot_get(req, res, next) {
-	res.render("admin/depot", { 
-		title: "Registration Depot",
-		users: await User.find({ approved: false })
-	});
+	try {
+		res.render("admin/depot", { 
+			title: "Registration Depot",
+			users: await User.find({ approved: false })
+		});
+	}
+
+	catch(err) { next(err); }
 }
 
 // process registration requests -----------------------------------------------
@@ -50,18 +54,22 @@ export const depot_post = [
 							.map((role) => role.trim())
 							.filter(Boolean);  
 
-			// delete user upon rejection
-			if (status == "reject") await User.findByIdAndDelete(id);
-
-			// approve user and and set roles
-			else {
-				await User.findByIdAndUpdate(id, {
-					$set: { 
-						approved: (status == "approve") ,
-						roles: roles
-					}
-				});
+			try {
+				// delete user upon rejection
+				if (status == "reject") await User.findByIdAndDelete(id);
+				
+				// approve user and and set roles
+				else {
+					await User.findByIdAndUpdate(id, {
+						$set: { 
+							approved: (status == "approve") ,
+							roles: roles
+						}
+					});
+				}
 			}
+
+			catch(err) { next(err); }
 		}
 
 		(req.session.flash ??= {}).message = {

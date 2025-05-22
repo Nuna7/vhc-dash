@@ -13,12 +13,16 @@ export function login_get(req, res, next) {
 // pre-validation POST ---------------------------------------------------------
 export const login_validate_post = [
 	body("username").trim().custom(async value => {
-		const user = await User.findOne({ username: value });
-		
-		if (!user) return Promise.reject("User does not exist");
-		if (!user.approved) return Promise.reject("User not approved");
-		
-		return true;
+		try {
+			const user = await User.findOne({ username: value });
+			
+			if (!user) return Promise.reject("User does not exist");
+			if (!user.approved) return Promise.reject("User not approved");
+			
+			return true;
+		}
+
+		catch(err) { next(err); }
 	}),
 	
 	(req, res, next) => {
@@ -84,38 +88,44 @@ export function register_get(req, res, next) {
 // registration request --------------------------------------------------------
 export const register_post = [
 	body("username", "Invalid username length").trim().isLength({ min: 3, max: 20 }).custom(async value => {
-		return (await User.findOne({ username: value })) ? Promise.reject("Username not unique") : true;
+		try { return (await User.findOne({ username: value })) ? Promise.reject("Username not unique") : true; }
+		catch(err) { next(err); }
 	}),
 
 	body("email", "Invalid email ID").trim().isEmail().custom(async value => {
-		return (await User.findOne({ email: value })) ? Promise.reject("User with this email ID exists") : true;
+		try { return (await User.findOne({ email: value })) ? Promise.reject("User with this email ID exists") : true; }
+		catch(err) { next(err); }
 	}),
 
 	body("orcid").custom(async value => {
-		if (await User.findOne({ orcid: value })) throw new Error("User with this ORCiD exists");
+		try {
+			if (await User.findOne({ orcid: value })) throw new Error("User with this ORCiD exists");
 
-		// test orcid pattern against regex
-		const orcidPattern = /^(\d{4}-){3}\d{3}[\dX]$/;
-		if (!orcidPattern.test(value)) throw new Error("Invalid ORCiD format");
+			// test orcid pattern against regex
+			const orcidPattern = /^(\d{4}-){3}\d{3}[\dX]$/;
+			if (!orcidPattern.test(value)) throw new Error("Invalid ORCiD format");
 
-		// validate ORCiD check digit
-		const baseDigits = value.replace(/-/g, "").substring(0, 15);
-		const providedCD = value.charAt(value.length - 1);
+			// validate ORCiD check digit
+			const baseDigits = value.replace(/-/g, "").substring(0, 15);
+			const providedCD = value.charAt(value.length - 1);
 
-		let total = 0;
+			let total = 0;
 
-		for (let i = 0; i < baseDigits.length; i++) {
-			const digit = parseInt(baseDigits.charAt(i), 10);
-			total = (total + digit) * 2;
+			for (let i = 0; i < baseDigits.length; i++) {
+				const digit = parseInt(baseDigits.charAt(i), 10);
+				total = (total + digit) * 2;
+			}
+			
+			const remainder = total % 11;
+			const result = (12 - remainder) % 11;
+			const expectedCD = result === 10 ? 'X' : result.toString();
+
+			if (providedCD !== expectedCD) throw new Error("Invalid ORCiD check digit");
+
+			return true;
 		}
-		
-		const remainder = total % 11;
-		const result = (12 - remainder) % 11;
-		const expectedCD = result === 10 ? 'X' : result.toString();
 
-		if (providedCD !== expectedCD) throw new Error("Invalid ORCiD check digit");
-
-		return true;
+		catch(err) { next(err); }
 	}),
 
 	body("phone", "Invalid phone number").optional({checkFalsy: true}).trim().isMobilePhone(),
@@ -144,7 +154,7 @@ export const register_post = [
 
 		const data = matchedData(req);
 
-		await User.register({ 
+		User.register({ 
 			username: data.username,
 			email: data.email,
 			orcid: data.orcid,

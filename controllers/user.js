@@ -9,7 +9,8 @@ export function panel(req, res, next) {
 
 export const edit_user = [
 	body("email", "Invalid email ID").trim().isEmail().custom(async (value, { req }) => {
-		return (await User.findOne({ _id: { $ne: req.user._id }, email: value })) ? Promise.reject("User with this email ID exists") : true;
+		try { return (await User.findOne({ _id: { $ne: req.user._id }, email: value })) ? Promise.reject("User with this email ID exists") : true; }
+		catch(err) { next(err); }
 	}),
 
 	body("phone", "Invalid phone number").optional({checkFalsy: true}).trim().isMobilePhone(),
@@ -28,22 +29,27 @@ export const edit_user = [
 
 		const data = matchedData(req);
 		
-		await User.findById(req.user._id).updateOne({
-			email: data.email,
-			phone: data.phone
-		});
+		try {
+			await User.findById(req.user._id).updateOne({
+				email: data.email,
+				phone: data.phone
+			});
 
-		(req.session.flash ??= {}).message = { 
-			msg: `Updated info. for "${req.user.username}" successfully.` 
-		};
-		
-		res.redirect("/user");
+			(req.session.flash ??= {}).message = { 
+				msg: `Updated info. for "${req.user.username}" successfully.` 
+			};
+			
+			res.redirect("/user");
+		}
+
+		catch(err) { next(err); }
 	}
 ]
 
 export const edit_password = [
 	body("old", "Incorrect former passkey").custom(async (value, { req }) => {
-		return (await req.user.authenticate(value)).error ? Promise.reject() : true;
+		try { return (await req.user.authenticate(value)).error ? Promise.reject() : true; }
+		catch(err) { next(err); }
 	}),
 
 	body("new", "Invalid passkey length").isLength({ min: 8 }),
@@ -66,13 +72,17 @@ export const edit_password = [
 
 		const data = matchedData(req);
 
-		await req.user.changePassword(data.old, data.new);
-		
-		(req.session.flash ??= {}).message = {
-			msg: `Updated passkey for ${req.user.username} successfully.` 
+		try {
+			await req.user.changePassword(data.old, data.new);
+			
+			(req.session.flash ??= {}).message = {
+				msg: `Updated passkey for ${req.user.username} successfully.` 
+			}
+			
+			res.redirect("/user"); 
 		}
-		
-		res.redirect("/user"); 
+
+		catch(err) { next(err); }
 	}
 ]
 
