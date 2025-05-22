@@ -19,11 +19,10 @@ exports.ranker = async (req, res, next) => {
 		{ $unwind: "$rcv" },
 		{ $match: { "rcv.ballots.voter": { $ne: req.user._id } } },
 		{ $limit: 1 }
-	
 	]);
 	
 	// populate PRC
-	const prc = prcs.length ? await PRC.hydrate(prcs[0]).populate("responses.llm") : undefined;
+	const prc = prcs.length ? await PRC.hydrate(prcs[0]) : undefined;
 		
 	res.render("ranker", {
 		title: "M.O. Ranker",

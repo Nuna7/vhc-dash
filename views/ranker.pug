@@ -31,10 +31,10 @@ block content
 				.Divider 
 
 			#Responses.Flexbox.mMinSpacing
-				each response in prc.responses
+				each response, index in prc.responses
 					.Response(tabindex="0", id=`response-${response._id}`).iAlignTop 
 						.header.Flexbox.mVertStart
-							h2.modelName!=response.llm.displayName
+							h2.modelName LLM ##{index}
 
 							.ranker.RadioGroup(data-rank="?").Flexbox
 								each i in Array.from({length: prc.responses.length}, (v,i) => i+1)
