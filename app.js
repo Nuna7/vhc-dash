@@ -15,7 +15,6 @@ import session from "cookie-session";
 import logger from "morgan";
 
 // security & auth
-import helmet from "helmet";
 import passport from "passport";
 
 // error handling
@@ -71,7 +70,6 @@ app.use(session({
 }));
 app.use(logger("dev"));
 
-app.use(helmet());
 app.use(passport.initialize());
 app.use(passport.session());
 
