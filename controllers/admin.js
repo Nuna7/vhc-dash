@@ -1,18 +1,20 @@
 import { body, validationResult } from "express-validator";
 
+import { flashAndRedirect } from "../utils/flash.js";
+
 import User from "../models/User.js";
 
 // DEPOT =======================================================================
 
 export async function depot_get(req, res, next) {
 	try {
-		res.render("admin/depot", { 
+		res.render("admin/depot", {
 			title: "Registration Depot",
 			users: await User.find({ approved: false })
 		});
 	}
 
-	catch(err) { next(err); }
+	catch (err) { next(err); }
 }
 
 // process registration requests -----------------------------------------------
@@ -29,13 +31,13 @@ export const depot_post = [
 
 	async (req, res, next) => {
 		const errors = validationResult(req);
-		
-		if (!errors.isEmpty()) { 
+
+		if (!errors.isEmpty()) {
 			(req.session.flash ??= {}).errors = {
 				for: "depot",
 				err: errors.array()
 			}
-			
+
 			return res.redirect("/admin/user-depot");
 		}
 
@@ -50,33 +52,31 @@ export const depot_post = [
 		for (const id of userIDs) {
 			const status = req.body[`status-${id}`];
 			const roles = (req.body[`roles-${id}`] || "")
-							.split(",")
-							.map((role) => role.trim())
-							.filter(Boolean);  
+				.split(",")
+				.map((role) => role.trim())
+				.filter(Boolean);
 
 			try {
 				// delete user upon rejection
 				if (status == "reject") await User.findByIdAndDelete(id);
-				
+
 				// approve user and and set roles
 				else {
 					await User.findByIdAndUpdate(id, {
-						$set: { 
-							approved: (status == "approve") ,
+						$set: {
+							approved: (status == "approve"),
 							roles: roles
 						}
 					});
 				}
 			}
 
-			catch(err) { next(err); }
+			catch (err) { next(err); }
 		}
 
-		(req.session.flash ??= {}).message = {
-			msg: `Successfully processed ${userIDs.length} registration request(s).` 
-		}
-
-		return res.redirect("/admin/user-depot");
+		flashAndRedirect(req, res, "message", {
+			msg: `Successfully processed ${userIDs.length} registration request(s).`
+		}, "/admin/user-depot")
 	}
 ]
 
