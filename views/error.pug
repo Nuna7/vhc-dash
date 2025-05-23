@@ -1,6 +1,14 @@
 extends layout
 
 block content
-	.Box.mSolid.mOutline.mRed.iAlignLeft
-		h1 Error #{error.status}
-		p.mReadWidth=message
+	.Flexbox.mCol.mCmpSpacing
+		.Box.mSolid.mOutline.mRed.iAlignLeft
+			h1 Error #{status}
+			p.mReadWidth=message
+
+		
+		if returnURL
+			p <- Return to #[a(href=returnURL) previous page] #[span.tGray=`[${returnURL}]`]
+		
+		else 
+			p <- Return to #[a(href="/") homepage]

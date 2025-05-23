@@ -1,4 +1,5 @@
 import { body, validationResult, matchedData } from "express-validator";
+import createError from "http-errors";
 
 import { flashAndRedirect } from "../utils/flash.js";
 
@@ -32,6 +33,17 @@ export const edit_user = [
 		}
 
 		const data = matchedData(req);
+
+		// check for mismatch in expected and request user
+		if (req.body.uid != req.user._id.toString()) {
+			const err = createError(
+				403,
+				"Attempting to edit another user's information - re-check authentication status."
+			)
+			err.returnURL = "/user";
+			
+			return next(err);
+		}
 
 		try {
 			await User.findById(req.user._id).updateOne({
@@ -74,6 +86,17 @@ export const edit_password = [
 		}
 
 		const data = matchedData(req);
+
+		// check for mismatch in expected and request user
+		if (req.body.uid != req.user._id.toString()) {
+			const err = createError(
+				403,
+				"Attempting to change another user's password - re-check authentication status."
+			);
+			err.returnURL = "/user";
+			
+			return next(err);
+		}
 
 		try {
 			await req.user.changePassword(data.old, data.new);
