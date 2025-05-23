@@ -191,7 +191,7 @@ small {
 .Box>:is(.cLabel, .lLabel, .rLabel)::after {
 	z-index         : -1;
 	position        : absolute;
-	inset           : calc(50% - 1px) 0 0 0;
+	inset           : calc(50% - 2px) 0 0 0;
 	background-color: var(--bg);
 	content         : "";
 }
