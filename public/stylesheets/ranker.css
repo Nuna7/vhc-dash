@@ -28,8 +28,9 @@
 }
 
 #Responses>.Response {
-	flex     : 1 1 0;
-	min-width: 30em;
+	flex       : 1 1 0;
+	min-width  : 30em;
+	padding-top: 10px;
 }
 
 #Responses>.Response:focus {
@@ -49,7 +50,16 @@
 }
 
 #Responses>.Response>.header>.status {
+	position    : relative;
 	margin-right: 1em;
+}
+
+#Responses>.Response>.header>.status::after {
+	position : absolute;
+	right    : 0;
+	bottom   : calc(100% + 5px);
+	content  : "Pass?";
+	font-size: 0.8em;
 }
 
 #Responses>.Response>.header>.rankDisplay {
@@ -68,6 +78,6 @@
 	--bg            : var(--black);
 	--fg            : var(--white);
 	background-color: var(--bg);
-	color: var(--fg);
-	font-weight: var(--font-bold);
+	color           : var(--fg);
+	font-weight     : var(--font-bold);
 }
