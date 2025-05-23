@@ -8,8 +8,8 @@ import adminController from "../controllers/admin.js";
 
 const router = Router();
 
-router.get("/user-depot", sessionAuthCheck(["admin"]), adminController.depot_get);
-router.post("/user-depot", sessionAuthCheck(["admin"]), adminController.depot_post);
+router.get("/user-depot", sessionAuthCheck({ roles: ["admin"] }), adminController.depot_get);
+router.post("/user-depot", sessionAuthCheck({ roles: ["admin"] }), adminController.depot_post);
 
 // DEFAULT EXPORT ==============================================================
 

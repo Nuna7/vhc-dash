@@ -9,8 +9,8 @@ import userController from "../controllers/user.js";
 const router = Router();
 
 router.get("/", sessionAuthCheck(), userController.panel);
-router.post("/edit-info", sessionAuthCheck(), userController.edit_user);
-router.post("/edit-password", sessionAuthCheck(), userController.edit_password);
+router.post("/edit-info", sessionAuthCheck({ returnTo: "/user" }), userController.edit_user);
+router.post("/edit-password", sessionAuthCheck({ returnTo: "/user" }), userController.edit_password);
 
 // DEFAULT EXPORT ==============================================================
 
