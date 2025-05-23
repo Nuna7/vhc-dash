@@ -169,7 +169,7 @@ small {
 .Box.mSolid.mOutline {
 	--box-padding: var(--cmp-spacing);
 
-	outline       : 1px solid var(--white);
+	outline       : 1px solid var(--fg);
 	outline-offset: calc(0px - var(--box-padding) / 2);
 }
 
@@ -246,4 +246,13 @@ th[scope="row"] {
 	width      : 0.1%;
 	text-align : right;
 	white-space: nowrap;
+}
+
+/* FLASH MESSAGES =========================================================== */
+
+#Flash[data-type="warn"] {
+	--fg: var(--black);
+	--bg: var(--yellow);
+
+	outline-color: var(--dark-gray);
 }
