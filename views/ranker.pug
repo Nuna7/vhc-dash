@@ -32,21 +32,21 @@ block content
 
 			#Responses.Flexbox.mMinSpacing
 				each response, index in prc.responses
-					.Response(tabindex="0", id=`response-${response._id}`).iAlignTop 
+					.Response(tabindex="0", id=`response-${index}`).iAlignTop 
 						.header.Flexbox.mVertStart
 							h2.modelName LLM ##{index}
 
 							.ranker.RadioGroup(data-rank="?").Flexbox
 								each i in Array.from({length: prc.responses.length}, (v,i) => i+1)
 									label(title=`Assign rank ${i}\nShortcut: [${i}]`)=i
-										input(type="radio", id=`radio-${response._id}-${i}`, name=`rank-${response.llm._id}`, value=i).mButton
+										input(type="radio", id=`radio-${index}-${i}`, name=`rank-${response.llm._id}`, value=i).mButton
 
 							.status.RadioGroup.Flexbox
 								label.pass(title=`Assign "pass" status\nShortcut: [\`]`) ✓
-									input(type="radio", id=`radio-${response._id}-p`, name=`status-${response.llm._id}`, value="pass", checked).mButton
+									input(type="radio", id=`radio-${index}-p`, name=`status-${response.llm._id}`, value="pass", checked).mButton
 
 								label.fail(title=`Assign "fail" status\nShortcut: [\`]`) X
-									input(type="radio", id=`radio-${response._id}-f`, name=`status-${response.llm._id}`, value="fail").mButton
+									input(type="radio", id=`radio-${index}-f`, name=`status-${response.llm._id}`, value="fail").mButton
 
 							.rankDisplay ?
 
