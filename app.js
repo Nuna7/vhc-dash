@@ -5,14 +5,18 @@ dotenv.config();
 // IMPORTS =====================================================================
 
 // core functionality
-import express from "express"
+import fs from "fs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
+import express from "express"
 
 // requests & session
 import cookieParser from "cookie-parser";
 import session from "cookie-session";
-import logger from "morgan";
+
+// logging
+import { createStream } from "rotating-file-stream";
+import morgan from "morgan";
 
 // security & auth
 import passport from "passport";
@@ -37,6 +41,23 @@ import userRouter from "./routes/user.js";
 import adminRouter from "./routes/admin.js";
 import rankerRouter from "./routes/ranker.js";
 
+// PATH SETUP ==================================================================
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// LOGGING =====================================================================
+
+const logDirectory = join(__dirname, "logs");
+if (!fs.existsSync(logDirectory)) fs.mkdirSync(logDirectory);
+
+// rotating write stream: one file per day, keep 30 days
+const accessLogStream = createStream("access.log", {
+	interval: "1d",
+	path: logDirectory,
+	maxFiles: 30
+});
+
 // APP DEFINITION ==============================================================
 
 const app = express();
@@ -50,9 +71,6 @@ connect_db().then(conn => {
 }).catch(err => console.error("MongoDB connection error:", err));
 
 // app settings ----------------------------------------------------------------
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
 app.set("views", join(__dirname, "views"));
 app.set("view engine", "pug");
 
@@ -61,6 +79,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(join(__dirname, "public")));
 
+if (process.env.NODE_ENV === "production") {
+	app.use(morgan("combined", { stream: accessLogStream }));
+}
+
+else app.use(morgan("dev"));
+
 app.use(cookieParser());
 app.use(session({
 	resave: false,
@@ -68,7 +92,6 @@ app.use(session({
 	cookie: { secure: false },
 	secret: process.env.SESSION_SECRET
 }));
-app.use(logger("dev"));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -77,7 +100,7 @@ app.use(sessionAuthData);
 app.use(flashMessages);
 
 // template url access middleware ----------------------------------------------
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
 	const fullUrl = `${req.protocol}://${req.get("host")}${req.originalUrl || req.url}`;
 	res.locals.url = new URL(fullUrl).pathname;
 	return next();
@@ -93,7 +116,7 @@ app.use("/ranker", rankerRouter);
 // error handling ----------------------------------------------------------
 app.use((req, res, next) => next(createError(404)));
 
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
 	res.locals.message = err.message;
 	res.locals.error = req.app.get("env") === "development" ? err : {};
 	res.status(err.status || 500);
