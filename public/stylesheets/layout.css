@@ -16,6 +16,14 @@
 	background : radial-gradient(circle, var(--light-gray) 1px, var(--bg) 1px) 0 / 8px 8px;
 }
 
+#Username {
+	max-width    : 100%;
+	margin-right : 10px;
+	overflow     : hidden;
+	text-overflow: ellipsis;
+	white-space  : nowrap;
+}
+
 /* MAIN ===================================================================== */
 
 #Main {
@@ -42,9 +50,9 @@
 /* PAGE CONTENT ============================================================= */
 
 #Content {
-	max-width: 100%;
+	max-width       : 100%;
+	padding         : var(--cmp-spacing);
 	background-color: var(--off-white);
-	padding: var(--cmp-spacing);
 }
 
 /* FOOTER =================================================================== */
