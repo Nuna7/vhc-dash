@@ -34,7 +34,7 @@ block content
 				each response, index in prc.responses
 					.Response(tabindex="0", id=`response-${index}`).iAlignTop 
 						.header.Flexbox.mVertStart
-							h2.modelName LLM ##{index}
+							h2.modelName(data-index=index) LLM-#{String.fromCharCode(65 + index)}
 
 							.ranker.RadioGroup(data-rank="?").Flexbox
 								each i in Array.from({length: prc.responses.length}, (v,i) => i+1)

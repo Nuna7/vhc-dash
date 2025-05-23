@@ -57,7 +57,7 @@ function updateReviewBox() {
 			checkedCount = checkedCount + 1;
 
 			// ...update rank array
-			ranking[checkedRadio.value - 1] = ranker.parentNode.querySelector(".modelName").innerText;
+			ranking[checkedRadio.value - 1] = String.fromCharCode(65 + Number(ranker.parentNode.querySelector(".modelName").dataset.index));
 		}
 	};
 
