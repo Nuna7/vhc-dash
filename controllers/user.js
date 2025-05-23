@@ -4,11 +4,13 @@ import { flashAndRedirect } from "../utils/flash.js";
 
 import User from "../models/User.js";
 
+// USER INFO PANEL =============================================================
+
 export function panel(req, res, next) {
 	res.render("user", { title: "User Panel" });
 }
 
-
+// edit user details -----------------------------------------------------------
 export const edit_user = [
 	body("email", "Invalid email ID").trim().isEmail().custom(async (value, { req }) => {
 		try { return (await User.exists({ _id: { $ne: req.user._id }, email: value })) ? Promise.reject("User with this email ID exists") : true; }
@@ -46,6 +48,7 @@ export const edit_user = [
 	}
 ]
 
+// update password -------------------------------------------------------------
 export const edit_password = [
 	body("old", "Incorrect former passkey").custom(async (value, { req }) => {
 		try { return (await req.user.authenticate(value)).error ? Promise.reject() : true; }
@@ -83,6 +86,8 @@ export const edit_password = [
 		catch (err) { next(err); }
 	}
 ]
+
+// DEFAULT EXPORT ==============================================================
 
 export default {
 	panel,
