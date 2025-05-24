@@ -1,3 +1,7 @@
+#Ballot>.clabel {
+	left: max(50%, 42em);
+}
+
 #Original {
 	flex: 1 1 600px;
 }
