@@ -12,7 +12,8 @@ import express from "express"
 
 // requests & session
 import cookieParser from "cookie-parser";
-import session from "cookie-session";
+import session from "express-session";
+import MongoStore from "connect-mongo";
 
 // logging
 import { createStream } from "rotating-file-stream";
@@ -86,10 +87,21 @@ app.use(process.env.NODE_ENV === "production"
 
 app.use(cookieParser());
 app.use(session({
+	secret: process.env.SESSION_SECRET,
 	resave: false,
-	saveUninitialized: true,
-	cookie: { secure: false },
-	secret: process.env.SESSION_SECRET
+	saveUninitialized: false,
+
+	store: MongoStore.create({
+		mongoUrl: process.env.MONGODB_URL,
+		collectionName: "sessions",
+	}),
+
+	cookie: { 
+		secure: false,
+		httpOnly: true,
+		sameSite: "lax",
+		maxAge: 14 * 24 * 60 * 60 * 1000
+	},
 }));
 
 app.use(passport.initialize());
