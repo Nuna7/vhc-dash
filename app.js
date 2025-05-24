@@ -79,11 +79,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(join(__dirname, "public")));
 
-if (process.env.NODE_ENV === "production") {
-	app.use(morgan("combined", { stream: accessLogStream }));
-}
-
-else app.use(morgan("dev"));
+app.use(process.env.NODE_ENV === "production"
+	? morgan("combined", { stream: accessLogStream })
+	: morgan("dev")
+);
 
 app.use(cookieParser());
 app.use(session({
