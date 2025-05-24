@@ -1,7 +1,6 @@
 
 // capture elements
 const responses = document.querySelectorAll(".Response");
-const rankers = document.querySelectorAll(".Response .ranker");
 const rankRadios = document.querySelectorAll(".Response .ranker input[type='radio']");
 const statusRadios = document.querySelectorAll(".Response .status input[type='radio']");
 const review = document.getElementById("Review");
@@ -38,58 +37,61 @@ for (const radio of statusRadios) {
 
 // update response element rank data
 function updateRankData() {
-	for (const ranker of rankers) {
-		const checkedRadio = ranker.querySelector("input[type='radio']:checked");
-		ranker.parentElement.querySelector(".rankDisplay").innerText = checkedRadio ? "#" + String(checkedRadio.value) : "?";
+	for (const response of responses) {
+		const checkedRadio = response.querySelector(".ranker input[type='radio']:checked");
+		response.querySelector(".rankDisplay").innerText = checkedRadio ? "#" + String(checkedRadio.value) : "?";
 	}
 }
 
 // update review box state
 function updateReviewBox() {
-	var checkedCount = 0;
-	var ranking = Array(rankers.length).fill("<span class='tGray'>?</span>");
+	var ranking = Array(responses.length).fill("?");
+	
+	var failCount = 0;
+	
+	// count number of ranked and failing responses and update rank array
+	for (const response of responses) {
+		const checkedRankRadio = response.querySelector(".ranker input[type='radio']:checked");
+		const checkedStatusRadio = response.querySelector(".status input[type='radio']:checked");
 
-	// iterate over rankers and...
-	for (const ranker of rankers) {
-		const checkedRadio = ranker.querySelector("input[type='radio']:checked");
-		if (checkedRadio) {
-			// ...count number of ranked responses
-			checkedCount = checkedCount + 1;
+		if (checkedStatusRadio.value === "fail") failCount++;
 
-			// ...update rank array
-			ranking[checkedRadio.value - 1] = String.fromCharCode(65 + Number(ranker.parentNode.querySelector(".modelName").dataset.index));
-		}
+		// convert index to uppercase letter
+		if (checkedRankRadio) ranking[checkedRankRadio.value - 1] = String.fromCharCode(65 + Number(response.querySelector(".modelName").dataset.index));
 	};
 
-	// update rank preview display and disable/enable submission button
-	review.innerHTML = `${ranking[0]} > ${ranking[1]} > ${ranking[2]} > ${ranking[3]}`;
-	document.querySelector("#Ballot button[type='submit']").disabled = checkedCount != responses.length;
+	// update rank review display
+	const passSegment = (failCount > 0 ? ranking.slice(0, -failCount) : ranking).join(" > ");
+	const failSegment = failCount > 0 ? `<span class="failSeg">${ranking.slice(-failCount).join(" > ")}</span>` : ""
+	review.innerHTML = [passSegment, failSegment].filter(Boolean).join(" > ")
+
+	// disable/enable submission button
+	document.querySelector("#Ballot button[type='submit']").disabled = ranking.filter(e => e !== "?").length != responses.length;
 }
 
 // update radio values
 function passFailSplit() {
 	for (const radio of rankRadios) radio.disabled = false;
 
-	var pass_count = 0;
-
-	// count no. of passing responses
-	for (const response of responses) {
-		const status = response.querySelector(".status input[type='radio']:checked").value;
-		if (status == "pass") pass_count++;
-	}
+	// count passing responses
+	const passCount = [...responses]
+		.filter(s => s.querySelector(".status input[type='radio']:checked").value === "pass")
+		.length;
 
 	// disable appropriate rank range for each response
 	for (const response of responses) {
 		const status = response.querySelector(".status input[type='radio']:checked").value;
 
 		for (const radio of response.querySelectorAll(".ranker input[type='radio']")) {
-			if ((status == "fail" && radio.value <= pass_count) || (status == "pass" && radio.value > pass_count)) {
+			if ((status == "fail" && radio.value <= passCount) || (status == "pass" && radio.value > passCount)) {
 				radio.disabled = true;
 				radio.checked = false;
 				radio.dispatchEvent(new Event("change"));
 			}
 		}
 	}
+
+	updateReviewBox();
 }
 
 // visually mark occupied ranks
