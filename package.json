@@ -25,7 +25,9 @@
     "passport": "^0.5.3",
     "passport-local-mongoose": "^8.0.0",
     "pug": "2.0.0-beta11",
+    "qrcode": "^1.5.4",
     "rotating-file-stream": "^3.2.6",
+    "speakeasy": "^2.0.0",
     "url": "^0.11.3"
   },
   "devDependencies": {
