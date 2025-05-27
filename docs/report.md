@@ -120,7 +120,7 @@ Navigation is fully operable via keyboard shortcuts, catering to power users and
 
 The application is designed primarily for desktop use, reflecting the need to display large amounts of textual data side-by-side for effective comparative evaluation. The nature of this data makes it impractical to fit on a mobile screen in a usable manner. While the interface is not fully responsive, it does not break at smaller screen sizes. Users can scroll horizontally to access content, ensuring functionality remains intact even on constrained displays.
 
-## ORCiD IDs
+## 1.5. ORCiD IDs
 
 Requiring an ORCID iD in my medical LLM output benchmarking application ensures that all users are uniquely and reliably identified as real researchers or contributors. ORCID (Open Researcher and Contributor ID) provides a persistent, globally recognized identifier that disambiguates users with similar names and links them to their academic and professional records. This enhances the integrity and traceability of contributions within the app, supports transparency in medical AI benchmarking, and helps prevent misuse or anonymous participation. By requiring ORCID, the application aligns with best practices in scientific research and fosters a trusted, verifiable user community.
 
@@ -134,7 +134,7 @@ The web application utilizes a secure authentication mechanism to restrict acces
 
 ![Authentication](images/auth.png)
 
-## User Management
+## 2.2. User Management
 
 The web application allows users to modify/update select meta-info via a set of secure forms, for user info. and password updation respectively.
 
@@ -204,7 +204,7 @@ Each unique state of the ranker buttons (selected, unselected, disables) is dist
 
 The workflow is fully keyboard-enabled, with extensive tooltips for each interactable element.
 
-### 3.1.8. Workflow Example
+### 3.1.7. Workflow Example
 
 ![Workflow animation](images/workflow.gif)
 
