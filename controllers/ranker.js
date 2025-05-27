@@ -46,7 +46,7 @@ export const post_ballot = [
 
 			// make sure no extra/missing rank/status fields
 			if (!(rankKeys.length == prc.responses.length || statusKeys.length == prc.responses.length)) {
-				throw new Error("No. of rank/status fields does not match no. of PRC responses");
+				return Promise.reject("No. of rank/status fields does not match no. of PRC responses");
 			}
 					
 			const seenRanks = new Set();
@@ -58,15 +58,15 @@ export const post_ballot = [
 				const statusValue = body[statusKeys[i]];
 				
 				// ensure rank/status pairs match and LLM IDs are valid
-				if (llmID != statusKeys[i].split("-")[1]) throw new Error("Rank/status IDs do not match");
-				if (!validLLMIDs.includes(llmID)) throw new Error("Invalid LLM ID");
+				if (llmID != statusKeys[i].split("-")[1]) return Promise.reject("Rank/status IDs do not match");
+				if (!validLLMIDs.includes(llmID)) return Promise.reject("Invalid LLM ID");
 
 				// ensure rank values are distinct
-				if (seenRanks.has(rankValue)) throw new Error("Rank values are not unique");
+				if (seenRanks.has(rankValue)) return Promise.reject("Rank values are not unique");
 				seenRanks.add(rankValue);
 
 				// check if status value is valid
-				if (!["pass", "fail"].includes(statusValue)) throw new Error("Invalid status value");
+				if (!["pass", "fail"].includes(statusValue)) return Promise.reject("Invalid status value");
 
 				rankStatusPairs.push({ rank: rankValue, status: statusValue });
 			}
@@ -77,13 +77,13 @@ export const post_ballot = [
 
 			for (const status of sortedPairs) {
 				if (!foundFail && status == "fail") foundFail = true;
-				if (foundFail && status == "pass") throw new Error("Fail rank above pass rank");
+				if (foundFail && status == "pass") return Promise.reject("Fail rank above pass rank");
 			}
 
 			return true;
 		}
 
-		catch(err) { next(err); }
+		catch(err) { throw new Error("Database error"); }
 	}),
 
 	async (req, res, next) => {

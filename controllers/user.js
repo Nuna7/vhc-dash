@@ -20,7 +20,7 @@ export const edit_user = [
 				: true;
 		}
 
-		catch (err) { next(err); }
+		catch (err) { throw new Error("Database error"); }
 	}),
 
 	body("phone", "Invalid phone number").optional({ checkFalsy: true }).trim().isMobilePhone(),
@@ -69,7 +69,7 @@ export const edit_user = [
 export const edit_password = [
 	body("old", "Incorrect former passkey").custom(async (value, { req }) => {
 		try { return (await req.user.authenticate(value)).error ? Promise.reject() : true; }
-		catch (err) { next(err); }
+		catch (err) { throw new Error("Database error"); }
 	}),
 
 	body("new", "Invalid passkey length").isLength({ min: 8 }),

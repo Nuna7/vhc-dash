@@ -23,7 +23,7 @@ export const depot_post = [
 		// validate roles against regex
 		for (const key of Object.keys(body).filter(key => key.startsWith("roles-"))) {
 			const pattern = /^((?!-)(?!.*--)[a-z0-9-]+(?<!-)(,\s*(?!-)(?!.*--)[a-z0-9-]+(?<!-))*)?$/;
-			if (!pattern.test(body[key])) throw new Error("Invalid role(s) format");
+			if (!pattern.test(body[key])) return Promise.reject("Invalid role(s) format");
 		}
 
 		return true;

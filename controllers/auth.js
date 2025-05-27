@@ -27,7 +27,7 @@ export const login_validate_post = [
 			return true;
 		}
 
-		catch (err) { next(err); }
+		catch (err) { throw new Error("Database error"); }
 	}),
 
 	(req, res, next) => {
@@ -90,21 +90,21 @@ export function register_get(req, res, next) {
 export const register_post = [
 	body("username", "Invalid username length").trim().isLength({ min: 3, max: 20 }).custom(async value => {
 		try { return (await User.exists({ username: value })) ? Promise.reject("Username not unique") : true; }
-		catch (err) { next(err); }
+		catch (err) { throw new Error("Database error"); }
 	}),
 
 	body("email", "Invalid email ID").trim().isEmail().custom(async value => {
 		try { return (await User.exists({ email: value })) ? Promise.reject("User with this email ID exists") : true; }
-		catch (err) { next(err); }
+		catch (err) { throw new Error("Database error"); }
 	}),
 
 	body("orcid").custom(async value => {
 		try {
-			if (await User.exists({ orcid: value })) throw new Error("User with this ORCiD exists");
+			if (await User.exists({ orcid: value })) return Promise.reject("User with this ORCiD exists");
 
 			// test orcid pattern against regex
 			const orcidPattern = /^(\d{4}-){3}\d{3}[\dX]$/;
-			if (!orcidPattern.test(value)) throw new Error("Invalid ORCiD format");
+			if (!orcidPattern.test(value)) return Promise.reject("Invalid ORCiD format");
 
 			// validate ORCiD check digit
 			const baseDigits = value.replace(/-/g, "").substring(0, 15);
@@ -121,12 +121,12 @@ export const register_post = [
 			const result = (12 - remainder) % 11;
 			const expectedCD = result === 10 ? 'X' : result.toString();
 
-			if (providedCD !== expectedCD) throw new Error("Invalid ORCiD check digit");
+			if (providedCD !== expectedCD) return Promise.reject("Invalid ORCiD check digit");
 
 			return true;
 		}
 
-		catch (err) { next(err); }
+		catch (err) { throw new Error("Database error"); }
 	}),
 
 	body("phone", "Invalid phone number").optional({ checkFalsy: true }).trim().isMobilePhone(),
