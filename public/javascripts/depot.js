@@ -1,6 +1,6 @@
 const roleInputs = document.getElementsByClassName("roleField");
 const statusRadios = document.querySelectorAll(".statusField input[type='radio']");
-const depotFormSubmit = document.querySelector("#DepotForm>button[type='submit']");
+const depotFormSubmit = document.querySelector("#DepotForm button[type='submit']");
 
 // initialize form submit disabled state
 depotFormSubmit.disabled = Array.from(statusRadios).filter((r) => r.checked && r.value == "defer" ).length == roleInputs.length;
