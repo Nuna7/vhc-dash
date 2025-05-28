@@ -58,15 +58,13 @@ export function login_success_post(req, res, next) {
 
 // login failure POST ----------------------------------------------------------
 export function login_error_post(err, req, res, next) {
-	(req.session.flash ??= {}).errors = {
+	flashAndRedirect(req, res, "errors", {
 		for: "login",
 		err: [{
 			path: "password",
 			msg: "Incorrect passkey"
 		}]
-	};
-
-	return res.redirect("/login");
+	}, "/login");
 }
 
 // logout ----------------------------------------------------------------------
