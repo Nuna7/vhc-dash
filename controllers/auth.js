@@ -153,17 +153,23 @@ export const register_post = [
 
 		const data = matchedData(req);
 
-		User.register({
-			username: data.username,
-			email: data.email,
-			orcid: data.orcid,
-			phone: data.phone,
-			creationComment: data.comments
-		}, req.body.password);
+		try {
+			await User.register({
+				creationComment: data.comments,
+				username: data.username,
+				email: data.email,
+				orcid: data.orcid,
+				phone: data.phone,
+				totpSecret: encrypt(secret),
+				totpEnabled: true
+			}, req.body.password);
 
-		flashAndRedirect(req, res, "message", {
-			msg: "Registration request successful. Contact POC for approval status."
-		}, "/")
+			flashAndRedirect(req, res, "message", {
+				msg: "Registration request successful. Contact POC for approval status."
+			}, "/")
+		}
+
+		catch (err) { next(err); }
 	}
 ]
 
