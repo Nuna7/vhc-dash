@@ -66,7 +66,7 @@ export function login_success_post(req, res, next) {
 
 	flashAndRedirect(req, res, "message", {
 		msg: `Logged in as "${req.user.username}" successfully.`
-	}, "/")
+	}, returnTo || "/")
 }
 
 // login failure POST ----------------------------------------------------------
