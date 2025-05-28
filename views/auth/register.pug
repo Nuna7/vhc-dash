@@ -8,49 +8,56 @@ block content
 			h1 Registration Request
 			p.mReadWidth Submit a user creation request, subject to approval by site admininstrators.
 		
+		.Divider
+
 		.Flexbox.mStdSpacing
-			+ErrorWrapper("register"): .Box.Flexbox.mCol.mMinSpacing.iAlignLeft
-				.rLabel Cred. Request
-
+			.Flexbox.mCol.mCmpSpacing
 				div
-					label(for="UsernameField").mReq: b New User ID
-					input#UsernameField(type="text" name="username" required placeholder="Between 3 and 20 chars." autocomplete="off" autofocus)
+					h2 1. Registration Form
+					p Fill in user details.
+			
+				+ErrorWrapper("register"): .Box.Flexbox.mCol.mMinSpacing.iAlignLeft
+					.rLabel Cred. Request
 
-				div
-					label(for="EmailField").mReq: b Email ID
-					input#EmailField(type="email" name="email" required)
-
-				.Flexbox.mCol.mMinSpacing
 					div
-						label(for="ORCiDField").mReq: b ORCiD
-						input#ORCiDField(type="text" name="orcid" placeholder="xxxx-xxxx-xxxx-xxxx" required)
+						label(for="UsernameField").mReq: b New User ID
+						input#UsernameField(type="text" name="username" required placeholder="Between 3 and 20 chars." autocomplete="off" autofocus)
 
-					a#ORCiDLink(href="https://orcid.org/register" target="blank_").tGray.iAlignRight: small Create an ORCiD ID
+					div
+						label(for="EmailField").mReq: b Email ID
+						input#EmailField(type="email" name="email" required)
 
+					.Flexbox.mCol.mMinSpacing
+						div
+							label(for="ORCiDField").mReq: b ORCiD
+							input#ORCiDField(type="text" name="orcid" placeholder="xxxx-xxxx-xxxx-xxxx" required)
+
+						a#ORCiDLink(href="https://orcid.org/register" target="blank_").tGray.iAlignRight: small Create an ORCiD ID
+
+					div
+						label(for="PhoneField"): b Phone No.
+						input#PhoneField(type="text" name="phone")
+
+					.Flexbox.mMinSpacing.mVertCenter(style="margin-top: var(--cmp-spacing)")
+						label(for="PasswordField").mReq: b Passkey
+						.Divider
+
+					input#PasswordField(type="password" name="password" placeholder="More than 8 chars." required)
+
+					div
+						label(for="PasswordConfirmField").mReq: b Confirmation
+						input#PasswordConfirmField(type="password" name="confirm" required)
+
+					.Flexbox.mMinSpacing.mVertCenter(style="margin-top: var(--cmp-spacing)")
+						label(for="PasswordField"): b Comments
+						.Divider
+
+					textarea#CommentsField(name="comments" rows="5" maxlength="300" placeholder="Less than 300 chars.")
+
+			.Flexbox.mCol.mCmpSpacing
 				div
-					label(for="PhoneField"): b Phone No.
-					input#PhoneField(type="text" name="phone")
-
-				.Flexbox.mMinSpacing.mVertCenter(style="margin-top: var(--cmp-spacing)")
-					label(for="PasswordField").mReq: b Passkey
-					.Divider
-
-				input#PasswordField(type="password" name="password" placeholder="More than 8 chars." required)
-
-				div
-					label(for="PasswordConfirmField").mReq: b Confirmation
-					input#PasswordConfirmField(type="password" name="confirm" required)
-
-				.Flexbox.mMinSpacing.mVertCenter(style="margin-top: var(--cmp-spacing)")
-					label(for="PasswordField"): b Comments
-					.Divider
-
-				textarea#CommentsField(name="comments" rows="5" maxlength="300" placeholder="Less than 300 chars.")
-
-			.Flexbox.mCol.mStdSpacing
-				div
-					h2 2FA Setup
-					p Set up two-factor authentication using #[a(href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2", target="_blank") Google Authenticator].
+					h2 2. 2FA Setup
+					p Set up two-factor authentication using #[a(href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2", target="_blank") Google Authenticator] (search on the play/app store).
 
 				
 				.Box.mSolid.mOutline
