@@ -11,8 +11,8 @@ block content
 		p Approve/deny incoming user registration requests.
 
 	if users.length
-		+ErrorWrapper("depot")
-			form#DepotForm(action="/admin/user-depot" method="post").iAlignLeft.Box.Flexbox.mCol.mMinSpacing
+		form#DepotForm(action="/admin/user-depot" method="post")
+			+ErrorWrapper("depot"): .iAlignLeft.Box.Flexbox.mCol.mMinSpacing
 				.cLabel: b Req. Depot 
 				.llabel.tGray: small #[b move/sel:] [↑, ↓, TAB] | #[b approve:] [`]
 

@@ -1,9 +1,9 @@
 mixin ErrorWrapper(name)
-	.Flexbox.mCmpSpacing
+	.div(style="display: inline-block; position: relative;")
 		block
 
 		if flash && flash.errors && flash.errors.for == name
-			.Box.mSolid.mOutline.mRed.iAlignTop
+			.Errors.Box.mSolid.mOutline.mRed.iAlignTop
 				h2 <- Error(s)
 
 				ul

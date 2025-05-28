@@ -7,8 +7,8 @@ block content
 		h1 Registration Request
 		p.mReadWidth Submit a user creation request, subject to approval by site admininstrators.
 
-	+ErrorWrapper("register")
-		form(method="post").Box.Flexbox.mCol.mMinSpacing.iAlignLeft
+	form(method="post")
+		+ErrorWrapper("register"): .Box.Flexbox.mCol.mMinSpacing.iAlignLeft
 			.rLabel Cred. Request
 
 			div

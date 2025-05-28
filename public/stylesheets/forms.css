@@ -32,8 +32,8 @@ textarea {
 }
 
 :is(input[type="text"], input[type="email"], input[type="password"], textarea):disabled {
+	cursor : not-allowed;
 	opacity: 0.4;
-	cursor: not-allowed;
 }
 
 label+:is(input[type="text"], input[type="email"], input[type="password"], textarea) {
@@ -148,5 +148,23 @@ button:disabled.sLoading::after {
 
 	75% {
 		content: "[\\]";
+	}
+}
+
+/* ERRORS =================================================================== */
+
+.Errors {
+	z-index  : 1;
+	position : absolute;
+	width    : 250px;
+	inset    : 0 auto auto calc(100% + var(--cmp-spacing));
+	animation: fade 2s ease-in-out 5s forwards;
+	opacity  : 0.95;
+}
+
+@keyframes fade {
+	100% {
+		opacity       : 0;
+		pointer-events: none;
 	}
 }

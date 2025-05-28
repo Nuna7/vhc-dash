@@ -7,8 +7,8 @@ block content
 		h1 Authentication
 		p.mReadWidth Identify yourself with the credentials provided to you by the administrator.
 
-	+ErrorWrapper("login")
-		form(method="post").Box.Flexbox.mCol.mMinSpacing.iAlignLeft
+	form(method="post")
+		+ErrorWrapper("login"): .Box.Flexbox.mCol.mMinSpacing
 			.rLabel Auth. Portal
 
 			div

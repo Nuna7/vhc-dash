@@ -10,8 +10,8 @@ block content
 		h1 User Mgmt.
 		p View and edit your user instance information.
 
-	+ErrorWrapper("info")
-		form#InfoForm(action="/user/edit-info" method="post").Box.Flexbox.mCol.mMinSpacing
+	form#InfoForm(action="/user/edit-info" method="post")
+		+ErrorWrapper("info"): .Box.Flexbox.mCol.mMinSpacing
 			.lLabel: b User Info. 
 			.rLabel + Info. Form
 			
@@ -53,8 +53,8 @@ block content
 
 		.Divider
 
-	+ErrorWrapper("password")
-		form#PasswordForm(method="post" action="/user/edit-password").Box.Flexbox.mCol.mCmpSpacing 
+	form#PasswordForm(method="post" action="/user/edit-password")
+		+ErrorWrapper("password"): .Box.Flexbox.mCol.mCmpSpacing 
 			.rLabel Passkey Form
 
 			input(type="hidden", name="uid", value=user._id)
