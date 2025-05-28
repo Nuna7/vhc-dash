@@ -2,7 +2,7 @@ import { Router } from "express";
 import rateLimit from "express-rate-limit";
 import passport from "passport";
 
-import { flashAndRedirect } from "../utils/flash.js";
+import { flashAndRedirect } from "../helpers/flash.js";
 
 import authController from "../controllers/auth.js";
 

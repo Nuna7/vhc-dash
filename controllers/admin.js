@@ -1,6 +1,6 @@
 import { body, validationResult } from "express-validator";
 
-import { flashAndRedirect } from "../utils/flash.js";
+import { flashAndRedirect } from "../helpers/flash.js";
 
 import User from "../models/User.js";
 

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import rateLimit from "express-rate-limit";
 
-import { flashAndRedirect } from "../utils/flash.js";
+import { flashAndRedirect } from "../helpers/flash.js";
 
 import { sessionAuthCheck } from "../middleware/auth.js";
 

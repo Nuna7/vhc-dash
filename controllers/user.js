@@ -1,7 +1,7 @@
 import { body, validationResult, matchedData } from "express-validator";
 import createError from "http-errors";
 
-import { flashAndRedirect } from "../utils/flash.js";
+import { flashAndRedirect } from "../helpers/flash.js";
 
 import User from "../models/User.js";
 
