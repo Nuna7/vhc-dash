@@ -1,0 +1,17 @@
+extends ../layout
+
+include ../mixins/ErrorWrapper.pug
+
+block content
+	div
+		h1 Two-Factor Authentication
+		p Please enter the 6-digit code from your authenticator app (for the entry labelled "VHC").
+
+	form(method="post").Box.Flexbox.mCol.mMinSpacing.iAlignLeft
+		.rLabel 2FA Verification
+
+		div
+			label(for="token"): b 6-digit Code
+			input(type="text", name="token", required, autofocus, autocomplete="one-time-code")
+
+		button(type="submit").mGreen Verify and Log In

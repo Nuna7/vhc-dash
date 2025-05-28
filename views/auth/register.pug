@@ -3,47 +3,77 @@ extends ../layout
 include ../mixins/ErrorWrapper.pug
 
 block content
-	div
-		h1 Registration Request
-		p.mReadWidth Submit a user creation request, subject to approval by site admininstrators.
+	form(method="post").Flexbox.mCol.mStdSpacing
+		div
+			h1 Registration Request
+			p.mReadWidth Submit a user creation request, subject to approval by site admininstrators.
+		
+		.Flexbox.mStdSpacing
+			+ErrorWrapper("register"): .Box.Flexbox.mCol.mMinSpacing.iAlignLeft
+				.rLabel Cred. Request
 
-	form(method="post")
-		+ErrorWrapper("register"): .Box.Flexbox.mCol.mMinSpacing.iAlignLeft
-			.rLabel Cred. Request
-
-			div
-				label(for="UsernameField").mReq: b New User ID
-				input#UsernameField(type="text" name="username" required placeholder="Between 3 and 20 chars." autocomplete="off" autofocus)
-
-			div
-				label(for="EmailField").mReq: b Email ID
-				input#EmailField(type="email" name="email" required)
-
-			.Flexbox.mCol.mMinSpacing
 				div
-					label(for="ORCiDField").mReq: b ORCiD
-					input#ORCiDField(type="text" name="orcid" placeholder="xxxx-xxxx-xxxx-xxxx" required)
+					label(for="UsernameField").mReq: b New User ID
+					input#UsernameField(type="text" name="username" required placeholder="Between 3 and 20 chars." autocomplete="off" autofocus)
 
-				a#ORCiDLink(href="https://orcid.org/register" target="blank_").tGray.iAlignRight: small Create an ORCiD ID
+				div
+					label(for="EmailField").mReq: b Email ID
+					input#EmailField(type="email" name="email" required)
 
-			div
-				label(for="PhoneField"): b Phone No.
-				input#PhoneField(type="text" name="phone")
+				.Flexbox.mCol.mMinSpacing
+					div
+						label(for="ORCiDField").mReq: b ORCiD
+						input#ORCiDField(type="text" name="orcid" placeholder="xxxx-xxxx-xxxx-xxxx" required)
 
-			.Flexbox.mMinSpacing.mVertCenter(style="margin-top: var(--cmp-spacing)")
-				label(for="PasswordField").mReq: b Passkey
-				.Divider
+					a#ORCiDLink(href="https://orcid.org/register" target="blank_").tGray.iAlignRight: small Create an ORCiD ID
 
-			input#PasswordField(type="password" name="password" placeholder="More than 8 chars." required)
+				div
+					label(for="PhoneField"): b Phone No.
+					input#PhoneField(type="text" name="phone")
 
-			div
-				label(for="PasswordConfirmField").mReq: b Confirmation
-				input#PasswordConfirmField(type="password" name="confirm" required)
+				.Flexbox.mMinSpacing.mVertCenter(style="margin-top: var(--cmp-spacing)")
+					label(for="PasswordField").mReq: b Passkey
+					.Divider
 
-			.Flexbox.mMinSpacing.mVertCenter(style="margin-top: var(--cmp-spacing)")
-				label(for="PasswordField"): b Comments
-				.Divider
+				input#PasswordField(type="password" name="password" placeholder="More than 8 chars." required)
 
-			textarea#CommentsField(name="comments" rows="5" maxlength="300" placeholder="Less than 300 chars.")
+				div
+					label(for="PasswordConfirmField").mReq: b Confirmation
+					input#PasswordConfirmField(type="password" name="confirm" required)
 
-			button(type="submit").mGreen.iAlignRight Submit Req.
+				.Flexbox.mMinSpacing.mVertCenter(style="margin-top: var(--cmp-spacing)")
+					label(for="PasswordField"): b Comments
+					.Divider
+
+				textarea#CommentsField(name="comments" rows="5" maxlength="300" placeholder="Less than 300 chars.")
+
+			.Flexbox.mCol.mStdSpacing
+				div
+					h2 2FA Setup
+					p Set up two-factor authentication using #[a(href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2", target="_blank") Google Authenticator].
+
+				
+				.Box.mSolid.mOutline
+
+					h3 Step 1: Scan
+					
+					p.mReadWidth Scan the QR code below using your Google Authenticator app. If you cannot scan the QR code, you may manually enter the following secret code: 
+					
+					p.tLarge: span.tHighlight=secret.match(/.{1,4}/g).join("-")
+
+					h3 Step 2: Verify
+					p Enter the 6-digit code from your authenticator app below.
+
+				.Flexbox.mMinSpacing
+					img(src=qr, alt="QR Code", style="width: 10em")
+
+					.Box.Flexbox.mCol.mMinSpacing
+						.rLabel 2FA Verification
+
+						div
+							label(for="token"): b 6-digit Code
+							input(type="text", name="token", required, autocomplete="one-time-code")
+
+						input(type="hidden", name="secret", value=secret)
+
+						button(type="submit").mGreen Verify and Submit Req.

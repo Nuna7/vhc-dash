@@ -104,12 +104,25 @@ small {
 	font-size: 0.9em;
 }
 
+.tLarge {
+	font-size: 1.2em;
+}
+
 .tGray {
 	color: var(--dark-gray);
 }
 
 .tRed {
 	color: var(--red);
+}
+
+.tHighlight {
+	--bg: var(--yellow);
+	--fg: var(--black);
+	
+	outline         : 2px solid var(--bg);
+	background-color: var(--bg);
+	color           : var(--fg);
 }
 
 /* UTILITIES ================================================================ */
@@ -255,4 +268,8 @@ th[scope="row"] {
 	--bg: var(--yellow);
 
 	outline-color: var(--dark-gray);
+}
+
+#Flash[data-type="error"] {
+	--bg: var(--red);
 }

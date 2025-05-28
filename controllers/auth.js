@@ -1,6 +1,9 @@
+import speakeasy from "speakeasy";
+import QRCode from "qrcode";
 import { body, validationResult, matchedData } from "express-validator";
 
-import { flashAndRedirect } from "../utils/flash.js";
+import { encrypt, decrypt } from "../helpers/cryptography.js";
+import { flashAndRedirect } from "../helpers/flash.js";
 
 import User from "../models/User.js";
 
@@ -48,12 +51,22 @@ export const login_validate_post = [
 
 // login success POST ----------------------------------------------------------
 export function login_success_post(req, res, next) {
+	if (req.user.totpEnabled) {
+		req.session.pending2FAVerificationID = req.user._id;
+
+		req.logout();
+
+		return flashAndRedirect(req, res, "message", {
+			msg: "Login partially complete - finish two-factor authentication."
+		}, "/2fa")
+	}
+
 	const returnTo = req.session.returnTo;
 	delete req.session.returnTo;
 
 	flashAndRedirect(req, res, "message", {
 		msg: `Logged in as "${req.user.username}" successfully.`
-	}, returnTo || "/")
+	}, "/")
 }
 
 // login failure POST ----------------------------------------------------------
@@ -76,12 +89,87 @@ export function logout(req, res, next) {
 	}, req.query.next)
 }
 
+// 2FA =========================================================================
+
+export async function twofa_verify_get(req, res, next) {
+	if (!req.session.pending2FAVerificationID) return res.redirect("/login");
+
+	res.render("auth/2fa-verify", {
+		title: "Log In - 2FA"
+	});
+}
+
+// 2FA verification ------------------------------------------------------------
+export async function twofa_verify_post(req, res, next) {
+	const { token } = req.body;
+
+	// safety check
+	if (!req.session.pending2FAVerificationID) {
+		return flashAndRedirect(req, res, "message", {
+			type: "error",
+			msg: "Your session has expired. Please log in again."
+		}, "/login");
+	}
+
+	try {
+		const user = await User.findById(req.session.pending2FAVerificationID);
+
+		if (!user || !user.totpEnabled || !user.totpSecret) {
+			throw new Error("Invalid 2FA user state.");
+		}
+		
+		const isVerified = speakeasy.totp.verify({
+			secret: decrypt(user.totpSecret),
+			encoding: "base32",
+			token,
+			window: 1
+		});
+
+		if (!isVerified) {
+			return flashAndRedirect(req, res, "message", {
+				type: "error",
+				msg: "Invalid code. Please try again."
+			}, "/2fa");
+		}
+
+		// fully log the user in
+		req.login(user, function (err) {
+			if (err) { return next(err); }
+
+			delete req.session.pending2FAVerificationID;
+			const returnTo = req.session.returnTo;
+			delete req.session.returnTo;
+
+			flashAndRedirect(req, res, "message", {
+				msg: `Logged in as "${req.user.username}" successfully.`
+			}, returnTo || "/")
+		});
+	}
+
+	catch (err) { return next(err); }
+}
+
 // REGISTRATION ================================================================
 
-export function register_get(req, res, next) {
-	if (req.query.next) req.session.returnTo = req.query.next;
-	res.render("auth/register", { title: "Register" });
+export async function register_get(req, res, next) {
+	const secret = speakeasy.generateSecret({ name: "VHC" });
 
+	const qr = await QRCode.toDataURL(secret.otpauth_url, {
+		margin: 0,
+		scale: 10,
+		color: {
+			dark: "#000000",
+			light: "#00000000"
+		}
+	});
+
+	if (req.query.next) req.session.returnTo = req.query.next;
+
+	res.render("auth/register", {
+		title: "Register",
+		qr: qr,
+		secret: secret.base32
+	});
 }
 
 // registration request --------------------------------------------------------
@@ -151,6 +239,23 @@ export const register_post = [
 			return res.redirect("/register");
 		}
 
+		const token = req.body.token;
+		const secret = req.body.secret
+
+		const isVerified = speakeasy.totp.verify({
+			secret: secret,
+			encoding: "base32",
+			token,
+			window: 1 // allow slight time drift
+		});
+
+		if (!isVerified) {
+			return flashAndRedirect(req, res, "message", {
+				type: "error",
+				msg: "Invalid 6-digit code. Please try again."
+			}, "/register");
+		}
+
 		const data = matchedData(req);
 
 		try {
@@ -182,5 +287,7 @@ export default {
 	login_error_post,
 	register_get,
 	register_post,
+	twofa_verify_get,
+	twofa_verify_post,
 	logout
 };

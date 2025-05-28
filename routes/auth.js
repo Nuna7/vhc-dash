@@ -41,6 +41,9 @@ const router = Router();
 router.get("/login", authController.login_get);
 router.post("/login", loginAuthLimiter, authController.login_validate_post, passport.authenticate("local", { failWithError: true }), authController.login_success_post, authController.login_error_post);
 
+router.get("/2fa", authController.twofa_verify_get);
+router.post("/2fa", authController.twofa_verify_post);
+
 router.get("/register", authController.register_get);
 router.post("/register", registrationAuthLimiter, authController.register_post);
 
