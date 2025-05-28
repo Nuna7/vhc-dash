@@ -5,7 +5,7 @@ include ../mixins/ErrorWrapper.pug
 block content
 	div
 		h1 Two-Factor Authentication
-		p Please enter the 6-digit code from your authenticator app (for the entry labelled "VHC").
+		p Please enter the 6-digit code from your authenticator for #[span.tLarge=`VHC:${identifier}`]
 
 	form(method="post").Box.Flexbox.mCol.mMinSpacing.iAlignLeft
 		.rLabel 2FA Verification

@@ -17,6 +17,7 @@ const UserSchema = new Schema({
 		content: String,
 		tag: String
 	},
+	totpIdentifier: { type: String, required: true },
 	totpEnabled: { type: Boolean, default: false }
 }, { timestamps: true });
 

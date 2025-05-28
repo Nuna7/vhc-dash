@@ -1,5 +1,8 @@
+import crypto from "crypto";
+
 import speakeasy from "speakeasy";
 import QRCode from "qrcode";
+
 import { body, validationResult, matchedData } from "express-validator";
 
 import { encrypt, decrypt } from "../helpers/cryptography.js";
@@ -52,7 +55,8 @@ export const login_validate_post = [
 // login success POST ----------------------------------------------------------
 export function login_success_post(req, res, next) {
 	if (req.user.totpEnabled) {
-		req.session.pending2FAVerificationID = req.user._id;
+		req.session.pending2FAUserID = req.user._id;
+		req.session.pending2FAIdentifier = req.user.totpIdentifier;
 
 		req.logout();
 
@@ -92,10 +96,11 @@ export function logout(req, res, next) {
 // 2FA =========================================================================
 
 export async function twofa_verify_get(req, res, next) {
-	if (!req.session.pending2FAVerificationID) return res.redirect("/login");
+	if (!req.session.pending2FAUserID) return res.redirect("/login");
 
 	res.render("auth/2fa-verify", {
-		title: "Log In - 2FA"
+		title: "Log In - 2FA",
+		identifier: req.session.pending2FAIdentifier
 	});
 }
 
@@ -104,7 +109,7 @@ export async function twofa_verify_post(req, res, next) {
 	const { token } = req.body;
 
 	// safety check
-	if (!req.session.pending2FAVerificationID) {
+	if (!req.session.pending2FAUserID) {
 		return flashAndRedirect(req, res, "message", {
 			type: "error",
 			msg: "Your session has expired. Please log in again."
@@ -112,7 +117,7 @@ export async function twofa_verify_post(req, res, next) {
 	}
 
 	try {
-		const user = await User.findById(req.session.pending2FAVerificationID);
+		const user = await User.findById(req.session.pending2FAUserID);
 
 		if (!user || !user.totpEnabled || !user.totpSecret) {
 			throw new Error("Invalid 2FA user state.");
@@ -136,7 +141,9 @@ export async function twofa_verify_post(req, res, next) {
 		req.login(user, function (err) {
 			if (err) { return next(err); }
 
-			delete req.session.pending2FAVerificationID;
+			delete req.session.pending2FAUserID;
+			delete req.session.pending2FAIdentifier;
+
 			const returnTo = req.session.returnTo;
 			delete req.session.returnTo;
 
@@ -152,7 +159,8 @@ export async function twofa_verify_post(req, res, next) {
 // REGISTRATION ================================================================
 
 export async function register_get(req, res, next) {
-	const secret = speakeasy.generateSecret({ name: "VHC" });
+	const identifier = crypto.randomBytes(6).toString("base64url").slice(0, 6);
+	const secret = speakeasy.generateSecret({ name: `VHC:${identifier}` });
 
 	const qr = await QRCode.toDataURL(secret.otpauth_url, {
 		margin: 0,
@@ -168,7 +176,8 @@ export async function register_get(req, res, next) {
 	res.render("auth/register", {
 		title: "Register",
 		qr: qr,
-		secret: secret.base32
+		secret: secret.base32,
+		identifier: identifier
 	});
 }
 
@@ -240,7 +249,8 @@ export const register_post = [
 		}
 
 		const token = req.body.token;
-		const secret = req.body.secret
+		const secret = req.body.secret;
+		const identifier = req.body.identifier;
 
 		const isVerified = speakeasy.totp.verify({
 			secret: secret,
@@ -266,6 +276,7 @@ export const register_post = [
 				orcid: data.orcid,
 				phone: data.phone,
 				totpSecret: encrypt(secret),
+				totpIdentifier: identifier,
 				totpEnabled: true
 			}, req.body.password);
 
