@@ -10,7 +10,7 @@ A dashboard of utilities for the EHR-compliant record digitization component of 
 
 ## 1.2. Applications
 
-### 1.2.1. Model Output Ranker
+### 1.2.1. LLM Ranker
 
 ![Ranker](docs/images/workflow.gif)
 

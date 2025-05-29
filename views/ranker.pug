@@ -7,13 +7,13 @@ append scripts
 	script(type="text/javascript", src="/javascripts/ranker.js", defer)
 
 block content
-	h1 Model Output Ranker
+	h1 LLM Ranker
 
 	if prc
 		form#Ballot(method="post").Box.mRoomy.Flexbox.mCol.mCmpSpacing
 			input(type="hidden", name="prc", value=prc._id)
 			
-			.clabel: b M.O. Ranker
+			.clabel: b LLM Ranker
 			.llabel.tGray: small #[b select:] [<-, ->] | #[b rank:] [1-#{prc.responses.length}] | #[b status:] [`] | #[b submit:] [s|enter]
 
 			.Flexbox.mCmpSpacing.mSpaceBtwn.mVertEnd.mWrap.mHorzEnd
