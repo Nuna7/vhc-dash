@@ -124,6 +124,12 @@ The application is designed primarily for desktop use, reflecting the need to di
 
 Requiring an ORCID iD in my medical LLM output benchmarking application ensures that all users are uniquely and reliably identified as real researchers or contributors. ORCID (Open Researcher and Contributor ID) provides a persistent, globally recognized identifier that disambiguates users with similar names and links them to their academic and professional records. This enhances the integrity and traceability of contributions within the app, supports transparency in medical AI benchmarking, and helps prevent misuse or anonymous participation. By requiring ORCID, the application aligns with best practices in scientific research and fosters a trusted, verifiable user community.
 
+### Resources
+
+1. [What is ORCiD?](https://info.orcid.org/what-is-orcid/)
+2. [ORCiD Wikipedia](https://en.wikipedia.org/wiki/ORCID)
+3. [Scientists: your number is up (Nature)](https://www.nature.com/articles/485564a)
+
 # 2. Dashboard
 
 This section outlines the development of the primary dashboard as a container of its various applications.
