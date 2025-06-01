@@ -139,6 +139,13 @@ small {
 	border-top: 1px dotted var(--fg);
 }
 
+/* FILLER COMPONENT ========================================================= */
+
+.Filler {
+	width: 100%;
+	background: repeating-conic-gradient(var(--black) 0% 25%, transparent 0% 100%) 1px 0.5px / 3px 3px;
+}
+
 /* BOX COMPONENT ============================================================ */
 
 .Box {
