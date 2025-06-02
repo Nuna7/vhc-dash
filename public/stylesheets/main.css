@@ -119,7 +119,7 @@ small {
 .tHighlight {
 	--bg: var(--yellow);
 	--fg: var(--black);
-	
+
 	outline         : 2px solid var(--bg);
 	background-color: var(--bg);
 	color           : var(--fg);
@@ -142,7 +142,7 @@ small {
 /* FILLER COMPONENT ========================================================= */
 
 .Filler {
-	width: 100%;
+	flex      : 1;
 	background: radial-gradient(var(--black) 20%, transparent 21%) 1px 0.5px / 3px 3px;
 }
 
