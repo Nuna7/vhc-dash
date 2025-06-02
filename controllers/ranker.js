@@ -23,7 +23,7 @@ export async function ranker(req, res, next) {
 		]);
 				
 		res.render("ranker", {
-			title: "M.O. Ranker",
+			title: "LLM Ranker",
 			prc: prcs.length ? PRC.hydrate(prcs[0]) : undefined
 		});
 	}
