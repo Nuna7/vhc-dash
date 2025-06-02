@@ -112,7 +112,8 @@ export const post_ballot = [
 			prc.rcv.ballots.push({
 				voter: req.user._id,
 				ranking: ranking,
-				failCount: failCount
+				failCount: failCount,
+				rationale: req.body.rationale
 			});
 
 			await prc.rcv.save();

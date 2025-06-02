@@ -2,27 +2,8 @@
 	left: max(50%, 42em);
 }
 
-#Original {
-	flex: 1 1 600px;
-}
-
 #Submission {
 	position: relative;
-}
-
-#Submission::after {
-	position : absolute;
-	top      : calc(100% + 1em);
-	right    : 0;
-	font-size: 0.8em;
-}
-
-#Submission:not(:has(button:disabled))::after {
-	content: "Ranking complete - submit now";
-}
-
-#Submission:has(button:disabled)::after {
-	content: "Rank all to enable submission";
 }
 
 #Responses {
@@ -49,8 +30,21 @@
 	margin: 0 1em 0 1.5em;
 }
 
+#Responses>.Response>.header>.ranker>label {
+	position: relative;
+}
+
 #Responses>.Response>.header>.ranker>label:not(:has(:disabled, :checked)):has(.sTaken) {
 	background-image: linear-gradient(to bottom right, transparent 50%, var(--dark-gray) 50%, transparent 55%);
+}
+
+#Responses>.Response>.header>.ranker>label:not(:has(:disabled, :checked)):has(.sTaken)::after {
+	position   : absolute;
+	bottom     : calc(100% + 5px);
+	left       : 0.3rem;
+	content    : attr(data-label);
+	font-weight: normal;
+	font-size  : 0.8em;
 }
 
 #Responses>.Response>.header>.status {

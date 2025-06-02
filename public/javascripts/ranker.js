@@ -45,28 +45,14 @@ function updateRankData() {
 
 // update review box state
 function updateReviewBox() {
-	var ranking = Array(responses.length).fill("?");
-	
-	var failCount = 0;
-	
-	// count number of ranked and failing responses and update rank array
-	for (const response of responses) {
-		const checkedRankRadio = response.querySelector(".ranker input[type='radio']:checked");
-		const checkedStatusRadio = response.querySelector(".status input[type='radio']:checked");
+	// count passing responses
+	const ranking = [...responses]
+		.map(s => s.querySelector(".ranker input[type='radio']:checked"))
+		.map(s => s && s.value);
 
-		if (checkedStatusRadio.value === "fail") failCount++;
+	for (const radio of rankRadios) radio.parentElement.dataset.label = String.fromCharCode(65 + ranking.findIndex(r => r === radio.value));
 
-		// convert index to uppercase letter
-		if (checkedRankRadio) ranking[checkedRankRadio.value - 1] = String.fromCharCode(65 + Number(response.querySelector(".modelName").dataset.index));
-	};
-
-	// update rank review display
-	const passSegment = (failCount > 0 ? ranking.slice(0, -failCount) : ranking).join(" > ");
-	const failSegment = failCount > 0 ? `<span class="failSeg">${ranking.slice(-failCount).join(" > ")}</span>` : ""
-	review.innerHTML = [passSegment, failSegment].filter(Boolean).join(" > ")
-
-	// disable/enable submission button
-	document.querySelector("#Ballot button[type='submit']").disabled = ranking.filter(e => e !== "?").length != responses.length;
+	document.querySelector("#Ballot button[type='submit']").disabled = ranking.filter(Boolean).length != responses.length;
 }
 
 // update radio values

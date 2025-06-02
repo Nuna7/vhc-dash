@@ -16,7 +16,8 @@ const BallotSchema = new Schema({
 			message: "Ranking must contain unique choices"
 		}
 	},
-	failCount: { type: Number, required: true }
+	failCount: { type: Number, required: true },
+	rationale: { type: String, required: true }
 }, { timestamps: true });
 
 // main paraphrase voting schema -----------------------------------------------

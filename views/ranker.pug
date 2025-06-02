@@ -13,18 +13,11 @@ block content
 		form#Ballot(method="post").Box.mRoomy.Flexbox.mCol.mCmpSpacing
 			input(type="hidden", name="prc", value=prc._id)
 			
-			.clabel: b LLM Ranker
 			.llabel.tGray: small #[b select:] [<-, ->] | #[b rank:] [1-#{prc.responses.length}] | #[b status:] [`] | #[b submit:] [s|enter]
+			.clabel: b LLM Ranker
+			.rLabel ID: #{prc._id}
 
-			.Flexbox.mCmpSpacing.mSpaceBtwn.mVertEnd.mWrap.mHorzEnd
-				#Original.Box.mSolid: p: b!=prc.input
-
-				#Submission.Box.mCompact.Flexbox.mVertCenter.mMinSpacing
-					.lLabel: b Review: 
-					
-					#Review.uNoWrap
-					
-					button(type="submit", title="Submit ranking\nShortcut: [s]").mGreen Submit
+			.Box.mSolid: p: b!=prc.input
 
 			.Flexbox.mVertCenter.mMinSpacing
 				b.uNoWrap LLM Responses:
@@ -51,6 +44,17 @@ block content
 							.rankDisplay ?
 
 						.content!=response.renderContent()
+
+			.Flexbox.mVertCenter.mMinSpacing
+				label.mReq: b Rationale:
+				.Divider 
+
+			.Flexbox.mMinSpacing 
+				textarea#Rationale(name="rationale", style="flex-grow: 1", rows=4, placeholder="Describe the rationale for your ranking choices...", required)
+				
+				.Flexbox.mCol.mMinSpacing 
+					.Filler
+					button(type="submit", title="Submit ranking\nShortcut: [s]").mGreen Submit
 
 	else 
 		.Box.mSolid.mOutline.iAlignLeft
