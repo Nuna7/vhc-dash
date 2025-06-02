@@ -15,7 +15,7 @@ block content
 			
 			.llabel.tGray: small #[b select:] [<-, ->] | #[b rank:] [1-#{prc.responses.length}] | #[b status:] [`] | #[b submit:] [s|enter]
 			.clabel: b LLM Ranker
-			.rLabel ID: #{prc._id}
+			.rLabel ID: #{String(prc._id).slice(10)}
 
 			.Box.mSolid: p: b!=prc.input
 
