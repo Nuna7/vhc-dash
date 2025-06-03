@@ -39,7 +39,7 @@
 	counter-reset: navlink -1;
 }
 
-#Navigation>.authLinks {
+#Navigation>.subnavigation {
 	border-left: 2px solid var(--light-gray);
 	padding-left: var(--cmp-spacing);
 }

@@ -75,18 +75,21 @@ html(lang="en")
 
 		#Main.Flexbox.mCol.mStdSpacing
 			nav#Navigation.iAlignLeft.Box.Flexbox.mCmpSpacing
+				- const base = url.split("/")[1]
+				
 				.lLabel: b Navigation:
 
 				a(href="/").link.Flexbox.mCol.mMinSpacing.mHorzCenter
 					img(src="/icons/home.svg", alt="Home", width=40)
 					u Home
 				
-				a(href="/ranker").link.Flexbox.mCol.mMinSpacing.mHorzCenter
-					img(src="/icons/ranking.svg", alt="Ranker", width=40)
-					u LLM Ranker
+				unless base == "ranker"
+					a(href="/ranker").link.Flexbox.mCol.mMinSpacing.mHorzCenter
+						img(src="/icons/ranking.svg", alt="Ranker", width=40)
+						u LLM Ranker
 
 				unless user
-					.authLinks.Flexbox.mMinSpacing
+					.subnavigation.Flexbox.mMinSpacing
 						img(src="/icons/user.svg", alt="User", width=80)
 						
 						div
@@ -95,6 +98,17 @@ html(lang="en")
 							ul
 								li: a.login(href="/login") Log In
 								li: a.login(href="/register") Register
+
+				if base == "ranker"
+					.subnavigation.Flexbox.mMinSpacing
+						img(src="/icons/ranking.svg", alt="User", width=80)
+						
+						div
+							h2 LLM Ranker
+						
+							ul
+								li: a.login(href="/ranker") Ranker
+								li: a.login(href="/ranker/history") History
 
 			main#Content.Flexbox.mCol.mStdSpacing.iAlignLeft: block content
 
