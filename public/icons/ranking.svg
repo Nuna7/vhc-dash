@@ -24,9 +24,9 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
      showguides="true"
-     inkscape:zoom="5.7798541"
-     inkscape:cx="51.125858"
-     inkscape:cy="69.032884"
+     inkscape:zoom="5.9255548"
+     inkscape:cx="21.348212"
+     inkscape:cy="53.919002"
      inkscape:window-width="1920"
      inkscape:window-height="1014"
      inkscape:window-x="0"
@@ -40,26 +40,26 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="fill:#111111;stroke-width:0.205246;fill-opacity:1"
+       style="fill:#111111;fill-opacity:1;stroke-width:0.195359"
        id="rect1"
        width="7.9375"
-       height="14.552083"
+       height="13.183842"
        x="0"
-       y="11.90625" />
+       y="13.274491" />
     <rect
-       style="fill:#111111;stroke-width:0.231549;fill-opacity:1"
+       style="fill:#111111;fill-opacity:1;stroke-width:0.220395"
        id="rect1-5"
        width="7.9375"
-       height="18.520834"
+       height="16.779436"
        x="9.260417"
-       y="7.9374995" />
+       y="9.6788979" />
     <rect
-       style="fill:#111111;stroke-width:0.175034;fill-opacity:1"
+       style="fill:#111111;fill-opacity:1;stroke-width:0.166602"
        id="rect1-5-9"
        width="7.9375"
-       height="10.583333"
+       height="9.5882483"
        x="18.520834"
-       y="15.875001" />
+       y="16.870085" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:CommitMono;-inkscape-font-specification:'CommitMono, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#111111;stroke-width:0.264583;fill-opacity:1"
@@ -94,7 +94,7 @@
        inkscape:rounded="0"
        inkscape:randomized="0"
        d="M 6.9917256,-4.1679535 8.2166562,-1.6859726 10.955685,-1.2879684 8.9737051,0.64398422 9.4415869,3.3719453 6.9917255,2.0839767 4.5418638,3.3719451 5.0097458,0.64398424 3.0277662,-1.2879686 5.7667946,-1.6859726 Z"
-       inkscape:transform-center-y="-0.31675307"
-       transform="matrix(0.79585374,0,0,0.79585374,7.6647759,3.3170814)" />
+       inkscape:transform-center-y="-0.37951841"
+       transform="matrix(0.95355396,0,0,0.95355396,6.6068305,4.2869272)" />
   </g>
 </svg>
