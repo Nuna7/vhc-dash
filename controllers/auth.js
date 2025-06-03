@@ -79,7 +79,7 @@ export function login_error_post(err, req, res, next) {
 		for: "login",
 		err: [{
 			path: "password",
-			msg: "Incorrect passkey"
+			msg: "Incorrect password"
 		}]
 	}, "/login");
 }

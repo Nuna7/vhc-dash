@@ -61,7 +61,7 @@ A registrant is prompted for the following details (mandatory fields in bold):
 - **Unique email ID**
 - **ORCiD ID**
 - Phone no.
-- **Passkey**
+- **Password**
 - Comments (for the benefit of the approving authority)
 
 > [!NOTE]
@@ -89,7 +89,7 @@ Registered users may navigate to `/user` to view and manage their user instance.
 
 ![User](images/user.png)
 
-Users may also update their password - there is no provision as of now for account recovery; ensure you do not forget your passkey.
+Users may also update their password - there is no provision as of now for account recovery; ensure you do not forget your password.
 
 ![User](images/password.png)
 

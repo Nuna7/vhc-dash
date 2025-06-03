@@ -55,20 +55,20 @@ block content
 
 	form#PasswordForm(method="post" action="/user/edit-password")
 		+ErrorWrapper("password"): .Box.Flexbox.mCol.mCmpSpacing 
-			.rLabel Passkey Form
+			.rLabel Password Form
 
 			input(type="hidden", name="uid", value=user._id)
 
 			div
-				label(for="OldPasswordField"): b Old Passkey
+				label(for="OldPasswordField"): b Old Password
 				input#OldPasswordField(type="password" name="old" required)
 
 			div
-				label(for="NewPasswordField"): b New Passkey
+				label(for="NewPasswordField"): b New Password
 				input#NewPasswordField(type="password" name="new" placeholder="More than 8 chars." required)
 
 			div
-				label(for="ConfirmPasswordField"): b Confirm New Passkey
+				label(for="ConfirmPasswordField"): b Confirm New Password
 				input#ConfirmPasswordField(type="password" name="confirm" required)
 
-			button(type="submit").mGreen.iAlignRight Update Passkey
+			button(type="submit").mGreen.iAlignRight Update Password

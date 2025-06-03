@@ -67,14 +67,14 @@ export const edit_user = [
 
 // update password -------------------------------------------------------------
 export const edit_password = [
-	body("old", "Incorrect former passkey").custom(async (value, { req }) => {
+	body("old", "Incorrect former password").custom(async (value, { req }) => {
 		try { return (await req.user.authenticate(value)).error ? Promise.reject() : true; }
 		catch (err) { throw new Error("Database error"); }
 	}),
 
-	body("new", "Invalid passkey length").isLength({ min: 8 }),
+	body("new", "Invalid password length").isLength({ min: 8 }),
 
-	body("confirm", "Passkey confirmation does not match").custom((value, { req }) => {
+	body("confirm", "Password confirmation does not match").custom((value, { req }) => {
 		return value == req.body.new || Promise.reject();
 	}),
 
@@ -107,7 +107,7 @@ export const edit_password = [
 			await req.user.changePassword(data.old, data.new);
 
 			flashAndRedirect(req, res, "message", {
-				msg: `Updated passkey for ${req.user.username} successfully.`
+				msg: `Updated password for ${req.user.username} successfully.`
 			}, "/user")
 		}
 
