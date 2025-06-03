@@ -1,0 +1,38 @@
+#History {
+	max-width: 1200px;
+}
+
+#History td {
+	vertical-align: top;
+}
+
+#History .date,
+#History .responses {
+	height: 100%;
+}
+
+#History .responses>.response>.spine {
+	justify-self    : stretch;
+	width           : 12ch;
+	padding         : var(--min-spacing);
+	border          : 1px dotted var(--black);
+	background-color: var(--lighter-gray);
+	cursor          : pointer;
+}
+
+#History .responses>.response:not(.sExpanded)+.response>.spine {
+	margin-left: -1px;
+}
+
+#History .responses>.response>.content {
+	margin: 0 var(--cmp-spacing)
+}
+
+#History .responses>.response.sExpanded {
+	flex-grow: 1;
+}
+
+#History .response:not(.sExpanded)>.content,
+#History .response.sExpanded>.spine {
+	display: none;
+}

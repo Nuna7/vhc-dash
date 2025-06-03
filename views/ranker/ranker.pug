@@ -1,13 +1,16 @@
-extends layout
+extends ../layout
 
 append stylesheets
-	link(rel="stylesheet", href="/stylesheets/ranker.css")
+	link(rel="stylesheet", href="/stylesheets/ranker/ranker.css")
 
 append scripts
-	script(type="text/javascript", src="/javascripts/ranker.js", defer)
+	script(type="text/javascript", src="/javascripts/ranker/ranker.js", defer)
 
 block content
-	h1 LLM Ranker
+	div
+		h1 LLM Ranker
+		p Rank LLM-paraphrased prescription text.
+
 
 	if prc
 		form#Ballot(method="post").Box.mRoomy.Flexbox.mCol.mCmpSpacing

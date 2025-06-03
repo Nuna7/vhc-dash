@@ -239,14 +239,6 @@ table {
 	table-layout   : fixed;
 }
 
-thead {
-	--fg: var(--white);
-	--bg: var(--black);
-
-	background-color: var(--bg);
-	color           : var(--fg);
-}
-
 tbody:focus {
 	outline         : none;
 	background-color: var(--lighter-gray);
@@ -254,6 +246,7 @@ tbody:focus {
 
 th,
 td {
+	height : 100%;
 	padding: 1ch;
 	border : 1px solid var(--light-gray);
 }
@@ -262,10 +255,23 @@ th {
 	font-weight: var(--font-bold);
 }
 
+th[scope="column"] {
+	--fg: var(--white);
+	--bg: var(--black);
+
+	background-color: var(--bg);
+	color           : var(--fg);
+}
+
 th[scope="row"] {
-	width      : 0.1%;
-	text-align : right;
-	white-space: nowrap;
+	width           : 0.1%;
+	background-color: var(--lighter-gray);
+	text-align      : right;
+	white-space     : nowrap;
+}
+
+td.mFill {
+	background-color: var(--lighter-gray);
 }
 
 /* FLASH MESSAGES =========================================================== */

@@ -1,0 +1,42 @@
+extends ../layout
+
+append stylesheets
+	link(rel="stylesheet", href="/stylesheets/ranker/history.css")
+
+append scripts
+	script(type="text/javascript", src="/javascripts/ranker/history.js", defer)
+
+block content
+	div
+		h1 LLM Ranker - History
+		p All ballots submitted by you.
+
+	table#History.mMultibody
+		thead
+			tr 
+				th(scope="column") Timestamp
+				th(scope="column") Ballot
+				th(scope="column") Rationale
+		
+		each ballot in ballots 
+			tbody
+				tr 
+					td(rowspan=2).mFill: .date.Flexbox.mCol.mMinSpacing
+						p: i=ballot.timestamp.toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })
+						.Filler
+					
+					td.mFill: p=ballot.prc.input
+					td(width=300, rowspan=2): p=ballot.rationale
+				
+				tr 
+					td.mLast: .responses.Flexbox.mInline
+						each candidate, index in ballot.ranking
+							- const response = ballot.prc.responses.find(r => String(r.llm) == candidate)
+							- const state = index == 0 && "sExpanded"
+
+							.response(class=state).Flexbox
+								.spine.Flexbox.mCol.mSpaceBtwn.mMinSpacing
+									b Rank: #{index + 1}
+									small.tGray Click to expand
+								
+								.content!=response.renderContent()

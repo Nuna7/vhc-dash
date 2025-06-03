@@ -6,7 +6,7 @@ import RCV from "../models/RCV.js";
 // RANKER ======================================================================
 
 export async function ranker(req, res, next) {
-	try {	
+	try {
 		// find all PRCs not voted for by user
 		const prcs = await PRC.aggregate([
 			{
@@ -21,24 +21,24 @@ export async function ranker(req, res, next) {
 			{ $match: { "rcv.ballots.voter": { $ne: req.user._id } } },
 			{ $limit: 1 }
 		]);
-				
-		res.render("ranker", {
+
+		res.render("ranker/ranker", {
 			title: "LLM Ranker",
 			prc: prcs.length ? PRC.hydrate(prcs[0]) : undefined
 		});
 	}
 
-	catch(err) { next(err); }
+	catch (err) { next(err); }
 }
 
 // submit ballot ---------------------------------------------------------------
 export const post_ballot = [
 	body("prc").isMongoId(),
-	
+
 	body().custom(async (body, { req }) => {
 		try {
 			const prc = await PRC.findById(body.prc);
-			
+
 			const validLLMIDs = prc.responses.map(response => response.llm.toString());
 
 			const rankKeys = Object.keys(body).filter(key => key.startsWith("rank-"));
@@ -48,15 +48,15 @@ export const post_ballot = [
 			if (!(rankKeys.length == prc.responses.length || statusKeys.length == prc.responses.length)) {
 				return Promise.reject("No. of rank/status fields does not match no. of PRC responses");
 			}
-					
+
 			const seenRanks = new Set();
 			const rankStatusPairs = [];
 
-			for (let i=0; i < prc.responses.length; i++) {
+			for (let i = 0; i < prc.responses.length; i++) {
 				const llmID = rankKeys[i].split("-")[1];
 				const rankValue = body[rankKeys[i]];
 				const statusValue = body[statusKeys[i]];
-				
+
 				// ensure rank/status pairs match and LLM IDs are valid
 				if (llmID != statusKeys[i].split("-")[1]) return Promise.reject("Rank/status IDs do not match");
 				if (!validLLMIDs.includes(llmID)) return Promise.reject("Invalid LLM ID");
@@ -83,7 +83,7 @@ export const post_ballot = [
 			return true;
 		}
 
-		catch(err) { throw new Error("Database error"); }
+		catch (err) { throw new Error("Database error"); }
 	}),
 
 	async (req, res, next) => {
@@ -94,7 +94,7 @@ export const post_ballot = [
 			const errors = validationResult(req);
 
 			// TODO: implement syserror page/display
-			if (!errors.isEmpty()) { 
+			if (!errors.isEmpty()) {
 				return res.redirect("/ranker");
 			}
 
@@ -117,17 +117,66 @@ export const post_ballot = [
 			});
 
 			await prc.rcv.save();
-			
+
 			return res.redirect("/ranker");
 		}
 
-		catch(err) { next(err); }
+		catch (err) { next(err); }
 	}
 ]
+
+// USER RANK HISTORY ===========================================================
+
+export async function history(req, res, next) {
+	try {
+		const userId = req.user._id;
+
+		// run aggregation to find matching ballots and their PRCs
+		const rawResults = await RCV.aggregate([
+			{ $match: { "ballots.voter": userId } },
+			{ $unwind: "$ballots" },
+			{ $match: { "ballots.voter": userId } },
+			{
+				$lookup: {
+					from: "prcs",
+					localField: "_id",
+					foreignField: "rcv",
+					as: "prc"
+				}
+			},
+			{ $unwind: "$prc" },
+			{
+				$project: {
+					_id: "$ballots._id",
+					prc: "$prc",
+					ranking: "$ballots.ranking",
+					failCount: "$ballots.failCount",
+					rationale: "$ballots.rationale",
+					timestamp: "$ballots.createdAt",
+				}
+			},
+			{ $sort: { timestamp: -1 } }
+		]);
+
+		// hydrate PRC documents
+		const hydratedResults = rawResults.map(result => ({
+			...result,
+			prc: PRC.hydrate(result.prc)
+		}));
+
+		res.render("ranker/history", {
+			title: "LLM Ranker - History",
+			ballots: hydratedResults
+		});
+	}
+
+	catch (err) { next(err); }
+}
 
 // DEFAULT EXPORT ==============================================================
 
 export default {
 	ranker,
-	post_ballot
+	post_ballot,
+	history
 }

@@ -32,6 +32,8 @@ const router = Router();
 router.get("/", sessionAuthCheck(), rankerController.ranker);
 router.post("/", sessionAuthCheck(), ballotLimiter, rankerController.post_ballot);
 
+router.get("/history", sessionAuthCheck(), rankerController.history);
+
 // DEFAULT EXPORT ==============================================================
 
 export default router;
